@@ -1,0 +1,28 @@
+※ Vue에서 Bootstrap을 사용하기 위한 방법
+https://bootstrap-vue.org
+https://bootstrap-vue.org/docs
+--------------------------------------------------------------------------
+1. vue cli 설치(vue 프로젝트를 쉽게 만들어 빌드나 배포하기 쉽도록한다)
+   npm install -g @vue/cli
+
+2. vue 프로젝트 생성
+   vue create 10_vue-board-bootstrap
+  
+   [구조도]
+   Node_modules  -> 프로젝트에 필요한 라이브러리등이 모여있는 곳
+   public        -> html파일이나 기타 파일을 보관하는 곳
+   src           -> 모든 소스코드들이 담기는 곳
+   package.json  -> 라이브러리 버전, 프로젝트 설정을 기록하는 곳
+
+3. 프로젝트에 사용될 bootstrap을 설치
+   npm install vue bootstrap-vue
+   npm install bootstrap@4.5.3   
+   (또는 npm install vue bootstrap bootstrap-vue로 설치하고 
+         package.json에서 4.5.3으로 버전 변경)
+
+4. npm install --save axios moment  (날짜형식 지정하기 위해 설치)
+
+5. STS 에서 VueAPI 실행 할것
+
+6. 프로젝트 서버 실행
+   npm run serve
