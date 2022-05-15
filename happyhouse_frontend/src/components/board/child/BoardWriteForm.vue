@@ -67,7 +67,7 @@ export default {
   data() {
     return {
       article: {
-        no: 0,
+        articleno: 0,
         writer: "",
         title: "",
         content: "",
@@ -80,11 +80,12 @@ export default {
   },
   created() {
     if (this.type === "modify") {
-      http.get(`/api/board/${this.$route.params.no}`).then(({ data }) => {
-        // this.article.no = data.article.no;
-        // this.article.writer = data.article.writer;
-        // this.article.title = data.article.title;
-        // this.article.content = data.article.content;
+      http.get(`/board/${this.$route.params.no}`).then(({ data }) => {
+        console.log(data);
+        // this.article.articleno = data.articleno;
+        // this.article.writer = data.writer;
+        // this.article.title = data.title;
+        // this.article.content = data.content;
         this.article = data;
       });
       this.isWriter = true;
@@ -115,14 +116,14 @@ export default {
     },
     onReset(event) {
       event.preventDefault();
-      this.article.no = 0;
+      this.article.articleno = 0;
       this.article.title = "";
       this.article.content = "";
       this.$router.push({ name: "BoardList" });
     },
     registArticle() {
       http
-        .post(`/api/board`, {
+        .post(`/board`, {
           writer: this.article.writer,
           title: this.article.title,
           content: this.article.content,
@@ -138,8 +139,8 @@ export default {
     },
     modifyArticle() {
       http
-        .put(`/api/board/${this.article.no}`, {
-          no: this.article.no,
+        .put(`/board/${this.article.articleno}`, {
+          articleno: this.article.articleno,
           writer: this.article.writer,
           title: this.article.title,
           content: this.article.content,

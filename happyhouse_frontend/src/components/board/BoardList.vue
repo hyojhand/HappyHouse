@@ -53,7 +53,8 @@ export default {
     };
   },
   created() {
-    http.get(`/api/board`).then(({ data }) => {
+    http.get(`/board`).then(({ data }) => {
+      console.log(data);
       this.articles = data;
     });
   },

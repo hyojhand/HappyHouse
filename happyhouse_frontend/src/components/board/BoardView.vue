@@ -25,7 +25,7 @@
     <b-row class="mb-1">
       <b-col>
         <b-card
-          :header-html="`<h3>${article.no}.
+          :header-html="`<h3>${article.articleno}.
           ${article.title}</h3><div><h6>${article.writer}</div><div>${changeDateFormat}</h6></div>`"
           class="mb-2"
           border-variant="dark"
@@ -35,6 +35,7 @@
             <div v-html="message"></div>
           </b-card-body>
         </b-card>
+        <reply-list></reply-list>
       </b-col>
     </b-row>
   </b-container>
@@ -43,8 +44,13 @@
 <script>
 import moment from "moment";
 import http from "@/util/http-common";
+import ReplyList from "@/components/board/child/ReplyList.vue";
 
 export default {
+  name: "BoardView",
+  components: {
+    ReplyList,
+  },
   data() {
     return {
       article: {},
@@ -63,7 +69,7 @@ export default {
     },
   },
   created() {
-    http.get(`/api/board/${this.$route.params.no}`).then(({ data }) => {
+    http.get(`/board/${this.$route.params.no}`).then(({ data }) => {
       this.article = data;
     });
   },
@@ -74,15 +80,16 @@ export default {
     moveModifyArticle() {
       this.$router.replace({
         name: "BoardUpdate",
-        params: { no: this.article.no },
+        params: { no: this.article.articleno },
       });
       //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
     },
     deleteArticle() {
+      console.log(this.article);
       if (confirm("정말로 삭제?")) {
         this.$router.replace({
           name: "BoardDelete",
-          params: { no: this.article.no },
+          params: { no: this.article.articleno },
         });
       }
     },
