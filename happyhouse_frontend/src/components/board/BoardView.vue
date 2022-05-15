@@ -10,16 +10,27 @@
         <b-button variant="outline-primary" @click="listArticle">목록</b-button>
       </b-col>
       <b-col class="text-right">
-        <b-button
-          variant="outline-info"
-          size="sm"
-          @click="moveModifyArticle"
-          class="mr-2"
-          >글수정</b-button
-        >
-        <b-button variant="outline-danger" size="sm" @click="deleteArticle"
-          >글삭제</b-button
-        >
+        <div v-if="isWriter">
+          <b-button
+            variant="outline-info"
+            size="sm"
+            @click="moveModifyArticle"
+            class="mr-2"
+            >글수정</b-button
+          >
+          <b-button variant="outline-danger" size="sm" @click="deleteArticle"
+            >글삭제</b-button
+          >
+        </div>
+        <div v-else>
+          <b-icon
+            icon="heart-fill"
+            variant="danger"
+            v-if="isLike"
+            @click="modifyLike"
+          ></b-icon>
+          <b-icon icon="heart" v-else @click="modifyLike"></b-icon>
+        </div>
       </b-col>
     </b-row>
     <b-row class="mb-1">
@@ -54,6 +65,8 @@ export default {
   data() {
     return {
       article: {},
+      isWriter: true,
+      isLike: false,
     };
   },
   computed: {
@@ -72,6 +85,11 @@ export default {
     http.get(`/board/${this.$route.params.no}`).then(({ data }) => {
       this.article = data;
     });
+    http.get(`/board/like/${this.$route.params.no}`).then(({ data }) => {
+      console.log(data);
+      this.isLike = data;
+    });
+    // 작성자 본인인지 알려주는 axios 필요 (isWriter 변경)
   },
   methods: {
     listArticle() {
@@ -91,6 +109,29 @@ export default {
           name: "BoardDelete",
           params: { no: this.article.articleno },
         });
+      }
+    },
+    modifyLike() {
+      if (!this.isLike) {
+        http.put(`/board/like/${this.article.articleno}`).then(({ data }) => {
+          let msg = "좋아요 처리시 문제가 발생했습니다.";
+          if (data === "success") {
+            msg = "좋아요가 추가되었습니다.";
+          }
+          alert(msg);
+          this.isLike = !this.isLike;
+        });
+      } else {
+        http
+          .delete(`/board/dislike/${this.article.articleno}`)
+          .then(({ data }) => {
+            let msg = "좋아요 취소 처리시 문제가 발생했습니다.";
+            if (data === "success") {
+              msg = "좋아요가 취소되었습니다.";
+            }
+            alert(msg);
+            this.isLike = !this.isLike;
+          });
       }
     },
   },

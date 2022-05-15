@@ -50,17 +50,17 @@ public class ReplyController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 
-    @ApiOperation(value = "댓글 정보를 수정한다. 그리고 DB수정 성공시 모든 댓글 정보를 반환, 실패시 'fail' 문자열을 반환한다.", response = Object.class)
+    @ApiOperation(value = "댓글 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping
 	public ResponseEntity<?> updateReply(@RequestBody Reply reply) {
 		log.debug("updateReply - 호출");
 		if (replyService.updateReply(reply)) {
-			return new ResponseEntity<List<Reply>>(replyService.retrieveReply(reply.getArticleno()), HttpStatus.OK);
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 
-    @ApiOperation(value = "댓글 정보를 삭제한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+    @ApiOperation(value = "댓글 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("{replyid}")
 	public ResponseEntity<?> deleteReply(@PathVariable int replyid) {
 		log.debug("deleteReply - 호출");

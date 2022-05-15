@@ -14,6 +14,7 @@
             v-model="content"
             type="text"
             placeholder="댓글을 입력하세요"
+            ref="input"
           ></b-form-input>
         </b-form>
         <b-button variant="outline-primary" @click="writeReply()"
@@ -81,6 +82,7 @@ export default {
             msg = "댓글 작성시 문제가 발생했습니다.";
           } else {
             this.replies = data;
+            this.$refs.input.$el.value = "";
           }
           alert(msg);
         });

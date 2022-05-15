@@ -42,6 +42,37 @@
 		  from board 
 		 where articleno = #{articleno}
 	</delete>
+	
+	<select id="isLike" resultType="likey">
+		select * from likey
+		where userid = #{userid} and articleno = #{articleno}
+	</select>
+	
+	<!-- 좋아요 추가 -->
+	<insert id="insertLikey" parameterType="likey">
+		insert into likey(
+			userid, articleno
+		) values (#{userid}, #{articleno})
+	</insert>
+	
+	<update id="addLikey" parameterType="int">
+		update board
+			set likey = likey + 1
+		where articleno = #{articleno}
+	</update>
+	
+	<!-- 좋아요 삭제 -->
+	<delete id="deleteLikey" parameterType="likey">
+		delete 
+		  from likey 
+		 where userid = #{userid} and articleno = #{articleno}
+	</delete>
+	
+	<update id="subLikey" parameterType="int">
+		update board
+			set likey = likey - 1
+		where articleno = #{articleno}
+	</update>
 
 
 </mapper>

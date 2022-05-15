@@ -4,7 +4,7 @@
     <b-td>{{ content }}</b-td>
     <b-td>{{ writer }}</b-td>
     <b-td>{{ changeDateFormat }}</b-td>
-    <b-td>
+    <b-td v-if="isWriter">
       <b-button
         variant="outline-info"
         size="sm"
@@ -40,6 +40,7 @@ export default {
   },
   data() {
     return {
+      isWriter: true,
       isModify: true,
       nreplyid: "",
       ncontent: "",
@@ -51,7 +52,7 @@ export default {
     },
   },
   created() {
-    console.log();
+    // 작성자 본인인지 알려주는 axios 필요 (isWriter 변경)
   },
   methods: {
     modifyReply(e) {
@@ -75,7 +76,7 @@ export default {
           if (data === "fail") {
             msg = "수정 처리시 문제가 발생했습니다.";
           } else {
-            td.innerHTML = data[0].content;
+            td.innerHTML = original;
             this.isModify = true;
           }
           alert(msg);
