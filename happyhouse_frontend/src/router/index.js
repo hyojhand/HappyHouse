@@ -17,6 +17,9 @@ import BoardDelete from "@/components/board/BoardDelete.vue";
 import House from "@/views/House.vue";
 import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
 import HouseMap from "@/components/house/HouseMap.vue";
+import HouseList from "@/components/house/HouseList.vue";
+import HouseDetail from "@/components/house/HouseDetail.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -95,6 +98,16 @@ const routes = [
         path: "map/:aptcode",
         name: "HouseMap",
         component: HouseMap,
+      },
+      {
+        path: "list/:aptcode",
+        name: "HouseList",
+        component: HouseList,
+      },
+      {
+        path: "detail",
+        name: "HouseDetail",
+        component: HouseDetail,
       },
     ],
   },
