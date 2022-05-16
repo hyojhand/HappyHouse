@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="position: relative">
     <navi-bar />
     <router-view />
   </div>
@@ -24,5 +24,9 @@ a:hover {
 
 a.router-link-exact-active {
   color: #42b983;
+}
+
+ul {
+  list-style: none;
 }
 </style>

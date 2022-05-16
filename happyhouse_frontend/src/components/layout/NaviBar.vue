@@ -1,94 +1,71 @@
 <template>
-  <div>
-    <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand href="#">
-        <router-link to="/">
-          <img
-            src="@/assets/logo.png"
-            class="d-inline-block align-middle"
-            width="90px"
-            alt="Kitten"
-          />
-        </router-link>
-      </b-navbar-brand>
-
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
-          <b-nav-item href="#"
-            ><router-link
-              :to="{ name: 'Home' }"
-              class="link"
-              style="color: white"
-              ><b-icon icon="house" font-scale="1"></b-icon> HOME</router-link
-            ></b-nav-item
-          >
-          <b-nav-item href="#"
-            ><router-link
-              :to="{ name: 'Board' }"
-              class="link"
-              style="color: white"
-              ><b-icon icon="journal" font-scale="1"></b-icon>
-              게시판</router-link
-            ></b-nav-item
-          >
-          <b-nav-item href="#"
-            ><router-link :to="{ name: 'Instargram' }" class="link"
-              ><b-icon icon="instagram" font-scale="1"></b-icon>
-              인스타그램</router-link
-            ></b-nav-item
-          >
-          <b-nav-item href="#"
-            ><router-link :to="{ name: 'House' }" class="link"
-              ><b-icon icon="house-fill" font-scale="1"></b-icon>
-              아파트정보</router-link
-            ></b-nav-item
-          >
-        </b-navbar-nav>
-
-        <b-navbar-nav class="ml-auto" v-if="isLogin">
-          <b-nav-item href="#"
-            ><a href="#" class="link" @click="logout"
-              ><b-icon icon="person-circle"></b-icon> 로그아웃
-            </a></b-nav-item
-          >
-          <b-nav-item href="#"
-            ><router-link :to="{ name: 'Home' }" class="link"
-              ><b-icon icon="key"></b-icon> 마이 페이지</router-link
-            ></b-nav-item
-          >
-        </b-navbar-nav>
-
-        <b-navbar-nav class="ml-auto" v-else>
-          <b-nav-item href="#"
-            ><router-link :to="{ name: 'SignUp' }" class="link"
-              ><b-icon icon="person-circle"></b-icon> 회원가입</router-link
-            ></b-nav-item
-          >
-          <b-nav-item href="#"
-            ><router-link :to="{ name: 'SignIn' }" class="link"
-              ><b-icon icon="key"></b-icon> 로그인</router-link
-            ></b-nav-item
-          >
-          <!-- <b-nav-item-dropdown right>
-            <template #button-content>
-              <b-icon icon="people" font-scale="2"></b-icon>
-            </template>
-            <b-dropdown-item href="#"
-              ><router-link :to="{ name: 'SignUp' }" class="link"
-                ><b-icon icon="person-circle"></b-icon> 회원가입</router-link
-              ></b-dropdown-item
-            >
-            <b-dropdown-item href="#"
-              ><router-link :to="{ name: 'SignIn' }" class="link"
+  <div style="position: absolute; z-index: 99; right: 0">
+    <b-button
+      v-b-toggle.my-sidebar-right
+      class="mt-3"
+      style="
+        background-color: transparent;
+        border: transparent;
+        box-shadow: none;
+      "
+      ><b-icon
+        icon="three-dots-vertical"
+        style="width: 30px; height: 30px; color: pink"
+      ></b-icon
+    ></b-button>
+    <b-sidebar
+      id="my-sidebar-right"
+      title="안녕하세요 ㅇㅇㅇ님 :)"
+      right
+      shadow
+    >
+      <div class="px-2 py-5">
+        <ul>
+          <div v-if="isLogin">
+            <li>
+              <router-link :to="{ name: 'Mypage' }"
+                ><b-icon icon="person-lines-fill"></b-icon>
+                마이페이지</router-link
+              >
+            </li>
+            <li>
+              <a href="#" class="link" @click="logout"
+                ><b-icon icon="person-circle"></b-icon> 로그아웃
+              </a>
+            </li>
+          </div>
+          <div v-else>
+            <li>
+              <router-link :to="{ name: 'SignIn' }" class="link"
                 ><b-icon icon="key"></b-icon> 로그인</router-link
-              ></b-dropdown-item
+              >
+            </li>
+            <li>
+              <router-link :to="{ name: 'SignUp' }" class="link"
+                ><b-icon icon="person-circle"></b-icon> 회원가입</router-link
+              >
+            </li>
+          </div>
+        </ul>
+        <ul>
+          <li>
+            <router-link :to="{ name: 'Home' }"
+              ><b-icon icon="house"></b-icon> 홈</router-link
             >
-          </b-nav-item-dropdown> -->
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+          </li>
+          <li>
+            <router-link :to="{ name: 'Board' }"
+              ><b-icon icon="file-text"></b-icon> 게시판</router-link
+            >
+          </li>
+          <li>
+            <router-link :to="{ name: 'House' }"
+              ><b-icon icon="geo-alt"></b-icon> 아파트 정보</router-link
+            >
+          </li>
+        </ul>
+      </div>
+    </b-sidebar>
   </div>
 </template>
 
