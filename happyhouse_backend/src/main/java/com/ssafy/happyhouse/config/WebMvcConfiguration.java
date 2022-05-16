@@ -10,23 +10,25 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.ssafy.happyhouse.interceptor.ConfirmInterceptor;
+
 
 @Configuration
 @EnableAspectJAutoProxy
 @MapperScan(basePackages = {"com.ssafy.**.mapper"})
-public class WebMvcConfiguration {
+public class WebMvcConfiguration implements WebMvcConfigurer{
 	
+	@Autowired
+	private ConfirmInterceptor confirm;
 	
-//	@Autowired
-//	private ConfirmInterceptor confirm;
-//	
 ////	private final List<String> patterns = Arrays.asList("/happyhouse/*", "/admin/*", "/user/list");
 //	private final List<String> patterns = Arrays.asList("/happyhouse/*", "/user/list");
-//
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(confirm).addPathPatterns(patterns);
-//	}
+	private final List<String> patterns = Arrays.asList("/happyhouse/*");
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(confirm).addPathPatterns(patterns);
+	}
 
 
 }

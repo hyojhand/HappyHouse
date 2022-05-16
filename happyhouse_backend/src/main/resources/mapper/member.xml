@@ -15,19 +15,12 @@
 		from USER
 		where userid = #{userid} and userpwd = #{userpwd}
 	</select>
-
-	<!-- <select id="login" parameterType="map" resultType="Member">
-		select name, id, addr, tel
-		from happyhouse_member
-		where id = #{Id} and pw = #{Pw}
-	</select> 
-	-->
 	
 	<select id="idCheck" parameterType="string" resultType="int">
       select
-      count(id)
-      from happyhouse_member
-      where id = #{id}
+      count(userid)
+      from USER
+      where userid = #{userid}
    </select>
    
    <update id="updateMember" parameterType="Member">

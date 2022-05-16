@@ -29,6 +29,12 @@ public class HouseMapServiceImpl implements HouseMapService {
 	public List<HouseInfoDto> getDongInGugun(String gugun) throws Exception {
 		return houseMapMapper.getDongInGugun(gugun);
 	}
+	
+	@Override
+	public HouseInfoDto getAptInfo(String aptcode) throws Exception {
+		return houseMapMapper.getAptInfo(aptcode);
+	}
+	
 
 	@Override
 	public List<HouseInfoDto> getAptInDong(String dong) throws Exception {

@@ -154,7 +154,7 @@ export default {
           email: this.email,
         })
         .then(({ data }) => {
-          let msg = "회원가입에 오류가 생겼습니다!";
+          let msg = "회원가입중 오류가 생겼습니다!";
           if (data === "success") {
             msg = "회원가입 완료!";
           }
