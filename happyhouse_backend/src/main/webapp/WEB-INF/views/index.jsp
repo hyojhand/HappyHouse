@@ -48,7 +48,7 @@
 						<tbody id="searchResult"></tbody>
 					</table>
 				<div id="map" style="width:100%;height:500px;"></div>
-				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7992c338893fdadb0da92c1c7afa65d9&libraries=services"></script>
+				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=App&libraries=services"></script>
 				<script type="text/javascript" src="js/map.js"></script>
 				<script type="text/javascript">
 				let colorArr = ['table-primary','table-success','table-danger'];

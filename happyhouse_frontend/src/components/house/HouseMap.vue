@@ -43,7 +43,7 @@ export default {
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
       script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=14569f72289f7b671811748997f96066&libraries=services";
+        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=APP키&libraries=services";
       /* global kakao */
       script.addEventListener("load", () => {
         kakao.maps.load(this.initMap);
