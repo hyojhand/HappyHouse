@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.model.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,11 @@ public class HouseMapServiceImpl implements HouseMapService {
 	@Override
 	public List<HouseInfoDto> getAptInDong(String dong) throws Exception {
 		return houseMapMapper.getAptInDong(dong);
+	}
+	
+	@Override
+	public List<HouseInfoDto> getAptDetail(String aptcode) throws SQLException {
+		return houseMapMapper.getAptDetail(aptcode);
 	}
 
 	@Override

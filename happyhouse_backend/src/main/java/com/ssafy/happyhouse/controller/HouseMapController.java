@@ -61,6 +61,12 @@ public class HouseMapController {
 		return new ResponseEntity<List<HouseInfoDto>>(HouseMapService.getAptInDong(aptcode), HttpStatus.OK);
 	}
 	
+	@GetMapping("/aptdetail/{aptcode}")
+	public ResponseEntity<List<HouseInfoDto>> aptdetail(@PathVariable String aptcode) throws Exception {
+		log.debug("aptdetail : {}", HouseMapService.getAptDetail(aptcode));
+		return new ResponseEntity<List<HouseInfoDto>>(HouseMapService.getAptDetail(aptcode), HttpStatus.OK);
+	}
+	
 	@GetMapping("/word")
 	public ResponseEntity<List<HouseInfoDto>> word(@RequestParam("word") String word) throws Exception {
 //		System.out.println("word 실행");

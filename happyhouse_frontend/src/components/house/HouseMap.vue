@@ -1,11 +1,9 @@
 <template>
   <b-container>
-    <br />
-    <h3 class="underline-orange">
+    <h3 class="underline-blue">
       <b-icon icon="house-fill"></b-icon> {{ sidoName }} {{ gugunName }}
       {{ dongName }} 주변 아파트 입니다.
     </h3>
-    <br />
     <div id="map"></div>
     <br />
     <b-button variant="info" @click="moveList()">아파트 리스트 확인</b-button>
@@ -129,8 +127,9 @@ export default {
   width: 100%;
   height: 500px;
 }
-.underline-orange {
+.underline-blue {
   display: inline-block;
+  margin: 30px auto;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 70%, #b9f7e5 30%);
 }
 </style>

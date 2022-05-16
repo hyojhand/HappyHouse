@@ -12,13 +12,25 @@
         alt="Image 1"
       ></b-img>
     </b-col>
-    <b-col cols="10" class="align-self-center"> [일련번호] 아파트이름 </b-col>
+    <b-col cols="10" class="align-self-center text-left">
+      <div class="AptName">
+        <strong>{{ apt.aptName }} 아파트</strong>
+      </div>
+      <div>
+        주소 : {{ apt.sidoName }} {{ apt.gugunName }} {{ apt.dongName }}
+      </div>
+      <div>건축년도 : {{ apt.buildYear }} 년</div>
+      <div>거래가 : {{ apt.recentPrice }} 만원</div>
+    </b-col>
   </b-row>
 </template>
 
 <script>
 export default {
   name: "HouseListRow",
+  props: {
+    apt: Object,
+  },
   data() {
     return {
       isColor: false,
@@ -35,6 +47,9 @@ export default {
 <style scoped>
 .apt {
   width: 50px;
+}
+.AptName {
+  font-size: 20px;
 }
 .mouse-over-bgcolor {
   background-color: lightblue;

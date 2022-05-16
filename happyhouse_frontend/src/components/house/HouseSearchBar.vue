@@ -71,27 +71,26 @@ export default {
   methods: {
     selectCity(event) {
       // 도시선택 후, 해당 도시 구/군 데이터 가져오기
-      console.log(event.target.value);
+      // console.log(event.target.value);
       http.get(`/map/gugun/${event.target.value}`).then(({ data }) => {
         this.guguns = data;
       });
     },
     selectGugun(event) {
       // 구/군 선택 후, 해당 도시 동 데이터 가져오기
-      console.log(event.target.value);
+      // console.log(event.target.value);
       http.get(`/map/dong/${event.target.value}`).then(({ data }) => {
         this.dongs = data;
       });
     },
     selectDong(event) {
       // 동 선택후, Map으로 넘어가면서 aptcode 넘기기
-      console.log(event.target.value);
+      // console.log(event.target.value);
       this.$router.push({
         name: "HouseMap",
         params: { aptcode: event.target.value },
       });
     },
-    sendKeyword() {},
   },
 };
 </script>
