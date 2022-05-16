@@ -58,6 +58,7 @@
 
 <script>
 import http from "@/util/http-common";
+
 export default {
   name: "MemberLogin",
   data() {
@@ -97,13 +98,23 @@ export default {
           userpwd: this.userpwd,
         })
         .then(({ data }) => {
-          if (data == null) {
+          console.log(data);
+          if (data === "fail") {
             alert("로그인실패! 아이디&비밀번호를 확인해주세요");
-            this.$router.push({ name: "Home" });
           } else {
             alert("로그인 완료!!!");
             this.$router.push({ name: "Home" });
           }
+
+          http.get("/member/check").then(({ data }) => {
+            if (data === "success") {
+              this.isLogin = true;
+              console.log("로그인 true");
+            } else {
+              this.isLogin = false;
+              console.log("로그인 false");
+            }
+          });
         });
     },
     moveJoin() {

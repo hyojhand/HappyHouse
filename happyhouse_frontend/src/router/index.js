@@ -15,7 +15,8 @@ import BoardUpdate from "@/components/board/BoardUpdate.vue";
 import BoardDelete from "@/components/board/BoardDelete.vue";
 
 import House from "@/views/House.vue";
-
+import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
+import HouseMap from "@/components/house/HouseMap.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -83,6 +84,19 @@ const routes = [
     path: "/house",
     name: "House",
     component: House,
+    redirect: "/house/search",
+    children: [
+      {
+        path: "search",
+        name: "HouseSearchBar",
+        component: HouseSearchBar,
+      },
+      {
+        path: "map/:aptcode",
+        name: "HouseMap",
+        component: HouseMap,
+      },
+    ],
   },
 ];
 

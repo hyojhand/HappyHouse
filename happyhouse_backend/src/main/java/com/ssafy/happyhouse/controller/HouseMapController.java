@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,30 +18,41 @@ import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.service.HouseMapService;
 
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/map")
 @CrossOrigin("*")
+@Slf4j
 public class HouseMapController {
-	
-	private final Logger logger = LoggerFactory.getLogger(HouseMapController.class);
 
 	@Autowired
 	private HouseMapService HouseMapService;
 	
 	@GetMapping("/sido")
 	public ResponseEntity<List<SidoGugunCodeDto>> sido() throws Exception {
-		logger.debug("sido : {}", HouseMapService.getSido());
+		log.debug("sido : {}", HouseMapService.getSido());
 		return new ResponseEntity<List<SidoGugunCodeDto>>(HouseMapService.getSido(), HttpStatus.OK);
 	}
 	
-	@GetMapping("/gugun")
-	public ResponseEntity<List<SidoGugunCodeDto>> gugun(@RequestParam("sido") String sido) throws Exception {
+	@GetMapping("/gugun/{sido}")
+	public ResponseEntity<List<SidoGugunCodeDto>> gugun(@PathVariable String sido) throws Exception {
+		log.debug("gugun : {}", HouseMapService.getGugunInSido(sido));
 		return new ResponseEntity<List<SidoGugunCodeDto>>(HouseMapService.getGugunInSido(sido), HttpStatus.OK);
 	}
 	
-	@GetMapping("/dong")
-	public ResponseEntity<List<HouseInfoDto>> dong(@RequestParam("gugun") String gugun) throws Exception {
+	@GetMapping("/dong/{gugun}")
+	public ResponseEntity<List<HouseInfoDto>> dong(@PathVariable String gugun) throws Exception {
+		log.debug("dong : {}", HouseMapService.getDongInGugun(gugun));
 		return new ResponseEntity<List<HouseInfoDto>>(HouseMapService.getDongInGugun(gugun), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "검색한 아파트의 정보를 반환한다. ", response = HouseInfoDto.class)
+	@GetMapping("/aptinfo/{aptcode}")
+	public ResponseEntity<HouseInfoDto> aptinfo(@PathVariable String aptcode) throws Exception {
+		log.debug("aptinfo : {}", HouseMapService.getAptInfo(aptcode));
+		return new ResponseEntity<HouseInfoDto>(HouseMapService.getAptInfo(aptcode), HttpStatus.OK);
 	}
 	
 	@GetMapping("/apt")

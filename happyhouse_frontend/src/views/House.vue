@@ -5,31 +5,34 @@
     </h3>
     <b-row>
       <b-col>
-        <house-search-bar></house-search-bar>
+        <router-view></router-view>
       </b-col>
     </b-row>
-    <b-row>
+    <!-- <b-row>
       <b-col cols="6" align="left">
         <house-list />
       </b-col>
       <b-col cols="6">
         <house-detail />
       </b-col>
-    </b-row>
+      <house-map v-on:dongcode="citycode" />
+    </b-row> -->
   </b-container>
 </template>
 <script>
-import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
-import HouseList from "@/components/house/HouseList.vue";
-import HouseDetail from "@/components/house/HouseDetail.vue";
+// import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
+// import HouseList from "@/components/house/HouseList.vue";
+// import HouseDetail from "@/components/house/HouseDetail.vue";
+// import HouseMap from "@/components/house/HouseMap.vue";
 
 export default {
   name: "House",
-  components: {
-    HouseSearchBar,
-    HouseList,
-    HouseDetail,
-  },
+  // components: {
+  //   HouseSearchBar,
+  // HouseList,
+  // HouseDetail,
+  // HouseMap,
+  // },
 };
 </script>
 <style scoped>

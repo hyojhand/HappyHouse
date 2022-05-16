@@ -13,10 +13,10 @@ public interface MemberMapper {
 	public int registerMember(Member member);
 	
 	Member login(Member member) throws Exception;
-	
+	int idCheck(String checkId) throws Exception;
 
 	// Member login(Map<String, String> map) throws Exception;
-	int idCheck(String checkId) throws Exception;
+	
 	List<Member> listMember() throws Exception;
 	Member getMember(String userId) throws Exception;
 	void updateMember(Member member) throws Exception;
