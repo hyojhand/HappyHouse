@@ -1,32 +1,50 @@
 <template>
-  <b-container class="bv-example-row mt-3 text-center">
-    <h3 class="underline-steelblue"><b-icon icon="house"></b-icon> SSAFY</h3>
-    <b-row>
-      <b-col></b-col>
-      <b-col cols="10">
-        <b-jumbotron
-          bg-variant="muted"
-          text-variant="dark"
-          border-variant="dark"
-        >
-          <template #header>SSAFY Home</template>
-
-          <template #lead>
-            슬기로운 싸피 생활 (:6기편) <br />
-            열정 하~~~~앗 Six!!!!!
-          </template>
-
-          <hr class="my-4" />
-
-          <p>Vue + Bootstrap활용.</p>
-          <p>Bootstrap-vue는 버전 <b>4.5.3</b>을 권장합니다.</p>
-          <p><b>BoardList.vue</b>를 바꿔가면서 테스트하세요.</p>
-          <p>Bootstrap의 <b>table</b> 사용법을 익히게됩니다.</p>
-        </b-jumbotron>
-      </b-col>
-      <b-col></b-col>
-    </b-row>
-  </b-container>
+  <div>
+    <b-carousel
+      id="carousel-1"
+      v-model="slide"
+      :interval="10000"
+      controls
+      indicators
+      @sliding-start="onSlideStart"
+      @sliding-end="onSlideEnd"
+    >
+      <!-- 지도로 가기 -->
+      <b-carousel-slide
+        caption="Where is Your Happy House?"
+        text="Let me show you what we got for you"
+      >
+        <template v-slot:img>
+          <img
+            style="max-width: 100vw; max-height: 100vw"
+            class="class-name"
+            src="@/assets/house.jpg"
+            alt="image slot"
+          />
+        </template>
+        <b-button class="mb-3" @click="moveHouse"
+          ><b-icon icon="cursor"></b-icon
+        ></b-button>
+      </b-carousel-slide>
+      <!-- 게시판으로 가기 -->
+      <b-carousel-slide
+        caption="Anything you want to say to everyone"
+        text="We are waiting for your writing"
+      >
+        <template v-slot:img>
+          <img
+            style="max-width: 100vw; max-height: 100vw"
+            class="class-name"
+            src="@/assets/posting.jpg"
+            alt="image slot"
+          />
+        </template>
+        <b-button class="mb-3" @click="moveBoard"
+          ><b-icon icon="cursor"></b-icon
+        ></b-button>
+      </b-carousel-slide>
+    </b-carousel>
+  </div>
 </template>
 
 <script>
@@ -35,16 +53,13 @@ export default {
   props: {
     msg: String,
   },
+  methods: {
+    moveHouse() {
+      this.$router.push({ name: "House" });
+    },
+    moveBoard() {
+      this.$router.push({ name: "Board" });
+    },
+  },
 };
 </script>
-
-<style scoped>
-.underline-steelblue {
-  display: inline-block;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 70%,
-    rgba(72, 190, 233, 0.3) 30%
-  );
-}
-</style>
