@@ -2,23 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
 
-import Member from "@/views/Member.vue";
-import MemberLogin from "@/components/user/MemberLogin.vue";
-import MemberJoin from "@/components/user/MemberJoin.vue";
-
-import Board from "@/views/Board.vue";
-import BoardList from "@/components/board/BoardList.vue";
-import BoardWrite from "@/components/board/BoardWrite.vue";
-import BoardView from "@/components/board/BoardView.vue";
-import BoardUpdate from "@/components/board/BoardUpdate.vue";
-import BoardDelete from "@/components/board/BoardDelete.vue";
-
-import House from "@/views/House.vue";
-import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
-import HouseMap from "@/components/house/HouseMap.vue";
-import HouseList from "@/components/house/HouseList.vue";
-import HouseDetail from "@/components/house/HouseDetail.vue";
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -35,78 +18,78 @@ const routes = [
   {
     path: "/user",
     name: "Member",
-    component: Member,
+    component: () => import("@/views/Member.vue"),
     children: [
       {
         path: "singin",
         name: "SignIn",
-        component: MemberLogin,
+        component: () => import("@/components/user/MemberLogin.vue"),
       },
       {
         path: "singup",
         name: "SignUp",
-        component: MemberJoin,
+        component: () => import("@/components/user/MemberJoin.vue"),
       },
     ],
   },
   {
     path: "/board",
     name: "Board",
-    component: Board,
+    component: () => import("@/views/Board.vue"),
     redirect: "/board/list",
     children: [
       {
         path: "list",
         name: "BoardList",
-        component: BoardList,
+        component: () => import("@/components/board/BoardList.vue"),
       },
       {
         path: "write",
         name: "BoardWrite",
-        component: BoardWrite,
+        component: () => import("@/components/board/BoardWrite.vue"),
       },
       {
         path: "detail/:no",
         name: "BoardView",
-        component: BoardView,
+        component: () => import("@/components/board/BoardView.vue"),
       },
       {
         path: "update/:no",
         name: "BoardUpdate",
-        component: BoardUpdate,
+        component: () => import("@/components/board/BoardUpdate.vue"),
       },
       {
         path: "delete/:no",
         name: "BoardDelete",
-        component: BoardDelete,
+        component: () => import("@/components/board/BoardDelete.vue"),
       },
     ],
   },
   {
     path: "/house",
     name: "House",
-    component: House,
+    component: () => import("@/views/House.vue"),
     redirect: "/house/search",
     children: [
       {
         path: "search",
         name: "HouseSearchBar",
-        component: HouseSearchBar,
+        component: () => import("@/components/house/HouseSearchBar.vue"),
       },
       {
         path: "map/:aptcode",
         name: "HouseMap",
-        component: HouseMap,
+        component: () => import("@/components/house/HouseMap.vue"),
       },
       {
         path: "list/:aptcode",
         name: "HouseList",
-        component: HouseList,
+        component: () => import("@/components/house/HouseList.vue"),
       },
       {
         path: "detail",
         name: "HouseDetail",
-        component: HouseDetail,
+        component: () => import("@/components/house/HouseDetail.vue"),
       },
     ],
   },
