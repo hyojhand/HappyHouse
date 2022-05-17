@@ -13,13 +13,11 @@
         style="width: 30px; height: 30px; color: pink"
       ></b-icon
     ></b-button>
-    <b-sidebar
-      id="my-sidebar-right"
-      title="안녕하세요 ㅇㅇㅇ님 :)"
-      right
-      shadow
-    >
+    <b-sidebar id="my-sidebar-right" right shadow>
       <div class="px-2 py-5">
+        <div v-if="userInfo_message">
+          {{ userInfo_message.userInfo.username }} 님 반갑습니다 ^^
+        </div>
         <ul>
           <div v-if="isLogin">
             <li>
@@ -75,7 +73,7 @@ import { mapState } from "vuex";
 export default {
   name: "NaviBar",
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState(["isLogin", "userInfo_message"]),
   },
   methods: {
     logout() {

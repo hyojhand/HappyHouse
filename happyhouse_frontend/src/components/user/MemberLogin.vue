@@ -65,7 +65,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState(["isLogin", "userInfo_message"]),
   },
   methods: {
     checkValue() {
@@ -98,14 +98,6 @@ export default {
         this.$router.push({ name: "Home" });
       }
     },
-
-    // 유저 정보 가져오기
-    // http.defaults.headers["access-token"] =
-    //   sessionStorage.getItem("access-token");
-    // http.get(`/member/info/${this.userid}`).then(({ data }) => {
-    //   console.log(data);
-    // });
-
     moveJoin() {
       this.$router.push({ name: "SignUp" });
     },

@@ -3,15 +3,12 @@ package com.ssafy.happyhouse.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/member")
 @Slf4j
-//@RequiredArgsConstructor
 public class MemberController {
 	
 	private static final String SUCCESS = "success";
@@ -106,7 +102,7 @@ public class MemberController {
 	public ResponseEntity<Map<String, Object>> getInfo(
 			@PathVariable("userid") @ApiParam(value = "인증할 회원의 아이디.", required = true) String userid,
 			HttpServletRequest request) {
-//		log.debug("userid : {} ", userid);
+
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		if (jwtService.isUsable(request.getHeader("access-token"))) {
@@ -114,6 +110,7 @@ public class MemberController {
 			try {
 //				로그인 사용자 정보.
 				Member member = memberService.userInfo(userid);
+				log.info("로그인 유저 정보 : {} ", member);
 				resultMap.put("userInfo", member);
 				resultMap.put("message", SUCCESS);
 				status = HttpStatus.ACCEPTED;
