@@ -35,6 +35,7 @@ export default {
   created() {
     console.log(this.$route.params.aptcode);
     http.get(`/map/apt/${this.$route.params.aptcode}`).then(({ data }) => {
+      console.log(data);
       this.apts = data;
     });
   },

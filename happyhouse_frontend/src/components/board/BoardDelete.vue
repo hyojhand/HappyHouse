@@ -23,7 +23,6 @@ export default {
         msg = "삭제가 완료되었습니다.";
       }
       alert(msg);
-      // 현재 route를 /list로 변경.
       this.$router.push({ name: "BoardList" });
     });
   },

@@ -51,9 +51,6 @@ export default {
       return moment(new Date(this.regtime)).format("YY.MM.DD hh:mm:ss");
     },
   },
-  created() {
-    // 작성자 본인인지 알려주는 axios 필요 (isWriter 변경)
-  },
   methods: {
     modifyReply(e) {
       let tr = e.target.parentElement.parentElement;

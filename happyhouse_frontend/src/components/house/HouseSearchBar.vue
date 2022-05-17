@@ -22,31 +22,7 @@
         {{ don.dongName }}
       </option>
     </select>
-
-    <!-- <input
-      type="text"
-      class="ml-1 form-control"
-      id="sword"
-      name="word"
-      v-model="word"
-      placeholder="아파트명으로 검색.."
-    />
-    <button type="button" id="searchBtn" class="ml-1 btn btn-outline-primary">
-      검색
-    </button> -->
   </div>
-  <!-- <b-row class="mt-4 mb-4 text-center">
-    <b-col class="sm-3">
-      <b-form-input
-        v-model.trim="dongCode"
-        placeholder="동코드 입력...(예 : 11110)"
-        @keypress.enter="sendKeyword"
-      ></b-form-input>
-    </b-col>
-    <b-col class="sm-3" align="left">
-      <b-button variant="outline-primary" @click="sendKeyword">검색</b-button>
-    </b-col>
-  </b-row> -->
 </template>
 
 <script>
@@ -71,21 +47,18 @@ export default {
   methods: {
     selectCity(event) {
       // 도시선택 후, 해당 도시 구/군 데이터 가져오기
-      // console.log(event.target.value);
       http.get(`/map/gugun/${event.target.value}`).then(({ data }) => {
         this.guguns = data;
       });
     },
     selectGugun(event) {
       // 구/군 선택 후, 해당 도시 동 데이터 가져오기
-      // console.log(event.target.value);
       http.get(`/map/dong/${event.target.value}`).then(({ data }) => {
         this.dongs = data;
       });
     },
     selectDong(event) {
       // 동 선택후, Map으로 넘어가면서 aptcode 넘기기
-      // console.log(event.target.value);
       this.$router.push({
         name: "HouseMap",
         params: { aptcode: event.target.value },
