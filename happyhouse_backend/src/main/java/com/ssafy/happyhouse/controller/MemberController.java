@@ -59,31 +59,6 @@ public class MemberController {
 			}
 	}
 	
-	@PostMapping("{userid}")
-	public ResponseEntity<String> login(@RequestBody Member member, HttpServletRequest request) throws Exception {
-		log.debug("로그인시도 member info : {}", member);
-		Member loginmember = memberService.login(member);
-		log.debug("로그인완료 member : {}", loginmember);
-		HttpSession session = request.getSession();
-		if(loginmember == null) return new ResponseEntity<String>(FAIL, HttpStatus.OK);
-		
-//			HttpSession session = request.getSession();
-			log.debug("login세션 : {}",session);
-			session.setAttribute("loginmember", loginmember);
-			log.debug("loginmember 세션 값 : {}" , session.getAttribute("loginmember"));
-//			Cookie cookie = new Cookie("loginmember", loginmember.getUserid());
-//			cookie.setPath("/");
-//			if ("saveok".equals(map.get("idsave"))) {
-//				cookie.setMaxAge(60 * 60 * 24 * 365 * 40);
-//			} else {
-//				cookie.setMaxAge(0);
-//			}
-//			response.addCookie(cookie);
-			
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);		
-	}
-	
-	
 	@GetMapping("/check")
 	public ResponseEntity<String> logincheck(HttpServletRequest request) {
 		log.debug("로그인체크 수행");
@@ -99,18 +74,6 @@ public class MemberController {
 		
 	}
 	
-	@GetMapping("/logout")
-	public void logout(HttpServletRequest request) {
-		log.debug("로그아웃");
-		HttpSession session = request.getSession(false);
-		if(session != null) {
-			session.invalidate();
-			log.debug("세션삭제");
-		}
-	}
-	
-	
-
 	@ApiOperation(value = "로그인", notes = "Access-token과 로그인 결과 메세지를 반환한다.", response = Map.class)
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(

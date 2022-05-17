@@ -25,9 +25,6 @@ export default new Vuex.Store({
         }
       });
     },
-    setIsLogin({ commit }) {
-      commit("SET_IS_LOGIN");
-    },
     setIsNotLogin({ commit }) {
       commit("SET_IS_NOT_LOGIN");
     },
