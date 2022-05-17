@@ -16,6 +16,13 @@
 		where userid = #{userid} and userpwd = #{userpwd}
 	</select>
 	
+	<select id="userInfo" parameterType="String" resultType="Member">
+		select username, userid, email, joindate
+		from USER
+		where userid = #{userid}
+	</select>
+	
+	
 	<select id="idCheck" parameterType="string" resultType="int">
       select
       count(userid)

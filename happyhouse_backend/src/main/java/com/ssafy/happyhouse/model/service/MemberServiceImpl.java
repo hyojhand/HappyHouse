@@ -20,26 +20,21 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.registerMember(member) == 1;
 	}
 	
-	
-	@Override
-	public int idCheck(String checkId) throws Exception {
-		return memberMapper.idCheck(checkId); // 0 or 1
-	}
-
-//	@Override
-//	public void registerMember(Member member) throws Exception {
-//		memberMapper.registerMember(member);
-//	}
-	
 	@Override
 	public Member login(Member member) throws Exception {
 		return memberMapper.login(member);
 	}
 	
-//	@Override
-//	public Member login(Map<String, String> map) throws Exception {
-//		return memberMapper.login(map);
-//	}
+	@Override
+	public Member userInfo(String userid) throws Exception {
+		return memberMapper.userInfo(userid);
+	}
+	
+	
+	@Override
+	public int idCheck(String checkId) throws Exception {
+		return memberMapper.idCheck(checkId); // 0 or 1
+	}
 	
 	@Override
 	public List<Member> listMember() throws Exception {

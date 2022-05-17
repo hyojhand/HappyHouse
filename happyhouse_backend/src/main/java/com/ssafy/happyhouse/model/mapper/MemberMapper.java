@@ -11,11 +11,10 @@ import com.ssafy.happyhouse.model.Member;
 public interface MemberMapper {
 	
 	public int registerMember(Member member);
-	
 	Member login(Member member) throws Exception;
+	Member userInfo(String userid) throws Exception;
+	
 	int idCheck(String checkId) throws Exception;
-
-	// Member login(Map<String, String> map) throws Exception;
 	
 	List<Member> listMember() throws Exception;
 	Member getMember(String userId) throws Exception;
