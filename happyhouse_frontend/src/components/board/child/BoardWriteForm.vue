@@ -82,10 +82,6 @@ export default {
     if (this.type === "modify") {
       http.get(`/board/${this.$route.params.no}`).then(({ data }) => {
         console.log(data);
-        // this.article.articleno = data.articleno;
-        // this.article.writer = data.writer;
-        // this.article.title = data.title;
-        // this.article.content = data.content;
         this.article = data;
       });
       this.isWriter = true;
@@ -151,7 +147,6 @@ export default {
             msg = "수정이 완료되었습니다.";
           }
           alert(msg);
-          // 현재 route를 /list로 변경.
           this.$router.push({ name: "BoardList" });
         });
     },

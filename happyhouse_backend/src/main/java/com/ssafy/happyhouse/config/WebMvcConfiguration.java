@@ -30,5 +30,4 @@ public class WebMvcConfiguration implements WebMvcConfigurer{
 		registry.addInterceptor(confirm).addPathPatterns(patterns);
 	}
 
-
 }

@@ -77,51 +77,6 @@ public class MemberController {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);		
 	}
 	
-//	@PostMapping("{userid}")
-//	public ResponseEntity<HttpSession> login(@RequestBody Member member, HttpServletRequest request) throws Exception {
-//		log.debug("로그인시도 member info : {}", member);
-//		Member loginmember = memberService.login(member);
-//		log.debug("로그인완료 member : {}", loginmember);
-//		HttpSession session = request.getSession();
-//		if(loginmember == null) return new ResponseEntity<HttpSession>(session, HttpStatus.OK);
-//		
-////			HttpSession session = request.getSession();
-//			log.debug("login세션 : {}",session);
-//			session.setAttribute("loginmember", loginmember);
-//			log.debug("loginmember 세션 값 : {}" , session.getAttribute("loginmember"));
-//		
-//			return new ResponseEntity<HttpSession>(session, HttpStatus.OK);		
-//	}
-	
-	
-	
-//	@PostMapping("{userid}")
-//	public HttpSession login(@RequestBody Member member, HttpServletRequest request) throws Exception {
-//		log.debug("로그인시도 member info : {}", member);
-//		Member loginmember = memberService.login(member);
-//		log.debug("로그인완료 member : {}", loginmember);
-//		HttpSession session = request.getSession();
-//		if(loginmember == null) return session;
-//		
-////			HttpSession session = request.getSession();
-//			log.debug("login세션 : {}",session);
-//			session.setAttribute("loginmember", loginmember);
-//			log.debug("loginmember 세션 값 : {}" , session.getAttribute("loginmember"));
-////			Cookie cookie = new Cookie("loginmember", loginmember.getUserid());
-////			cookie.setPath("/");
-////			if ("saveok".equals(map.get("idsave"))) {
-////				cookie.setMaxAge(60 * 60 * 24 * 365 * 40);
-////			} else {
-////				cookie.setMaxAge(0);
-////			}
-////			response.addCookie(cookie);
-//			
-//			return session;		
-//	}
-	
-	
-	
-	
 	
 	@GetMapping("/check")
 	public ResponseEntity<String> logincheck(HttpServletRequest request) {

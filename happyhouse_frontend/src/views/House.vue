@@ -8,15 +8,6 @@
         <router-view></router-view>
       </b-col>
     </b-row>
-    <!-- <b-row>
-      <b-col cols="6" align="left">
-        <house-list />
-      </b-col>
-      <b-col cols="6">
-        <house-detail />
-      </b-col>
-      <house-map v-on:dongcode="citycode" />
-    </b-row> -->
   </b-container>
 </template>
 <script>

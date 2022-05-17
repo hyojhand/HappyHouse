@@ -34,7 +34,6 @@
             </b-tr>
           </b-thead>
           <tbody>
-            <!-- 하위 component인 ListRow에 데이터 전달(props) -->
             <reply-list-row
               v-for="(reply, index) in replies"
               :key="index"
@@ -43,7 +42,6 @@
           </tbody>
         </b-table-simple>
       </b-col>
-      <!-- <b-col v-else class="text-center">도서 목록이 없습니다.</b-col> -->
     </b-row>
   </b-container>
 </template>

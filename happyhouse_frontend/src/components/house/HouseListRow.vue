@@ -21,6 +21,7 @@
       </div>
       <div>건축년도 : {{ apt.buildYear }} 년</div>
       <div>거래가 : {{ apt.recentPrice }} 만원</div>
+      <div>거래가 : {{ apt.floor }} 층</div>
     </b-col>
   </b-row>
 </template>
