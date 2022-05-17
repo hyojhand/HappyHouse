@@ -1,22 +1,14 @@
 <template>
   <div>
-    <b-carousel
-      id="carousel-1"
-      v-model="slide"
-      :interval="10000"
-      controls
-      indicators
-      @sliding-start="onSlideStart"
-      @sliding-end="onSlideEnd"
-    >
+    <b-carousel id="carousel-1" :interval="10000" controls indicators>
       <!-- 지도로 가기 -->
       <b-carousel-slide
-        caption="Where is Your Happy House?"
-        text="Let me show you what we got for you"
+        caption="Where is your HappyHouse?"
+        text="Let us show you what we got only for you"
       >
         <template v-slot:img>
           <img
-            style="max-width: 100vw; max-height: 100vw"
+            style="width: 100vw; height: 100vh"
             class="class-name"
             src="@/assets/house.jpg"
             alt="image slot"
@@ -33,7 +25,7 @@
       >
         <template v-slot:img>
           <img
-            style="max-width: 100vw; max-height: 100vw"
+            style="width: 100vw; height: 100vh"
             class="class-name"
             src="@/assets/posting.jpg"
             alt="image slot"
@@ -43,15 +35,32 @@
           ><b-icon icon="cursor"></b-icon
         ></b-button>
       </b-carousel-slide>
+      <!-- 뉴스로 가기 -->
+      <b-carousel-slide>
+        <template v-slot:img>
+          <img
+            style="width: 100vw; height: 100vh"
+            class="news-img"
+            src="@/assets/news.jpg"
+            alt="image slot"
+          />
+        </template>
+        <news-list></news-list>
+      </b-carousel-slide>
     </b-carousel>
   </div>
 </template>
 
 <script>
+import NewsList from "@/components/news/NewsList.vue";
+
 export default {
   name: "Main",
   props: {
     msg: String,
+  },
+  components: {
+    NewsList,
   },
   methods: {
     moveHouse() {
@@ -60,6 +69,17 @@ export default {
     moveBoard() {
       this.$router.push({ name: "Board" });
     },
+    moveNews() {
+      this.$router.push({ name: "News" });
+    },
   },
 };
 </script>
+<style>
+.carousel-caption {
+  top: 40%;
+}
+.news-img + div {
+  top: 10%;
+}
+</style>
