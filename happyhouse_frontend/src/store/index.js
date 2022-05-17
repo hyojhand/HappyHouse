@@ -7,41 +7,29 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isLogin: false,
-    // isLoginError: false,
     userInfo: null,
   },
   actions: {
-    goLogin({ commit }, user) {
-      http.post("/member/login", JSON.stringify(user)).then(({ data }) => {
+    async goLogin({ commit }, user) {
+      await http.post("/member/login", user).then(({ data }) => {
         console.log(data);
-        // console.log(data.message);
         const token = data["access-token"];
-        // console.log(token);
         if (data.message === "success") {
           alert("로그인 완료!!!");
           sessionStorage.setItem("access-token", token);
           console.log(sessionStorage.getItem("access-token"));
-          // this.$store.dispatch("isLogin");
-          console.log("실행1");
           commit("SET_IS_LOGIN");
-          console.log("실행2");
-          console.log(this.isLogin);
-          // this.$router.push({ name: "Home" });
         } else {
           alert("로그인실패! 아이디&비밀번호를 확인해주세요");
-          // this.$store.dispatch("isNotLogin");
-          commit("SET_IS_NOT_LOGIN");
-          console.log(this.isLogin);
+          //   commit("SET_IS_NOT_LOGIN");
         }
       });
     },
     setIsLogin({ commit }) {
       commit("SET_IS_LOGIN");
-      //   commit("SET_IS_NOT_LOGIN", false);
     },
     setIsNotLogin({ commit }) {
       commit("SET_IS_NOT_LOGIN");
-      //   commit("SET_IS_NOT_LOGIN", true);
     },
   },
   mutations: {
@@ -51,9 +39,6 @@ export default new Vuex.Store({
     SET_IS_NOT_LOGIN: (state) => {
       state.isLogin = false;
     },
-    // SET_IS_NOT_LOGIN(state, isNotLogin) {
-    //   state.isNotLogin = isNotLogin;
-    // },
   },
   getters: {},
 
