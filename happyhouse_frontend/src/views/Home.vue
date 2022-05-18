@@ -80,6 +80,6 @@ export default {
   top: 40%;
 }
 .news-img + div {
-  top: 10%;
+  top: 20%;
 }
 </style>

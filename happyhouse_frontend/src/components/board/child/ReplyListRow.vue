@@ -2,7 +2,9 @@
   <b-tr>
     <b-td>{{ replyid }}</b-td>
     <b-td>{{ content }}</b-td>
-    <b-td>{{ writer }}</b-td>
+    <b-td>
+      <writer-menu :writer="writer" :no="replyid"></writer-menu>
+    </b-td>
     <b-td>{{ changeDateFormat }}</b-td>
     <b-td v-if="isWriter">
       <b-button
@@ -30,6 +32,7 @@
 <script>
 import moment from "moment";
 import http from "@/util/http-common.js";
+import WriterMenu from "@/components/board/WriterMenu.vue";
 export default {
   name: "BoardListRow",
   props: {
@@ -37,6 +40,9 @@ export default {
     writer: String,
     content: String,
     regtime: String,
+  },
+  components: {
+    WriterMenu,
   },
   data() {
     return {

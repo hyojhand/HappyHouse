@@ -6,13 +6,16 @@
         title
       }}</router-link>
     </b-th>
-    <b-td>{{ writer }}</b-td>
+    <b-td>
+      <writer-menu :writer="writer" :no="articleno"></writer-menu>
+    </b-td>
     <b-td>{{ changeDateFormat }}</b-td>
   </b-tr>
 </template>
 
 <script>
 import moment from "moment";
+import WriterMenu from "@/components/board/WriterMenu.vue";
 
 export default {
   name: "BoardListRow",
@@ -21,6 +24,9 @@ export default {
     writer: String,
     title: String,
     regtime: String,
+  },
+  components: {
+    WriterMenu,
   },
   computed: {
     changeDateFormat() {
