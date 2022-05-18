@@ -129,11 +129,6 @@ const routes = [
         name: "HouseList",
         component: () => import("@/components/house/HouseList.vue"),
       },
-      {
-        path: "detail",
-        name: "HouseDetail",
-        component: () => import("@/components/house/HouseDetail.vue"),
-      },
     ],
   },
 ];

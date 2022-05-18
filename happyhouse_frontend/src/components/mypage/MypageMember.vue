@@ -57,7 +57,7 @@
             <button @click="checkValue" class="btn btn-outline-primary">
               회원정보 수정
             </button>
-            <button @click="deleteUser" class="btn btn-outline-danger">
+            <button @click="checkDelete" class="btn btn-outline-danger">
               회원 탈퇴
             </button>
           </div>
@@ -137,7 +137,35 @@ export default {
           this.$router.go(this.$router.currentRoute);
         });
     },
-    deleteUser() {},
+    checkDelete() {
+      let err = true;
+      let msg = "";
+      err &&
+        !this.userpwd &&
+        ((msg = "비밀번호를 입력해주세요"),
+        (err = false),
+        this.$refs.userpwd.focus());
+
+      if (!err) alert(msg);
+      else {
+        if (confirm("회원 탈퇴하시겠습니까?")) {
+          this.deleteUser();
+        }
+      }
+    },
+    deleteUser() {
+      http.delete(`/member/${this.userid}`).then(({ data }) => {
+        console.log(data);
+        if (data === "success") {
+          alert("탈퇴 완료!");
+          sessionStorage.removeItem("access-token");
+          this.$store.dispatch("setIsNotLogin");
+          this.$router.push({ name: "Home" });
+        } else {
+          alert("탈퇴 중 오류가 발생했습니다.");
+        }
+      });
+    },
   },
 };
 </script>
