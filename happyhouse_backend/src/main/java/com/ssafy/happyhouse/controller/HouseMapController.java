@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.happyhouse.model.HouseDetail;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
 import com.ssafy.happyhouse.model.service.HouseMapService;
@@ -62,9 +63,9 @@ public class HouseMapController {
 	}
 	
 	@GetMapping("/aptdetail/{aptcode}")
-	public ResponseEntity<List<HouseInfoDto>> aptdetail(@PathVariable String aptcode) throws Exception {
+	public ResponseEntity<List<HouseDetail>> aptdetail(@PathVariable String aptcode) throws Exception {
 		log.debug("aptdetail : {}", HouseMapService.getAptDetail(aptcode));
-		return new ResponseEntity<List<HouseInfoDto>>(HouseMapService.getAptDetail(aptcode), HttpStatus.OK);
+		return new ResponseEntity<List<HouseDetail>>(HouseMapService.getAptDetail(aptcode), HttpStatus.OK);
 	}
 	
 	@GetMapping("/word")

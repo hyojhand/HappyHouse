@@ -17,6 +17,10 @@ export default {
 </script>
 
 <style>
+body {
+  height: 100vh;
+}
+
 a:hover {
   text-decoration: none;
   font-weight: bold;

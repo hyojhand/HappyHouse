@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isLogin: false,
+    selectApart: {},
   },
   actions: {
     async goLogin({ commit }, user) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     setIsNotLogin({ commit }) {
       commit("SET_IS_NOT_LOGIN");
     },
+    selectApt({ commit }, apt) {
+      commit("SELECT_APT", apt);
+    },
   },
   mutations: {
     SET_IS_LOGIN: (state) => {
@@ -33,6 +37,9 @@ export default new Vuex.Store({
     },
     SET_IS_NOT_LOGIN: (state) => {
       state.isLogin = false;
+    },
+    SELECT_APT: (state, apt) => {
+      state.selectApart = apt;
     },
   },
   getters: {},
