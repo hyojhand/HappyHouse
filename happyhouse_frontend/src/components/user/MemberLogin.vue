@@ -65,7 +65,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isLogin", "userInfo_message"]),
+    ...mapState(["isLogin"]),
   },
   methods: {
     checkValue() {

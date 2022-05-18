@@ -3,7 +3,7 @@
     <div class="container text-center mt-3">
       <div class="col-lg-8 mx-auto">
         <h2 class="p-3 mb-3 shadow bg-light">
-          <mark class="orange">회원가입</mark>
+          <mark class="orange">마이 페이지</mark>
         </h2>
         <div>
           <div class="form-group text-left">
@@ -27,7 +27,8 @@
               name="userid"
               v-model="userid"
               ref="userid"
-              placeholder="아이디입력..."
+              value="{userInfo_message.userInfo.userid}"
+              readonly
             />
             <div id="idresult" class="mt-1"></div>
           </div>
@@ -55,7 +56,6 @@
               placeholder="이메일 입력..."
             />
           </div>
-
           <div class="form-group text-center">
             <button @click="checkValue" class="btn btn-outline-primary">
               회원가입
@@ -69,72 +69,21 @@
 </template>
 
 <script>
-import http from "@/util/http-common";
+import { mapState } from "vuex";
+
 export default {
-  name: "MemberJoin",
+  name: "MemberMypage",
+  computed: {
+    ...mapState(["userInfo_message"]),
+  },
   data() {
-    return {
-      username: "",
-      userid: "",
-      userpwd: "",
-      email: "",
-    };
+    return {};
   },
 
-  methods: {
-    checkValue() {
-      let err = true;
-      let msg = "";
-      !this.username &&
-        ((msg = "이름을 입력해주세요"),
-        (err = false),
-        this.$refs.username.focus());
-      err &&
-        !this.userid &&
-        ((msg = "아이디를 입력해주세요"),
-        (err = false),
-        this.$refs.userid.focus());
-      err &&
-        !this.userpwd &&
-        ((msg = "비밀번호를 입력해주세요"),
-        (err = false),
-        this.$refs.userpwd.focus());
-      // err &&
-      //   !this.pwcheck &&
-      //   ((msg = "비번확인 입력해주세요"),
-      //   (err = false),
-      //   this.$refs.pwcheck.focus());
-      err &&
-        !this.email &&
-        ((msg = "이메일을 입력해주세요"),
-        (err = false),
-        this.$refs.email.focus());
+  mounted() {},
 
-      if (!err) alert(msg);
-      else this.registUser();
-    },
-    registUser() {
-      http
-        .post("/member", {
-          username: this.username,
-          userid: this.userid,
-          userpwd: this.userpwd,
-          email: this.email,
-        })
-        .then(({ data }) => {
-          let msg = "회원가입중 오류가 생겼습니다!";
-          if (data === "success") {
-            msg = "회원가입 완료!";
-          }
-          alert(msg);
-          this.moveLogin();
-        });
-    },
-    moveLogin() {
-      this.$router.push({ name: "SignIn" });
-    },
-  },
+  methods: {},
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

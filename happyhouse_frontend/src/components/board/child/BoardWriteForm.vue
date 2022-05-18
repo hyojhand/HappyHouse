@@ -10,11 +10,11 @@
         >
           <b-form-input
             id="writer"
-            :disabled="isWriter"
-            v-model="article.writer"
+            v-model="userInfo.username"
             type="text"
             required
-            placeholder="작성자 입력..."
+            value="userInfo.username"
+            readonly
           ></b-form-input>
         </b-form-group>
 
@@ -61,6 +61,8 @@
 
 <script>
 import http from "@/util/http-common";
+import jwt_decode from "jwt-decode";
+import { mapState } from "vuex";
 
 export default {
   name: "BoardWriteForm",
@@ -73,12 +75,18 @@ export default {
         content: "",
       },
       isWriter: false,
+      userInfo: [],
     };
   },
   props: {
     type: { type: String },
   },
   created() {
+    if (!this.isLogin) {
+      alert("로그인된 사용자만 가능합니다!");
+      this.$router.push({ name: "Home" });
+    }
+
     if (this.type === "modify") {
       http.get(`/board/${this.$route.params.no}`).then(({ data }) => {
         console.log(data);
@@ -86,6 +94,19 @@ export default {
       });
       this.isWriter = true;
     }
+
+    if (this.isLogin) {
+      const decode = jwt_decode(sessionStorage.getItem("access-token"));
+      http.defaults.headers["access-token"] =
+        sessionStorage.getItem("access-token");
+      http.get(`/member/info/${decode.userid}`).then(({ data }) => {
+        this.userInfo = data.userInfo;
+        console.log(this.userInfo);
+      });
+    }
+  },
+  computed: {
+    ...mapState(["isLogin"]),
   },
   methods: {
     onSubmit(event) {

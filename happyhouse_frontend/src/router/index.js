@@ -30,6 +30,11 @@ const routes = [
         name: "SignUp",
         component: () => import("@/components/user/MemberJoin.vue"),
       },
+      {
+        path: "mypage",
+        name: "MyPage",
+        component: () => import("@/components/user/MemberMypage.vue"),
+      },
     ],
   },
   {

@@ -15,13 +15,11 @@
     ></b-button>
     <b-sidebar id="my-sidebar-right" right shadow>
       <div class="px-2 py-5">
-        <div v-if="userInfo_message">
-          {{ userInfo_message.userInfo.username }} 님 반갑습니다 ^^
-        </div>
+        <div v-if="isLogin">{{ this.userInfo.username }} 님 반갑습니다 ^^</div>
         <ul>
           <div v-if="isLogin">
             <li>
-              <router-link :to="{ name: 'Mypage' }"
+              <router-link :to="{ name: 'MyPage' }"
                 ><b-icon icon="person-lines-fill"></b-icon>
                 마이페이지</router-link
               >
@@ -69,11 +67,31 @@
 
 <script>
 import { mapState } from "vuex";
+import http from "@/util/http-common";
+import jwt_decode from "jwt-decode";
 
 export default {
   name: "NaviBar",
+  data() {
+    return {
+      userInfo: [],
+    };
+  },
+  mounted() {
+    this.$nextTick(function () {
+      if (this.isLogin) {
+        const decode = jwt_decode(sessionStorage.getItem("access-token"));
+        http.defaults.headers["access-token"] =
+          sessionStorage.getItem("access-token");
+        http.get(`/member/info/${decode.userid}`).then(({ data }) => {
+          this.userInfo = data.userInfo;
+          console.log(this.userInfo);
+        });
+      }
+    });
+  },
   computed: {
-    ...mapState(["isLogin", "userInfo_message"]),
+    ...mapState(["isLogin"]),
   },
   methods: {
     logout() {
