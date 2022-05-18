@@ -6,7 +6,7 @@ import com.ssafy.happyhouse.model.BoardDto;
 import com.ssafy.happyhouse.model.Likey;
 
 public interface BoardService {
-	public List<BoardDto> retrieveBoard();
+	public List<BoardDto> retrieveBoard(String type);
 	public BoardDto detailBoard(int articleno);
 	public boolean writeBoard(BoardDto board);
 	public boolean updateBoard(BoardDto board);

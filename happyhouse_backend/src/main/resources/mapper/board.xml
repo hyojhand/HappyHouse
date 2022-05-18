@@ -5,10 +5,31 @@
 <mapper namespace="com.ssafy.happyhouse.model.mapper.BoardMapper">
 	
 	<!-- 게시글 전체 조회 -->
-	<select id="selectBoard" resultType="boardDto">
+	<select id="selectBoardRecent" resultType="boardDto">
 		select *
 		  from board 
 		 order by articleno desc
+	</select>
+	
+	<!-- 좋아요가 가장 많은 게시글 3개 조회 -->
+	<select id="selectBoardLike" resultType="boardDto">
+		select *
+		  from board 
+		 order by likey desc
+		 limit 3
+	</select>
+	
+	<!-- 오늘 댓글이 가장 많이 달린 게시글 3개 조회 -->
+	<select id="selectBoardReply" resultType="boardDto">
+		select * from board where articleno in 
+			(select * from 
+				(select b.articleno from board b, reply r
+					where b.articleno = r.articleno and DATE_FORMAT(r.regtime, "%Y-%m-%d") = curdate()
+					group by b.articleno
+					order by count(r.replyid)
+					limit 3
+				) t
+		    );
 	</select>
 	
 	<!-- 게시글 상세 조회 -->

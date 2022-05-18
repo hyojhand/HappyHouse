@@ -1,29 +1,30 @@
 <template>
   <b-tr>
-    <b-td>{{ replyid }}</b-td>
-    <b-td>{{ content }}</b-td>
     <b-td>
       <writer-menu :writer="writer" :no="replyid"></writer-menu>
     </b-td>
-    <b-td>{{ changeDateFormat }}</b-td>
+    <b-td style="width: 60%; line-height: 30px">{{ content }}</b-td>
+    <b-td style="font-size: 13px; line-height: 30px">{{
+      changeDateFormat
+    }}</b-td>
     <b-td v-if="isWriter">
       <b-button
-        variant="outline-info"
+        variant="light"
         size="sm"
         @click="modifyReply"
         class="mr-2"
         v-if="isModify"
-        >수정</b-button
+        ><b-icon icon="pencil-square"></b-icon> 수정</b-button
       >
       <b-button
-        variant="outline-info"
+        variant="light"
         size="sm"
         @click="modifyReplyAction"
         class="mr-2"
         v-else
-        >수정</b-button
-      ><b-button variant="outline-danger" size="sm" @click="deleteReply"
-        >삭제</b-button
+        ><b-icon icon="pencil-square"></b-icon> 수정</b-button
+      ><b-button variant="dark" size="sm" @click="deleteReply"
+        ><b-icon icon="trash"></b-icon> 삭제</b-button
       >
     </b-td>
   </b-tr>

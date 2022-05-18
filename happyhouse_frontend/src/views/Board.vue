@@ -1,10 +1,10 @@
 <template>
-  <b-container class="bv-example-row mt-3 text-center">
-    <h3 class="underline-hotpink">
-      <b-icon icon="journals"></b-icon> Board Service
-    </h3>
+  <div class="bv-example-row text-center" style="position: relative">
+    <div style="height: 300px; overflow: hidden">
+      <img src="@/assets/board.jpg" style="width: 100%" />
+    </div>
     <router-view></router-view>
-  </b-container>
+  </div>
 </template>
 <script>
 export default {

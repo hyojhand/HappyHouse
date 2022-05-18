@@ -1,66 +1,90 @@
 <template>
-  <b-container class="bv-example-row mt-3">
-    <b-row>
-      <b-col>
-        <b-alert show><h3>글보기</h3></b-alert>
-      </b-col>
-    </b-row>
-    <b-row class="mb-1">
-      <b-col class="text-left">
-        <b-button variant="outline-primary" @click="listArticle">목록</b-button>
-      </b-col>
-      <b-col class="text-right">
-        <div v-if="isWriter">
+  <div>
+    <h1
+      style="
+        position: absolute;
+        top: 120px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        color: white;
+      "
+    >
+      {{ article.title }}
+    </h1>
+    <b-container class="bv-example-row mt-3">
+      <b-row class="mb-1">
+        <b-col>
+          <b-card
+            :header-html="'<h5>' + content + '</h5>'"
+            class="mb-2"
+            border-variant="dark"
+            no-body
+          >
+            <b-card-body class="text-right">
+              <div>
+                <writer-menu
+                  :writer="article.writer"
+                  :no="article.articleno"
+                ></writer-menu>
+                | {{ article.regtime }}
+              </div>
+            </b-card-body>
+          </b-card>
+        </b-col>
+      </b-row>
+      <b-row class="mb-1">
+        <b-col class="text-left">
+          <b-button size="sm" variant="secondary" @click="moveMainBoard"
+            ><b-icon icon="grid1x2"></b-icon> 메인</b-button
+          >
           <b-button
-            variant="outline-info"
             size="sm"
-            @click="moveModifyArticle"
-            class="mr-2"
-            >글수정</b-button
+            class="ml-2"
+            variant="light"
+            @click="moveListArticle"
+            ><b-icon icon="list-task"></b-icon> 목록</b-button
           >
-          <b-button variant="outline-danger" size="sm" @click="deleteArticle"
-            >글삭제</b-button
-          >
-        </div>
-        <div v-else>
-          <b-icon
-            icon="heart-fill"
-            variant="danger"
-            v-if="isLike"
-            @click="modifyLike"
-          ></b-icon>
-          <b-icon icon="heart" v-else @click="modifyLike"></b-icon>
-        </div>
-      </b-col>
-    </b-row>
-    <b-row class="mb-1">
-      <b-col>
-        <b-card
-          :header-html="`<h3>${article.articleno}.
-          ${article.title}</h3><div><h6>${article.writer}</div><div>${changeDateFormat}</h6></div>`"
-          class="mb-2"
-          border-variant="dark"
-          no-body
-        >
-          <b-card-body class="text-left">
-            <div v-html="message"></div>
-          </b-card-body>
-        </b-card>
-        <reply-list></reply-list>
-      </b-col>
-    </b-row>
-  </b-container>
+        </b-col>
+        <b-col class="text-right">
+          <div v-if="isWriter">
+            <b-button
+              variant="light"
+              size="sm"
+              @click="moveModifyArticle"
+              class="mr-2"
+              ><b-icon icon="pencil-square"></b-icon> 수정</b-button
+            >
+            <b-button variant="dark" size="sm" @click="deleteArticle"
+              ><b-icon icon="trash"></b-icon> 삭제</b-button
+            >
+          </div>
+          <div v-else>
+            <b-icon
+              icon="heart-fill"
+              variant="danger"
+              v-if="isLike"
+              @click="modifyLike"
+            ></b-icon>
+            <b-icon icon="heart" v-else @click="modifyLike"></b-icon>
+          </div>
+        </b-col>
+      </b-row>
+      <reply-list></reply-list>
+    </b-container>
+  </div>
 </template>
 
 <script>
-import moment from "moment";
+// import moment from "moment";
 import http from "@/util/http-common";
 import ReplyList from "@/components/board/child/ReplyList.vue";
+import WriterMenu from "@/components/board/WriterMenu.vue";
 
 export default {
   name: "BoardView",
   components: {
     ReplyList,
+    WriterMenu,
   },
   data() {
     return {
@@ -70,16 +94,19 @@ export default {
     };
   },
   computed: {
-    message() {
+    content() {
       if (this.article.content)
         return this.article.content.split("\n").join("<br>");
       return "";
     },
-    changeDateFormat() {
-      return moment(new Date(this.article.regtime)).format(
-        "YYYY.MM.DD hh:mm:ss"
-      );
-    },
+    // changeDateFormat() {
+    //   return moment(new Date(this.article.regtime)).format(
+    //     "YYYY.MM.DD hh:mm:ss"
+    //   );
+    // },
+    // info() {
+    //   return `<div><h6>${this.article.writer}</div><div>${changeDateFormat}</h6></div>`;
+    // },
   },
   created() {
     http.get(`/board/${this.$route.params.no}`).then(({ data }) => {
@@ -92,8 +119,11 @@ export default {
     // 작성자 본인인지 알려주는 axios 필요 (isWriter 변경)
   },
   methods: {
-    listArticle() {
+    moveListArticle() {
       this.$router.push({ name: "BoardList" });
+    },
+    moveMainBoard() {
+      this.$router.push({ name: "Board" });
     },
     moveModifyArticle() {
       this.$router.replace({

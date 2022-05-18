@@ -17,8 +17,13 @@ public class BoardServiceImpl implements BoardService {
 	private BoardMapper boardMapper;
 
     @Override
-	public List<BoardDto> retrieveBoard() {
-		return boardMapper.selectBoard();
+	public List<BoardDto> retrieveBoard(String type) {
+    	if (type.equals("recent"))
+    		return boardMapper.selectBoardRecent();
+    	else if (type.equals("like"))
+    		return boardMapper.selectBoardLike();
+    	else
+    		return boardMapper.selectBoardReply();
 	}
     
   	@Override

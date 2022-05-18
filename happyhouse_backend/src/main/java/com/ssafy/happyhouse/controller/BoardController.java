@@ -38,10 +38,10 @@ public class BoardController {
 	private BoardService boardService;
 
     @ApiOperation(value = "모든 게시글의 정보를 반환한다.", response = List.class)
-	@GetMapping
-	public ResponseEntity<List<BoardDto>> retrieveBoard(HttpSession session) throws Exception {
-		log.debug("retrieveBoard - 호출");
-		return new ResponseEntity<List<BoardDto>>(boardService.retrieveBoard(), HttpStatus.OK);
+	@GetMapping("/list/{type}")
+	public ResponseEntity<List<BoardDto>> retrieveBoard(@PathVariable String type) throws Exception {
+		log.debug("retrieveBoard - 호출, type : " + type);
+		return new ResponseEntity<List<BoardDto>>(boardService.retrieveBoard(type), HttpStatus.OK);
 	}
 
     @ApiOperation(value = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)    

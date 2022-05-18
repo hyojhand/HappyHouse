@@ -1,16 +1,5 @@
 <template>
   <b-container class="bv-example-row mt-3">
-    <h2
-      style="
-        position: absolute;
-        top: 120px;
-        left: 50%;
-        transform: translate(-50%, 0);
-        color: white;
-      "
-    >
-      최근 게시판
-    </h2>
     <b-row>
       <b-col v-if="articles.length">
         <b-table-simple hover responsive>
@@ -22,13 +11,6 @@
             />
           </tbody>
         </b-table-simple>
-      </b-col>
-    </b-row>
-    <b-row class="mb-1">
-      <b-col class="text-right">
-        <b-button variant="secondary" @click="moveWrite()"
-          ><b-icon icon="vector-pen"></b-icon> 글쓰기</b-button
-        >
       </b-col>
     </b-row>
   </b-container>
@@ -49,15 +31,14 @@ export default {
     };
   },
   created() {
-    http.get(`/board/list/recent`).then(({ data }) => {
+    http.get(`/board/list/${this.$props.type}`).then(({ data }) => {
+      // http.get(`/board`).then(({ data }) => {
       console.log(data);
       this.articles = data;
     });
   },
-  methods: {
-    moveWrite() {
-      this.$router.push({ name: "BoardWrite" });
-    },
+  props: {
+    type: String,
   },
 };
 </script>
@@ -68,7 +49,7 @@ export default {
   text-align: center;
 }
 .tdSubject {
-  width: 300px;
+  width: 500px;
   text-align: left;
 }
 </style>

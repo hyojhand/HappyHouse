@@ -9,7 +9,9 @@ import com.ssafy.happyhouse.model.Likey;
 
 @Mapper
 public interface BoardMapper {
-	public List<BoardDto> selectBoard();
+ 	public List<BoardDto> selectBoardRecent();
+	public List<BoardDto> selectBoardLike();
+	public List<BoardDto> selectBoardReply();
 	public BoardDto selectBoardByNo(int articleno);
 	public int insertBoard(BoardDto board);
 	public int updateBoard(BoardDto board);

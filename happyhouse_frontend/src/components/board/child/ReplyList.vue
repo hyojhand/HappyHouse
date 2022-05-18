@@ -1,14 +1,9 @@
 <template>
-  <b-container class="bv-example-row mt-3">
+  <b-container class="bv-example-row mt-5">
     <b-row class="mb-1">
-      <b-col style="text-align: left">
+      <b-col cols="2"></b-col>
+      <b-col style="text-align: left" cols="7">
         <b-form>
-          <b-form-group
-            id="reply-content-group"
-            label="댓글 : "
-            label-for="reply-content"
-            description="댓글을 입력하세요."
-          ></b-form-group>
           <b-form-input
             id="reply-content"
             v-model="content"
@@ -17,22 +12,16 @@
             ref="input"
           ></b-form-input>
         </b-form>
-        <b-button variant="outline-primary" @click="writeReply()"
-          >작성</b-button
-        >
+      </b-col>
+      <b-col cols="1">
+        <b-button variant="secondary" @click="writeReply()" style="width: 100%"
+          ><b-icon icon="vector-pen"></b-icon
+        ></b-button>
       </b-col>
     </b-row>
-    <b-row>
+    <b-row class="mt-5">
       <b-col v-if="replies.length">
         <b-table-simple hover responsive>
-          <b-thead head-variant="dark">
-            <b-tr>
-              <b-th>댓글 번호</b-th>
-              <b-th>댓글</b-th>
-              <b-th>작성자</b-th>
-              <b-th>작성일</b-th>
-            </b-tr>
-          </b-thead>
           <tbody>
             <reply-list-row
               v-for="(reply, index) in replies"

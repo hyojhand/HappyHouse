@@ -66,3 +66,8 @@ export default {
   },
 };
 </script>
+<style>
+button.dropdown-toggle {
+  color: black;
+}
+</style>

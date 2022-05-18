@@ -1,21 +1,23 @@
 <template>
   <b-tr>
-    <b-td>{{ articleno }}</b-td>
-    <b-th class="text-left">
-      <router-link :to="{ name: 'BoardView', params: { no: articleno } }">{{
-        title
-      }}</router-link>
-    </b-th>
-    <b-td>
-      <writer-menu :writer="writer" :no="articleno"></writer-menu>
+    <b-td style="width: 50%; line-height: 40px">
+      <router-link
+        :to="{ name: 'BoardView', params: { no: articleno } }"
+        style="font-weight: bold; font-size: 18px; color: black"
+        >{{ title }}</router-link
+      >
     </b-td>
-    <b-td>{{ changeDateFormat }}</b-td>
+    <b-td style="width: 25%; line-height: 40px; font-size: 13px">
+      {{ writer }}
+    </b-td>
+    <b-td style="width: 25%; line-height: 40px; font-size: 13px">{{
+      changeDateFormat
+    }}</b-td>
   </b-tr>
 </template>
 
 <script>
 import moment from "moment";
-import WriterMenu from "@/components/board/WriterMenu.vue";
 
 export default {
   name: "BoardListRow",
@@ -25,12 +27,9 @@ export default {
     title: String,
     regtime: String,
   },
-  components: {
-    WriterMenu,
-  },
   computed: {
     changeDateFormat() {
-      return moment(new Date(this.regtime)).format("YY.MM.DD hh:mm:ss");
+      return moment(new Date(this.regtime)).format("MM.DD hh:mm");
     },
   },
 };
