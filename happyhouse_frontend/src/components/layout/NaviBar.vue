@@ -19,7 +19,7 @@
         <ul>
           <div v-if="isLogin">
             <li>
-              <router-link :to="{ name: 'MyPage' }"
+              <router-link :to="{ name: 'Mypage' }"
                 ><b-icon icon="person-lines-fill"></b-icon>
                 마이페이지</router-link
               >

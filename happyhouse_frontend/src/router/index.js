@@ -30,10 +30,43 @@ const routes = [
         name: "SignUp",
         component: () => import("@/components/user/MemberJoin.vue"),
       },
+    ],
+  },
+  {
+    path: "/mypage",
+    name: "Mypage",
+    component: () => import("@/views/Mypage.vue"),
+    redirect: "/mypage/member",
+    children: [
       {
-        path: "mypage",
-        name: "MyPage",
-        component: () => import("@/components/user/MemberMypage.vue"),
+        path: "member",
+        name: "MypageMember",
+        component: () => import("@/components/mypage/MypageMember.vue"),
+      },
+      {
+        path: "receive",
+        name: "MypageMessageReceive",
+        component: () => import("@/components/mypage/MypageMessageReceive.vue"),
+      },
+      {
+        path: "send",
+        name: "MypageMessageSend",
+        component: () => import("@/components/mypage/MypageMessageSend.vue"),
+      },
+      {
+        path: "board",
+        name: "MypageWriteBoard",
+        component: () => import("@/components/mypage/MypageWriteBoard.vue"),
+      },
+      {
+        path: "reply",
+        name: "MypageWriteReply",
+        component: () => import("@/components/mypage/MypageWriteReply.vue"),
+      },
+      {
+        path: "like",
+        name: "MypageLikeBoard",
+        component: () => import("@/components/mypage/MypageLikeBoard.vue"),
       },
     ],
   },

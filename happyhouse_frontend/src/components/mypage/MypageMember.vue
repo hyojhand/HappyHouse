@@ -58,9 +58,11 @@
           </div>
           <div class="form-group text-center">
             <button @click="checkValue" class="btn btn-outline-primary">
-              회원가입
+              회원정보수정
             </button>
-            <button type="reset" class="btn btn-outline-danger">초기화</button>
+            <button type="reset" class="btn btn-outline-danger">
+              회원탈퇴
+            </button>
           </div>
         </div>
       </div>
@@ -69,13 +71,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 export default {
-  name: "MemberMypage",
-  computed: {
-    ...mapState(["userInfo_message"]),
-  },
+  name: "MypageMember",
+  computed: {},
   data() {
     return {};
   },
@@ -86,4 +84,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
