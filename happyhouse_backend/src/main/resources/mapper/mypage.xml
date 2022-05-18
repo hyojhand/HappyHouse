@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.MypageMapper">
+	
+	<!-- 해당 유저의 발송 메시지 조회 -->
+	<select id="selectReceiveMessage" resultType="message">
+		select *
+		  from message 
+		 where receive = #{userid}
+		 order by messageid desc
+	</select>
+	
+	<!-- 해당 유저의 전송 메시지 조회 -->
+	<select id="selectSendMessage" resultType="message">
+		select *
+		  from message 
+		 where send = #{userid}
+		 order by messageid desc
+	</select>
+	
+	<!-- 해당 유저의 작성 글 조회 -->
+	<select id="selectBoard" resultType="boardDto">
+		select *
+		  from board 
+		 where writer = #{userid}
+		 order by articleno desc
+	</select>
+	
+	<!-- 해당 유저의 작성 댓글 조회 -->
+	<select id="selectReply" resultType="reply">
+		select *
+		  from reply 
+		 where writer = #{userid}
+		 order by replyid desc
+	</select>
+	
+	<!-- 해당 유저의 좋아요 글 조회 -->
+	<select id="selectLike" resultType="boardDto">
+		select *
+			from board
+		where articleno in
+			(select articleno
+				from likey
+			where userid = #{userid})
+	</select>
+
+</mapper>

@@ -1,12 +1,55 @@
 <template>
-  <div>받은 메시지함 화면</div>
+  <div>
+    받은 메시지함 화면
+    <table>
+      <tr>
+        <td>From</td>
+        <td>title</td>
+        <td>content</td>
+        <td>regtime</td>
+      </tr>
+      <tr v-for="message in messages" :key="message.messageid">
+        <td>{{ message.send }}</td>
+        <td>{{ message.title }}</td>
+        <td>{{ message.content }}</td>
+        <td>{{ message.regtime }}</td>
+      </tr>
+    </table>
+  </div>
 </template>
 
 <script>
+import http from "@/util/http-common";
 export default {
   name: "MypageMessageReceive",
   data() {
-    return {};
+    return {
+      userInfo: {
+        userid: "",
+        username: "",
+        userpwd: "",
+        email: "",
+      },
+      messages: [
+        {
+          messageid: "",
+          send: "",
+          receive: "",
+          title: "",
+          content: "",
+          regtime: "",
+          isdeleted: "",
+        },
+      ],
+    };
+  },
+  created() {
+    this.userInfo = this.$route.params.userInfo;
+    console.log(this.userInfo);
+    http.get(`/mypage/receive/${this.userInfo.userid}`).then(({ data }) => {
+      console.log(data);
+      this.messages = data;
+    });
   },
   methods: {},
 };
