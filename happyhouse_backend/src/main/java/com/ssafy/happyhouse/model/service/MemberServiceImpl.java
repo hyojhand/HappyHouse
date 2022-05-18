@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.happyhouse.model.Member;
 import com.ssafy.happyhouse.model.mapper.MemberMapper;
@@ -16,7 +17,7 @@ public class MemberServiceImpl implements MemberService {
 	private MemberMapper memberMapper;
 	
 	@Override
-	public boolean registerMember(Member member) {
+	public boolean registerMember(Member member) throws Exception {
 		return memberMapper.registerMember(member) == 1;
 	}
 	
@@ -37,6 +38,19 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	@Transactional
+	public boolean updateMember(Member member) throws Exception {
+		return memberMapper.updateMember(member) == 1;
+	}
+
+	@Override
+	@Transactional
+	public boolean deleteMember(String userId) throws Exception {
+		return memberMapper.deleteMember(userId) == 1;
+	}
+	
+	
+	@Override
 	public List<Member> listMember() throws Exception {
 		return memberMapper.listMember();
 	}
@@ -46,15 +60,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.getMember(userId);
 	}
 
-	@Override
-	public void updateMember(Member member) throws Exception {
-		memberMapper.updateMember(member);
-	}
-
-	@Override
-	public void deleteMember(String userId) throws Exception {
-		memberMapper.deleteMember(userId);
-	}
+	
 	
 	 
 

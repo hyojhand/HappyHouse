@@ -5,7 +5,6 @@
         <div><button @click="moveMypageMember">회원정보 수정</button></div>
         <div><button @click="moveMessageReceive">받은 쪽지</button></div>
         <div><button @click="moveMessageSend">보낸 쪽지</button></div>
-
         <div><button @click="moveWriteBoard">내가 쓴 글</button></div>
         <div><button @click="moveWriteReply">내가 쓴 댓글</button></div>
         <div><button @click="moveLikeBoard">좋아요한 게시글</button></div>
@@ -18,14 +17,42 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import http from "@/util/http-common";
+import jwt_decode from "jwt-decode";
 export default {
   name: "Mypage",
   data() {
-    return {};
+    return {
+      userInfo: {},
+    };
   },
+  computed: {
+    ...mapState(["isLogin"]),
+  },
+  created() {
+    if (!this.isLogin) {
+      alert("로그인된 사용자만 가능합니다!");
+      this.$router.push({ name: "Home" });
+    }
+
+    if (this.isLogin) {
+      const decode = jwt_decode(sessionStorage.getItem("access-token"));
+      http.defaults.headers["access-token"] =
+        sessionStorage.getItem("access-token");
+      http.get(`/member/info/${decode.userid}`).then(({ data }) => {
+        this.userInfo = data.userInfo;
+        console.log(this.userInfo);
+      });
+    }
+  },
+
   methods: {
     moveMypageMember() {
-      this.$router.push({ name: "MypageMember" });
+      this.$router.push({
+        name: "MypageMember",
+        params: { userInfo: this.userInfo },
+      });
     },
     moveMessageReceive() {
       this.$router.push({ name: "MypageMessageReceive" });

@@ -15,7 +15,6 @@
               name="username"
               v-model="username"
               ref="username"
-              placeholder="이름입력..."
             />
           </div>
           <div class="form-group text-left">
@@ -25,9 +24,8 @@
               class="form-control"
               id="userid"
               name="userid"
-              v-model="userid"
               ref="userid"
-              value="{userInfo_message.userInfo.userid}"
+              v-model="userid"
               readonly
             />
             <div id="idresult" class="mt-1"></div>
@@ -51,17 +49,16 @@
               class="form-control"
               id="email"
               name="email"
-              v-model="email"
               ref="email"
-              placeholder="이메일 입력..."
+              v-model="email"
             />
           </div>
           <div class="form-group text-center">
             <button @click="checkValue" class="btn btn-outline-primary">
-              회원정보수정
+              회원정보 수정
             </button>
-            <button type="reset" class="btn btn-outline-danger">
-              회원탈퇴
+            <button @click="deleteUser" class="btn btn-outline-danger">
+              회원 탈퇴
             </button>
           </div>
         </div>
@@ -71,16 +68,77 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import http from "@/util/http-common";
 export default {
   name: "MypageMember",
-  computed: {},
+
   data() {
-    return {};
+    return {
+      userInfo: {},
+      userid: "",
+      username: "",
+      userpwd: "",
+      email: "",
+    };
   },
+  computed: {
+    ...mapState(["isLogin"]),
+  },
+  created() {
+    this.userInfo = this.$route.params.userInfo;
+    this.userid = this.userInfo.userid;
+    this.username = this.userInfo.username;
+    this.email = this.userInfo.email;
+    console.log("넘어온 데이터.");
+    console.log(this.$route.params.userInfo);
+  },
+  methods: {
+    checkValue() {
+      let err = true;
+      let msg = "";
+      !this.username &&
+        ((msg = "이름을 입력해주세요"),
+        (err = false),
+        this.$refs.username.focus());
+      err &&
+        !this.userid &&
+        ((msg = "아이디를 입력해주세요"),
+        (err = false),
+        this.$refs.userid.focus());
+      err &&
+        !this.userpwd &&
+        ((msg = "비밀번호를 입력해주세요"),
+        (err = false),
+        this.$refs.userpwd.focus());
+      err &&
+        !this.email &&
+        ((msg = "이메일을 입력해주세요"),
+        (err = false),
+        this.$refs.email.focus());
 
-  mounted() {},
-
-  methods: {},
+      if (!err) alert(msg);
+      else this.updateUser();
+    },
+    updateUser() {
+      http
+        .put("/member", {
+          userid: this.userid,
+          userpwd: this.userpwd,
+          username: this.username,
+          email: this.email,
+        })
+        .then(({ data }) => {
+          if (data == "success") {
+            alert("수정완료!");
+          } else {
+            alert("수정실패!");
+          }
+          this.$router.go(this.$router.currentRoute);
+        });
+    },
+    deleteUser() {},
+  },
 };
 </script>
 

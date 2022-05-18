@@ -10,15 +10,14 @@ import com.ssafy.happyhouse.model.Member;
 @Mapper
 public interface MemberMapper {
 	
-	public int registerMember(Member member);
+	public int registerMember(Member member) throws Exception;
 	Member login(Member member) throws Exception;
 	Member userInfo(String userid) throws Exception;
-	
 	int idCheck(String checkId) throws Exception;
+	public int updateMember(Member member) throws Exception;
+	public int deleteMember(String userId) throws Exception;
 	
 	List<Member> listMember() throws Exception;
 	Member getMember(String userId) throws Exception;
-	void updateMember(Member member) throws Exception;
-	void deleteMember(String userId) throws Exception;
 	
 }

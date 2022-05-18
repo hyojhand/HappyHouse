@@ -96,6 +96,7 @@ export default {
       console.log(this.isLogin);
       if (this.isLogin) {
         this.$router.push({ name: "Home" });
+        this.$router.go(this.$router.currentRoute);
       }
     },
     moveJoin() {

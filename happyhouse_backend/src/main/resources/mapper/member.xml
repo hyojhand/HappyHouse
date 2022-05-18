@@ -31,14 +31,14 @@
    </select>
    
    <update id="updateMember" parameterType="Member">
-      update happyhouse_member
-      set name = #{name}, pw = #{pw}, addr = #{addr}, tel = #{tel}   
-      where id = #{id}
+      update USER
+      set username = #{username}, userpwd = #{userpwd}, email = #{email}   
+      where userid = #{userid}
    </update>
    
    <delete id="deleteMember" parameterType="String">
-      delete from happyhouse_member
-      where id = #{id}
+      delete from USER
+      where userid = #{userid}
    </delete>
 	
 </mapper>

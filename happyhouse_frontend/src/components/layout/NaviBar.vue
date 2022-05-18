@@ -77,7 +77,7 @@ export default {
       userInfo: [],
     };
   },
-  mounted() {
+  created() {
     this.$nextTick(function () {
       if (this.isLogin) {
         const decode = jwt_decode(sessionStorage.getItem("access-token"));

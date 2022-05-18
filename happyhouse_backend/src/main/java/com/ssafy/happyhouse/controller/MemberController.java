@@ -10,13 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.happyhouse.model.BoardDto;
 import com.ssafy.happyhouse.model.Member;
 import com.ssafy.happyhouse.model.service.JwtServiceImpl;
 import com.ssafy.happyhouse.model.service.MemberService;
@@ -43,8 +46,7 @@ public class MemberController {
 	
 	@PostMapping
 	public ResponseEntity<String> register(@RequestBody Member member) throws Exception {
-		log.debug("회원가입 member info : {}", member);
-		log.debug("registerMember - 호출");
+		log.debug("회원가입요청 member info : {}", member);
 		if(memberService.idCheck(member.getUserid()) == 1) {
 			return new ResponseEntity<String>("아이디가 중복입니다.", HttpStatus.NO_CONTENT);
 		} else {
@@ -55,20 +57,24 @@ public class MemberController {
 			}
 	}
 	
-	@GetMapping("/check")
-	public ResponseEntity<String> logincheck(HttpServletRequest request) {
-		log.debug("로그인체크 수행");
-		HttpSession session = request.getSession(false);
-		log.debug("세션 : {}" ,session);
-		if(session == null) return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-		
-		Member loginmember = (Member) session.getAttribute("loginmember");
-		
-		log.debug("loginmember 세션 : {}" ,loginmember);
-		if(loginmember == null) return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT); 
-		else return new ResponseEntity<String>(SUCCESS,HttpStatus.OK);
-		
+	@PutMapping
+	public ResponseEntity<String> update(@RequestBody Member member) throws Exception {
+		log.debug("업데이트요청 member info : {}", member);
+		if (memberService.updateMember(member)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
+	
+	@DeleteMapping("{userid}")
+	public ResponseEntity<String> delete(@PathVariable("userid") String userid ) throws Exception {
+		log.debug("삭제요청 member id : ", userid);
+		if (memberService.deleteMember(userid)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
 	
 	@ApiOperation(value = "로그인", notes = "Access-token과 로그인 결과 메세지를 반환한다.", response = Map.class)
 	@PostMapping("/login")
