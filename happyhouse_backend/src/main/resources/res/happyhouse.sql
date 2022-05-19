@@ -1,6 +1,3 @@
--- 외래키 이름 나중에
--- 외래키 설정 on update, on delete 나중에
--- apt는 있던 테이블 그대로
 -- isdeleted는 실제로 디비에서 데이터를 삭제하지 않고 사용자에게만 보여주지 않기 위함 (데이터 백업용, 0이면 존재 1이면 삭제)
 
 CREATE TABLE BOARD (
@@ -11,7 +8,7 @@ CREATE TABLE BOARD (
     likey 		int 			default 0,
     regtime 	timestamp 		default current_timestamp,
     isdeleted 	int 			default 0,
-    constraint fk_board_writer foreign key (writer) references USER(userid)
+    constraint fk_board_writer foreign key (writer) references USER(userid) on delete cascade
 );
 
 CREATE TABLE USER (
@@ -30,15 +27,15 @@ CREATE TABLE REPLY (
     content 	varchar(1000) 	not null,
     regtime 	timestamp 		default current_timestamp,
     isdeleted 	int 			default 0,
-    constraint fk_reply_writer foreign key (writer) references USER(userid)
+    constraint fk_reply_writer foreign key (writer) references USER(userid) on delete cascade
 );
 
 CREATE TABLE LIKEY (
 	userid 		varchar(20),
     articleno	int,
     primary key (userid, articleno),
-    constraint fk_likey_userid foreign key (userid) references USER(userid),
-    constraint fk_likey_articleno foreign key (articleno) references BOARD(articleno)
+    constraint fk_likey_userid foreign key (userid) references USER(userid) on delete cascade,
+    constraint fk_likey_articleno foreign key (articleno) references BOARD(articleno) on delete cascade
 );
 
 CREATE TABLE MESSAGE (
@@ -49,6 +46,6 @@ CREATE TABLE MESSAGE (
     content 	varchar(500) 	not null,
     regtime 	timestamp 		default current_timestamp,
     isdeleted	int				default 0,
-    constraint fk_message_send foreign key (send) references USER(userid),
-    constraint fk_message_receive foreign key (receive) references USER(userid)
+    constraint fk_message_send foreign key (send) references USER(userid) on delete cascade,
+    constraint fk_message_receive foreign key (receive) references USER(userid) on delete cascade
 );
