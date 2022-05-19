@@ -6,23 +6,25 @@
     @click="selectApt"
     :class="{ 'mouse-over-bgcolor': isColor }"
   >
-    <b-col cols="4" class="text-center align-self-center">
+    <b-col cols="6" class="text-center align-self-center">
       <b-img
+        class="apartImg"
         thumbnail
-        src="https://picsum.photos/250/250/?image=58"
-        alt="Image 1"
+        :src="require(`@/assets/apart_img/apart${random_num}.jpg`)"
+        fluid-grow
       ></b-img>
     </b-col>
-    <b-col cols="8" class="align-self-center text-left">
+    <b-col cols="6" class="align-self-center text-left">
       <div class="AptName">
         <strong>{{ apt.aptName }} </strong>
       </div>
-      <!-- <div>
-        주소 : {{ apt.sidoName }} {{ apt.gugunName }} {{ apt.dongName }}
-      </div> -->
-      <div>건축년도 : {{ apt.buildYear }} 년</div>
-      <div>거래가 : {{ apt.recentPrice }} 만원</div>
-      <div>평수 : {{ apt.floor }} 평</div>
+      <div>
+        <strong>주소</strong> : {{ apt.sidoName }} {{ apt.gugunName }}
+        {{ apt.dongName }}
+      </div>
+      <div><strong>건축년도</strong> : {{ apt.buildYear }} 년</div>
+      <div><strong>거래가</strong> : {{ apt.recentPrice }} 만원</div>
+      <div><strong>평수</strong> : {{ apt.floor }} 평</div>
     </b-col>
   </b-row>
 </template>
@@ -35,12 +37,15 @@ export default {
   },
   data() {
     return {
+      random_num: Math.ceil(Math.random() * 20),
+      temp: { apt: this.apt, random_num: Math.ceil(Math.random() * 12) },
       isColor: false,
     };
   },
   methods: {
     selectApt() {
       this.$store.dispatch("selectApt", this.apt);
+      // this.$store.dispatch("selectApartImgNum", this.random_num);
     },
     colorChange(flag) {
       this.isColor = flag;
@@ -50,6 +55,9 @@ export default {
 </script>
 
 <style scoped>
+.apartImg {
+  height: 200px;
+}
 .apt {
   width: 50px;
 }

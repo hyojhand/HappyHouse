@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     isLogin: false,
     selectApart: {},
+    selectApartImgNum: "",
   },
   actions: {
     async goLogin({ commit }, user) {
@@ -30,6 +31,9 @@ export default new Vuex.Store({
     selectApt({ commit }, apt) {
       commit("SELECT_APT", apt);
     },
+    selectApartImgNum({ commit }, num) {
+      commit("SELECT_APART_IMG_NUM", num);
+    },
   },
   mutations: {
     SET_IS_LOGIN: (state) => {
@@ -40,6 +44,9 @@ export default new Vuex.Store({
     },
     SELECT_APT: (state, apt) => {
       state.selectApart = apt;
+    },
+    SELECT_APART_IMG_NUM: (state, num) => {
+      state.selectApartImgNum = num;
     },
   },
   getters: {},

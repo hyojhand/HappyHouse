@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="m-4">
-      {{ apts.sidoName }} {{ apts.gugunName }} {{ apts.dongName }} 지역 아파트
+      {{ this.sidoName }} {{ this.gugunName }} {{ this.dongName }} 지역 아파트
       최근 거래정보
     </h2>
     <b-container
@@ -43,10 +43,15 @@ export default {
   data() {
     return {
       apts: [],
+      sidoName: "",
+      gugunName: "",
+      dongName: "",
     };
   },
   created() {
-    console.log(this.$route.params.aptcode);
+    this.sidoName = this.$route.params.sidoName;
+    this.gugunName = this.$route.params.gugunName;
+    this.dongName = this.$route.params.dongName;
     http
       .get(`/map/aptdetail/${this.$route.params.aptcode}`)
       .then(({ data }) => {
@@ -54,6 +59,7 @@ export default {
         this.apts = data;
         if (data != null) {
           this.$store.dispatch("selectApt", data[0]);
+          // this.$store.dispatch("selectApartImgNum", "1");
         }
       });
   },

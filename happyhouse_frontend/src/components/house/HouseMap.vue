@@ -115,7 +115,12 @@ export default {
     moveList() {
       this.$router.push({
         name: "HouseList",
-        params: { aptcode: this.$route.params.aptcode },
+        params: {
+          aptcode: this.$route.params.aptcode,
+          sidoName: this.sidoName,
+          gugunName: this.gugunName,
+          dongName: this.dongName,
+        },
       });
     },
   },
