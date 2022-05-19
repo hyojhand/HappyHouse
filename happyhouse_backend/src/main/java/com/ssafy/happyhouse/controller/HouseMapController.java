@@ -62,10 +62,60 @@ public class HouseMapController {
 		return new ResponseEntity<List<HouseInfoDto>>(HouseMapService.getAptInDong(aptcode), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "이름순으로 정렬한 아파트의 정보를 반환한다. ", response = HouseDetail.class)
 	@GetMapping("/aptdetail/{aptcode}")
 	public ResponseEntity<List<HouseDetail>> aptdetail(@PathVariable String aptcode) throws Exception {
 		log.debug("aptdetail : {}", HouseMapService.getAptDetail(aptcode));
 		return new ResponseEntity<List<HouseDetail>>(HouseMapService.getAptDetail(aptcode), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "이름순으로 내림차순 정렬한 아파트의 정보를 반환한다. ", response = HouseDetail.class)
+	@GetMapping("/aptdetailDesc/{aptcode}")
+	public ResponseEntity<List<HouseDetail>> aptdetailDesc(@PathVariable String aptcode) throws Exception {
+		log.debug("aptdetail 내림차순 : {}", HouseMapService.getAptDetailDesc(aptcode));
+		return new ResponseEntity<List<HouseDetail>>(HouseMapService.getAptDetailDesc(aptcode), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "건축년도 순으로 정렬한 아파트의 정보를 반환한다. ", response = HouseDetail.class)
+	@GetMapping("/aptdetail/year/{aptcode}")
+	public ResponseEntity<List<HouseDetail>> aptdetailYearSort(@PathVariable String aptcode) throws Exception {
+		log.debug("aptdetail 건축년도순 정렬 : {}", HouseMapService.getAptDetailYearSort(aptcode));
+		return new ResponseEntity<List<HouseDetail>>(HouseMapService.getAptDetailYearSort(aptcode), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "건축년도 내림차순으로 정렬한 아파트의 정보를 반환한다. ", response = HouseDetail.class)
+	@GetMapping("/aptdetailDesc/year/{aptcode}")
+	public ResponseEntity<List<HouseDetail>> aptdetailYearSortDesc(@PathVariable String aptcode) throws Exception {
+		log.debug("aptdetail 건축년도 내림차순 정렬 : {}", HouseMapService.getAptDetailYearSortDesc(aptcode));
+		return new ResponseEntity<List<HouseDetail>>(HouseMapService.getAptDetailYearSortDesc(aptcode), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "거래가 순으로 아파트의 정보를 반환한다. ", response = HouseDetail.class)
+	@GetMapping("/aptdetail/price/{aptcode}")
+	public ResponseEntity<List<HouseDetail>> aptdetailPriceSort(@PathVariable String aptcode) throws Exception {
+		log.debug("aptdetail 거래가순 정렬 : {}", HouseMapService.getAptDetailPriceSort(aptcode));
+		return new ResponseEntity<List<HouseDetail>>(HouseMapService.getAptDetailPriceSort(aptcode), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "거래가 내림차순으로 아파트의 정보를 반환한다. ", response = HouseDetail.class)
+	@GetMapping("/aptdetailDesc/price/{aptcode}")
+	public ResponseEntity<List<HouseDetail>> aptdetailPriceSortDesc(@PathVariable String aptcode) throws Exception {
+		log.debug("aptdetail 거래가 내림차순 정렬 : {}", HouseMapService.getAptDetailPriceSortDesc(aptcode));
+		return new ResponseEntity<List<HouseDetail>>(HouseMapService.getAptDetailPriceSortDesc(aptcode), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "평수 크기순으로 아파트의 정보를 반환한다. ", response = HouseDetail.class)
+	@GetMapping("/aptdetail/area/{aptcode}")
+	public ResponseEntity<List<HouseDetail>> aptdetailAreaSort(@PathVariable String aptcode) throws Exception {
+		log.debug("aptdetail 평수 크기순 정렬 : {}", HouseMapService.getAptDetailAreaSort(aptcode));
+		return new ResponseEntity<List<HouseDetail>>(HouseMapService.getAptDetailAreaSort(aptcode), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "평수 크기 내림차순으로 아파트의 정보를 반환한다. ", response = HouseDetail.class)
+	@GetMapping("/aptdetailDesc/area/{aptcode}")
+	public ResponseEntity<List<HouseDetail>> aptdetailAreaSortDesc(@PathVariable String aptcode) throws Exception {
+		log.debug("aptdetail 평수 크기 내림차순 정렬 : {}", HouseMapService.getAptDetailAreaSortDesc(aptcode));
+		return new ResponseEntity<List<HouseDetail>>(HouseMapService.getAptDetailAreaSortDesc(aptcode), HttpStatus.OK);
 	}
 	
 	@GetMapping("/word")

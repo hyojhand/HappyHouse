@@ -36,7 +36,6 @@ public class HouseMapServiceImpl implements HouseMapService {
 	public HouseInfoDto getAptInfo(String aptcode) throws Exception {
 		return houseMapMapper.getAptInfo(aptcode);
 	}
-	
 
 	@Override
 	public List<HouseInfoDto> getAptInDong(String dong) throws Exception {
@@ -47,7 +46,42 @@ public class HouseMapServiceImpl implements HouseMapService {
 	public List<HouseDetail> getAptDetail(String aptcode) throws SQLException {
 		return houseMapMapper.getAptDetail(aptcode);
 	}
+	
+	@Override
+	public List<HouseDetail> getAptDetailDesc(String aptcode) throws SQLException {
+		return houseMapMapper.getAptDetailDesc(aptcode);
+	}
 
+	@Override
+	public List<HouseDetail> getAptDetailYearSort(String aptcode) throws SQLException {
+		return houseMapMapper.getAptDetailYearSort(aptcode);
+	}
+	
+	@Override
+	public List<HouseDetail> getAptDetailYearSortDesc(String aptcode) throws SQLException {
+		return houseMapMapper.getAptDetailYearSortDesc(aptcode);
+	}
+
+	@Override
+	public List<HouseDetail> getAptDetailPriceSort(String aptcode) throws SQLException {
+		return houseMapMapper.getAptDetailPriceSort(aptcode);
+	}
+	
+	@Override
+	public List<HouseDetail> getAptDetailPriceSortDesc(String aptcode) throws SQLException {
+		return houseMapMapper.getAptDetailPriceSortDesc(aptcode);
+	}
+	
+	@Override
+	public List<HouseDetail> getAptDetailAreaSort(String aptcode) throws SQLException {
+		return houseMapMapper.getAptDetailPriceSort(aptcode);
+	}
+	
+	@Override
+	public List<HouseDetail> getAptDetailAreaSortDesc(String aptcode) throws SQLException {
+		return houseMapMapper.getAptDetailPriceSortDesc(aptcode);
+	}
+	
 	@Override
 	public List<HouseInfoDto> getAptWord(String word) throws Exception {
 		return houseMapMapper.getAptWord(word);

@@ -38,7 +38,6 @@ export default {
   data() {
     return {
       random_num: Math.ceil(Math.random() * 20),
-      // temp: { apt: this.apt, random_num: Math.ceil(Math.random() * 12) },
       isColor: false,
     };
   },
