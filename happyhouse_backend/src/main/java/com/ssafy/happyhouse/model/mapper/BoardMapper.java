@@ -12,6 +12,8 @@ public interface BoardMapper {
  	public List<BoardDto> selectBoardRecent();
 	public List<BoardDto> selectBoardLike();
 	public List<BoardDto> selectBoardReply();
+	public List<BoardDto> selectKeywordBoard(String keyword);
+	public List<BoardDto> selectWriterBoard(String writer);
 	public BoardDto selectBoardByNo(int articleno);
 	public int insertBoard(BoardDto board);
 	public int updateBoard(BoardDto board);

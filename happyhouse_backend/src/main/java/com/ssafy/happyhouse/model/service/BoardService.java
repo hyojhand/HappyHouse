@@ -7,6 +7,8 @@ import com.ssafy.happyhouse.model.Likey;
 
 public interface BoardService {
 	public List<BoardDto> retrieveBoard(String type);
+	public List<BoardDto> retrieveKeywordBoard(String keyword);
+	public List<BoardDto> retrieveWriterBoard(String writer);
 	public BoardDto detailBoard(int articleno);
 	public boolean writeBoard(BoardDto board);
 	public boolean updateBoard(BoardDto board);

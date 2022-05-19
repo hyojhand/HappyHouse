@@ -25,6 +25,16 @@ public class BoardServiceImpl implements BoardService {
     	else
     		return boardMapper.selectBoardReply();
 	}
+
+    @Override
+    public List<BoardDto> retrieveKeywordBoard(String keyword) {
+		return boardMapper.selectKeywordBoard(keyword);
+    }
+    
+    @Override
+    public List<BoardDto> retrieveWriterBoard(String writer) {
+    	return boardMapper.selectWriterBoard(writer);
+    }
     
   	@Override
 	public boolean writeBoard(BoardDto board) {

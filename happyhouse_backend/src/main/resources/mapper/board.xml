@@ -11,6 +11,23 @@
 		 order by articleno desc
 	</select>
 	
+	<!-- 키워드 검색 게시글 조회 -->
+	<select id="selectKeywordBoard" resultType="boardDto">
+		select *
+			from board
+		where title like concat('%', #{keyword}, '%')
+			or content like concat('%', #{keyword}, '%')
+		order by articleno desc
+	</select>
+	
+	<!-- 작성자 검색 게시글 조회 -->
+	<select id="selectWriterBoard" resultType="boardDto">
+		select *
+			from board
+		where writer = #{writer}
+		order by articleno desc
+	</select>
+	
 	<!-- 좋아요가 가장 많은 게시글 3개 조회 -->
 	<select id="selectBoardLike" resultType="boardDto">
 		select *

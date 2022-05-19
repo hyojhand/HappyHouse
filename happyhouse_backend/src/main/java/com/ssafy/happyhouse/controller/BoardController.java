@@ -43,6 +43,20 @@ public class BoardController {
 		log.debug("retrieveBoard - 호출, type : " + type);
 		return new ResponseEntity<List<BoardDto>>(boardService.retrieveBoard(type), HttpStatus.OK);
 	}
+    
+    @ApiOperation(value = "해당 키워드를 포함한 모든 게시글의 정보를 반환한다.", response = List.class)
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<List<BoardDto>> retrieveKeywordBoard(@PathVariable String keyword) throws Exception {
+    	log.debug("retrieveKeywordBoard - 호출, keyword : " + keyword);
+    	return new ResponseEntity<List<BoardDto>>(boardService.retrieveKeywordBoard(keyword), HttpStatus.OK);
+    }
+    
+    @ApiOperation(value = "해당 키워드를 포함한 모든 게시글의 정보를 반환한다.", response = List.class)
+    @GetMapping("/writer/{writer}")
+    public ResponseEntity<List<BoardDto>> retrieveWriterBoard(@PathVariable String writer) throws Exception {
+    	log.debug("retrieveWriterBoard - 호출, writer : " + writer);
+    	return new ResponseEntity<List<BoardDto>>(boardService.retrieveWriterBoard(writer), HttpStatus.OK);
+    }
 
     @ApiOperation(value = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)    
 	@GetMapping("{articleno}")

@@ -26,7 +26,7 @@
       </b-form-group>
       <b-button class="mt-3" block @click="sendMsg(no)">send</b-button>
     </b-modal>
-    <b-dropdown-item href="#">회원글 더보기</b-dropdown-item>
+    <b-dropdown-item @click="searchBoard">회원글 더보기</b-dropdown-item>
   </b-dropdown>
 </template>
 
@@ -62,6 +62,14 @@ export default {
           alert(msg);
         });
       this.$refs[`modal-${no}`].hide();
+    },
+    searchBoard() {
+      http.get(`board/writer/${this.$props.writer}`).then(({ data }) => {
+        this.$router.push({
+          name: "BoardList",
+          params: { articles: data, type: "search" },
+        });
+      });
     },
   },
 };
