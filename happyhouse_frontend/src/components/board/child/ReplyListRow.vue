@@ -64,7 +64,7 @@ export default {
       let original = tr.childNodes[1];
       original.innerHTML = `<input type='text' value="${original.innerText}" v-model="ncontent">`;
       this.isModify = false;
-      this.nreplyid = tr.childNodes[0].innerText;
+      this.nreplyid = this.$props.replyid;
     },
     modifyReplyAction(e) {
       let td = e.target.parentElement.parentElement.childNodes[1];
