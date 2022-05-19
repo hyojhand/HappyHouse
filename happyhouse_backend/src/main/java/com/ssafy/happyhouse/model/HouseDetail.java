@@ -16,7 +16,7 @@ public class HouseDetail {
 	private int recentYear;
 	private int recentMonth;
 	private int recentDay;
-	private String area;
+	private int area;
 	private int floor;
 	
 

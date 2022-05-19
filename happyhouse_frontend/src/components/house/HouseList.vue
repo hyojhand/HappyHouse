@@ -31,6 +31,7 @@
             v-for="(apt, index) in this.apts"
             :key="index"
             :apt="apt"
+            :num="Math.ceil(Math.random() * 20)"
           />
         </b-col>
         <b-col cols="6">

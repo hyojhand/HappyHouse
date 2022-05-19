@@ -74,12 +74,12 @@ public class HouseMapServiceImpl implements HouseMapService {
 	
 	@Override
 	public List<HouseDetail> getAptDetailAreaSort(String aptcode) throws SQLException {
-		return houseMapMapper.getAptDetailPriceSort(aptcode);
+		return houseMapMapper.getAptDetailAreaSort(aptcode);
 	}
 	
 	@Override
 	public List<HouseDetail> getAptDetailAreaSortDesc(String aptcode) throws SQLException {
-		return houseMapMapper.getAptDetailPriceSortDesc(aptcode);
+		return houseMapMapper.getAptDetailAreaSortDesc(aptcode);
 	}
 	
 	@Override

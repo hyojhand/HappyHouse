@@ -1,7 +1,5 @@
 <template>
-  <div class="form-group form-inline justify-content-center" id="searchbar">
-    <div id="background"></div>
-
+  <div class="form-group form-inline justify-content-center">
     <label class="mr-2" for="sido">시/도 : </label>
     <select class="form-control" id="sido" @change="selectCity($event)">
       <option value="0">선택</option>
@@ -73,19 +71,4 @@ export default {
 div {
   height: 100vh;
 }
-#background {
-  /* height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  margin: 0;
-  background-image: url("../../assets/house_searchbar.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center; */
-}
-/* #searchbar {
-  width: 100vw;
-  height: 100vh;
-  background-image: require("@/assets/house_searchbar.jpg");
-} */
 </style>

@@ -10,7 +10,7 @@
       <b-img
         class="apartImg"
         thumbnail
-        :src="require(`@/assets/apart_img/apart${random_num}.jpg`)"
+        :src="require(`@/assets/apart_img/apart${num}.jpg`)"
         fluid-grow
       ></b-img>
     </b-col>
@@ -24,7 +24,7 @@
       </div>
       <div><strong>건축년도</strong> : {{ apt.buildYear }} 년</div>
       <div><strong>거래가</strong> : {{ apt.recentPrice }} 만원</div>
-      <div><strong>평수</strong> : {{ apt.floor }} 평</div>
+      <div><strong>평수</strong> : {{ apt.area }} 평</div>
     </b-col>
   </b-row>
 </template>
@@ -34,17 +34,17 @@ export default {
   name: "HouseListRow",
   props: {
     apt: Object,
+    num: Number,
   },
   data() {
     return {
-      random_num: Math.ceil(Math.random() * 20),
       isColor: false,
     };
   },
   methods: {
     selectApt() {
       this.$store.dispatch("selectApt", this.apt);
-      this.$store.dispatch("selectApartImgNum", this.random_num);
+      this.$store.dispatch("selectApartImgNum", this.num);
     },
     colorChange(flag) {
       this.isColor = flag;
