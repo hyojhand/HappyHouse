@@ -59,7 +59,7 @@ export default {
         this.apts = data;
         if (data != null) {
           this.$store.dispatch("selectApt", data[0]);
-          // this.$store.dispatch("selectApartImgNum", "1");
+          this.$store.dispatch("selectApartImgNum", "1");
         }
       });
   },

@@ -38,14 +38,14 @@ export default {
   data() {
     return {
       random_num: Math.ceil(Math.random() * 20),
-      temp: { apt: this.apt, random_num: Math.ceil(Math.random() * 12) },
+      // temp: { apt: this.apt, random_num: Math.ceil(Math.random() * 12) },
       isColor: false,
     };
   },
   methods: {
     selectApt() {
       this.$store.dispatch("selectApt", this.apt);
-      // this.$store.dispatch("selectApartImgNum", this.random_num);
+      this.$store.dispatch("selectApartImgNum", this.random_num);
     },
     colorChange(flag) {
       this.isColor = flag;
