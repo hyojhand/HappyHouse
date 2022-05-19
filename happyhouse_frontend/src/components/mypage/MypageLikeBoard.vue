@@ -1,5 +1,5 @@
 <template>
-  <div>받은 메시지함</div>
+  <div>좋아요한 게시글</div>
 </template>
 
 <script>

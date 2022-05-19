@@ -13,7 +13,6 @@
             v-model="userInfo.username"
             type="text"
             required
-            value="userInfo.username"
             readonly
           ></b-form-input>
         </b-form-group>
@@ -28,6 +27,7 @@
             id="title"
             v-model="article.title"
             type="text"
+            ref="title"
             required
             placeholder="제목 입력..."
           ></b-form-input>
@@ -38,6 +38,7 @@
             id="content"
             v-model="article.content"
             placeholder="내용 입력..."
+            ref="content"
             rows="10"
             max-rows="15"
           ></b-form-textarea>
@@ -114,12 +115,7 @@ export default {
 
       let err = true;
       let msg = "";
-      !this.article.writer &&
-        ((msg = "작성자 입력해주세요"),
-        (err = false),
-        this.$refs.writer.focus());
-      err &&
-        !this.article.title &&
+      !this.article.title &&
         ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
       err &&
         !this.article.content &&
@@ -141,7 +137,7 @@ export default {
     registArticle() {
       http
         .post(`/board`, {
-          writer: this.article.writer,
+          writer: this.userInfo.userid,
           title: this.article.title,
           content: this.article.content,
         })

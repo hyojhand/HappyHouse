@@ -99,11 +99,6 @@ export default {
         ((msg = "비밀번호를 입력해주세요"),
         (err = false),
         this.$refs.userpwd.focus());
-      // err &&
-      //   !this.pwcheck &&
-      //   ((msg = "비번확인 입력해주세요"),
-      //   (err = false),
-      //   this.$refs.pwcheck.focus());
       err &&
         !this.email &&
         ((msg = "이메일을 입력해주세요"),
