@@ -1,71 +1,67 @@
 <template>
-  <b-container class="bv-example-row mt-3">
-    <div class="container text-center mt-3">
-      <div class="col-lg-8 mx-auto">
-        <h2 class="p-3 mb-3 shadow bg-light">
-          <mark class="orange">회원가입</mark>
-        </h2>
-        <div>
-          <div class="form-group text-left">
-            <label for="username">이름</label>
-            <input
-              type="text"
-              class="form-control"
-              id="username"
-              name="username"
-              v-model="username"
-              ref="username"
-              placeholder="이름입력..."
-            />
-          </div>
-          <div class="form-group text-left">
-            <label for="userid">아이디</label>
-            <input
-              type="text"
-              class="form-control"
-              id="userid"
-              name="userid"
-              v-model="userid"
-              ref="userid"
-              placeholder="아이디입력..."
-            />
-            <div id="idresult" class="mt-1"></div>
-          </div>
-          <div class="form-group text-left">
-            <label for="userpwd">비밀번호</label>
-            <input
-              type="password"
-              class="form-control"
-              id="userpwd"
-              name="userpwd"
-              v-model="userpwd"
-              ref="userpwd"
-              placeholder="비밀번호입력..."
-            />
-          </div>
-          <div class="form-group text-left">
-            <label for="email">이메일</label>
-            <input
-              type="text"
-              class="form-control"
-              id="email"
-              name="email"
-              v-model="email"
-              ref="email"
-              placeholder="이메일 입력..."
-            />
-          </div>
+  <div id="join-container">
+    <div style="margin: auto; width: 600px">
+      <div style="padding: 100px">
+        <h2 class="text-light p-5">회원가입</h2>
+        <div class="form-group text-left">
+          <label for="username" class="text-light">이름</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            v-model="username"
+            ref="username"
+            placeholder="이름 입력"
+          />
+        </div>
+        <div class="form-group text-left">
+          <label for="userid" class="text-light">아이디</label>
+          <input
+            type="text"
+            class="form-control"
+            id="userid"
+            name="userid"
+            v-model="userid"
+            ref="userid"
+            placeholder="아이디 입력"
+          />
+          <div id="idresult" class="mt-1"></div>
+        </div>
+        <div class="form-group text-left">
+          <label for="userpwd" class="text-light">비밀번호</label>
+          <input
+            type="password"
+            class="form-control"
+            id="userpwd"
+            name="userpwd"
+            v-model="userpwd"
+            ref="userpwd"
+            placeholder="비밀번호 입력"
+          />
+        </div>
+        <div class="form-group text-left">
+          <label for="email" class="text-light">이메일</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            name="email"
+            v-model="email"
+            ref="email"
+            placeholder="이메일 입력"
+          />
+        </div>
 
-          <div class="form-group text-center">
-            <button @click="checkValue" class="btn btn-outline-primary">
-              회원가입
-            </button>
-            <button type="reset" class="btn btn-outline-danger">초기화</button>
-          </div>
+        <div class="form-group text-center mt-5">
+          <b-button @click="checkValue" class="btn-light mr-3">
+            회원가입
+          </b-button>
+          <b-button type="reset" class="btn-dark">초기화</b-button>
         </div>
       </div>
     </div>
-  </b-container>
+  </div>
 </template>
 
 <script>
@@ -132,4 +128,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style scope>
+#join-container {
+  background: url("../../assets/join.jpg") repeat-y;
+  background-size: cover;
+  width: 100%;
+  min-height: 100vh;
+}
+</style>

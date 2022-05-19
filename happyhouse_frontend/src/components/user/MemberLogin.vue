@@ -1,56 +1,48 @@
 <template>
-  <b-container class="bv-example-row mt-3">
-    <b-row>
-      <b-col>
-        <b-alert variant="secondary" show><h3>로그인</h3></b-alert>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col></b-col>
-      <b-col cols="8">
-        <b-card class="text-center mt-3" style="max-width: 40rem" align="left">
-          <b-form class="text-left">
-            <b-form-group label="아이디:" label-for="userid">
-              <b-form-input
-                id="userid"
-                v-model="userid"
-                ref="userid"
-                required
-                placeholder="아이디 입력...."
-                @keyup.enter="checkValue"
-              ></b-form-input>
-            </b-form-group>
-            <b-form-group label="비밀번호:" label-for="userpwd">
-              <b-form-input
-                type="password"
-                id="userpwd"
-                v-model="userpwd"
-                ref="userpwd"
-                required
-                placeholder="비밀번호 입력...."
-                @keyup.enter="checkValue"
-              ></b-form-input>
-            </b-form-group>
-            <b-button
-              type="button"
-              variant="primary"
-              class="m-1"
-              @click="checkValue"
-              >로그인</b-button
-            >
-            <b-button
-              type="button"
-              variant="success"
-              class="m-1"
-              @click="moveJoin"
-              >회원가입</b-button
-            >
-          </b-form>
-        </b-card>
-      </b-col>
-      <b-col></b-col>
-    </b-row>
-  </b-container>
+  <div id="login-container">
+    <div style="padding-top: 100px">
+      <h1 class="text-light p-5">로그인</h1>
+      <b-form class="text-left mt-5" style="width: 300px; margin: auto">
+        <b-form-group label="아이디 :" label-for="userid" class="text-light">
+          <b-form-input
+            id="userid"
+            v-model="userid"
+            ref="userid"
+            required
+            placeholder="아이디 입력"
+            @keyup.enter="checkValue"
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group label="비밀번호 :" label-for="userpwd" class="text-light">
+          <b-form-input
+            type="password"
+            id="userpwd"
+            v-model="userpwd"
+            ref="userpwd"
+            required
+            placeholder="비밀번호 입력"
+            @keyup.enter="checkValue"
+          ></b-form-input>
+        </b-form-group>
+        <b-button
+          type="button"
+          variant="light"
+          class="mt-3 ml-2 float-right"
+          size="sm"
+          @click="checkValue"
+          >로그인</b-button
+        >
+        <b-button
+          type="button"
+          variant="secondary"
+          class="mt-3 float-right"
+          size="sm"
+          @click="moveJoin"
+          >회원가입</b-button
+        >
+      </b-form>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -106,4 +98,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+#login-container {
+  background: url("../../assets/login.jpg") repeat-y;
+  background-size: cover;
+  width: 100%;
+  min-height: 100vh;
+}
+</style>
