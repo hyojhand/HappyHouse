@@ -1,31 +1,31 @@
 <template>
-  <b-container class="bv-example-row mt-5">
-    <b-row class="m-2 text-center">
-      <div class="mt-5">
-        <div class="mt-3">
-          <a class="text-dark" @click="moveMypageMember">회원정보 수정</a>
+  <div id="mypage-container">
+    <b-row class="p-5 text-center">
+      <div style="margin-top: 100px; margin-left: 100px">
+        <div class="mt-5">
+          <a class="text-light" @click="moveMypageMember">회원정보 수정</a>
         </div>
-        <div class="mt-3">
-          <a class="text-dark" @click="moveMessageReceive">받은 쪽지</a>
+        <div class="mt-5">
+          <a class="text-light" @click="moveMessageReceive">받은 쪽지</a>
         </div>
-        <div class="mt-3">
-          <a class="text-dark" @click="moveMessageSend">보낸 쪽지</a>
+        <div class="mt-5">
+          <a class="text-light" @click="moveMessageSend">보낸 쪽지</a>
         </div>
-        <div class="mt-3">
-          <a class="text-dark" @click="moveWriteBoard">내가 쓴 글</a>
+        <div class="mt-5">
+          <a class="text-light" @click="moveWriteBoard">내가 쓴 글</a>
         </div>
-        <div class="mt-3">
-          <a class="text-dark" @click="moveWriteReply">내가 쓴 댓글</a>
+        <div class="mt-5">
+          <a class="text-light" @click="moveWriteReply">내가 쓴 댓글</a>
         </div>
-        <div class="mt-3">
-          <a class="text-dark" @click="moveLikeBoard">좋아요한 게시글</a>
+        <div class="mt-5">
+          <a class="text-light" @click="moveLikeBoard">좋아요한 게시글</a>
         </div>
       </div>
-      <b-col class="text-center align-self-center">
+      <b-col class="text-center align-self-center" style="margin-top: 100px">
         <router-view></router-view>
       </b-col>
     </b-row>
-  </b-container>
+  </div>
 </template>
 
 <script>
@@ -100,4 +100,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#mypage-container {
+  background: url("../assets/mypage.jpg") repeat-y;
+  background-size: cover;
+  width: 100%;
+  min-height: 100vh;
+}
+</style>

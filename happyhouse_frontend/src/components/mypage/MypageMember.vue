@@ -2,11 +2,9 @@
   <b-container class="bv-example-row mt-3">
     <div class="container text-center mt-3">
       <div class="col-lg-8 mx-auto">
-        <h2 class="p-3 mb-3 shadow bg-light">
-          <mark class="orange">마이 페이지</mark>
-        </h2>
+        <h2 class="p-3 mb-3 text-light">마이 페이지</h2>
         <div>
-          <div class="form-group text-left">
+          <div class="form-group text-left text-light">
             <label for="username">이름</label>
             <input
               type="text"
@@ -17,7 +15,7 @@
               ref="username"
             />
           </div>
-          <div class="form-group text-left">
+          <div class="form-group text-left text-light">
             <label for="userid">아이디</label>
             <input
               type="text"
@@ -30,7 +28,7 @@
             />
             <div id="idresult" class="mt-1"></div>
           </div>
-          <div class="form-group text-left">
+          <div class="form-group text-left text-light">
             <label for="userpwd">비밀번호</label>
             <input
               type="password"
@@ -42,7 +40,7 @@
               placeholder="비밀번호입력..."
             />
           </div>
-          <div class="form-group text-left">
+          <div class="form-group text-left text-light">
             <label for="email">이메일</label>
             <input
               type="text"
@@ -53,13 +51,17 @@
               v-model="email"
             />
           </div>
-          <div class="form-group text-center">
-            <button @click="checkValue" class="btn btn-outline-primary">
+          <div class="form-group text-center float-right mt-3">
+            <b-button @click="checkValue" class="btn btn-light" size="sm">
               회원정보 수정
-            </button>
-            <button @click="checkDelete" class="btn btn-outline-danger">
+            </b-button>
+            <b-button
+              @click="checkDelete"
+              class="btn btn-secondary ml-3"
+              size="sm"
+            >
               회원 탈퇴
-            </button>
+            </b-button>
           </div>
         </div>
       </div>

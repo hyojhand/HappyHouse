@@ -1,14 +1,75 @@
 <template>
-  <div>내가 작성한 댓글 목록 화면</div>
+  <b-container class="bv-example-row mt-3">
+    <div class="container text-center mt-3">
+      <div class="col-lg-8 mx-auto">
+        <h2 class="p-3 mb-3 text-light">내가 쓴 댓글</h2>
+        <table class="text-light w-100">
+          <tr style="font-weight: bold; font-size: 20px; line-height: 80px">
+            <td>내용</td>
+            <td>작성 시간</td>
+          </tr>
+          <tr
+            v-for="reply in replies"
+            :key="reply.replyid"
+            style="line-height: 50px"
+          >
+            <td>{{ reply.content }}</td>
+            <td>{{ reply.regtime }}</td>
+            <td>
+              <b-button
+                class="btn-light"
+                size="sm"
+                @click="moveBoard(reply.articleno)"
+                ><b-icon icon="reply"></b-icon> 바로가기</b-button
+              >
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </b-container>
 </template>
 
 <script>
+import http from "@/util/http-common";
 export default {
   name: "MypageWriteReply",
   data() {
-    return {};
+    return {
+      userInfo: {
+        userid: "",
+        username: "",
+        userpwd: "",
+        email: "",
+      },
+      replies: [
+        {
+          replyid: "",
+          articleno: "",
+          wrtier: "",
+          content: "",
+          regtime: "",
+          isdeleted: "",
+        },
+      ],
+    };
   },
-  methods: {},
+  created() {
+    this.userInfo = this.$route.params.userInfo;
+    console.log(this.userInfo);
+    http.get(`/mypage/reply/${this.userInfo.userid}`).then(({ data }) => {
+      console.log(data);
+      this.replies = data;
+    });
+  },
+  methods: {
+    moveBoard(no) {
+      this.$router.push({
+        name: "BoardView",
+        params: { no: no },
+      });
+    },
+  },
 };
 </script>
 
