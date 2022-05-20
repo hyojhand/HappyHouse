@@ -51,7 +51,9 @@ CREATE TABLE MESSAGE (
 );
 
 CREATE TABLE SEARCHAPT (
-	dongcode int primary key,
+	dongcode varchar(10) primary key,
     cnt int default 0,
     constraint fk_searchapt_dongcode foreign key (dongcode) references dongcode(dongCode)
 );
+
+INSERT INTO SEARCHAPT (dongcode) SELECT dongCode FROM dongcode;

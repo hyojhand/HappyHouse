@@ -34,6 +34,19 @@
 		where dongCode = #{aptcode}
 	</select>
 	
+	<update id="addSearchCnt" parameterType="string">
+		update searchapt
+			set cnt = cnt + 1
+		where dongcode = #{aptcode};
+	</update>
+	
+	<select id="searchApt" resultType="aptSearchCnt">
+		select d.dongCode, concat(d.sidoName, ' ', d.gugunName, ' ', d.dongName) address, s.cnt
+			from dongcode d, searchapt s
+		where d.dongCode = s.dongcode
+		order by s.cnt desc
+		limit 10;
+	</select>
 	
 	<select id="getAptInDong" parameterType="string" resultType="houseInfoDto">
 		select h.aptCode, h.aptName, h.buildyear, h.dongCode, h.dongName, h.jibun, h.lat, h.lng, si.sidoname, gu.gugunname,

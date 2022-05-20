@@ -2,14 +2,13 @@ package com.ssafy.happyhouse.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,6 +53,14 @@ public class HouseMapController {
 	public ResponseEntity<HouseInfoDto> aptinfo(@PathVariable String aptcode) throws Exception {
 		log.debug("aptinfo : {}", HouseMapService.getAptInfo(aptcode));
 		return new ResponseEntity<HouseInfoDto>(HouseMapService.getAptInfo(aptcode), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "해당 아파트의 검색 횟수를 늘린다.")
+	@PostMapping("/aptcnt/{aptcode}")
+	public ResponseEntity<Void> addSearch(@PathVariable String aptcode) throws Exception {
+		log.debug("addSearch - 호출, aptcode : " + aptcode);
+		HouseMapService.addSearchCnt(aptcode);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@GetMapping("/apt/{aptcode}")

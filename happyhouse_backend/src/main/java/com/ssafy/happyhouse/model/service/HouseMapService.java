@@ -3,6 +3,7 @@ package com.ssafy.happyhouse.model.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.ssafy.happyhouse.model.AptSearchCnt;
 import com.ssafy.happyhouse.model.HouseDetail;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
@@ -13,6 +14,8 @@ public interface HouseMapService {
 	List<SidoGugunCodeDto> getGugunInSido(String sido) throws Exception;
 	List<HouseInfoDto> getDongInGugun(String gugun) throws Exception;
 	HouseInfoDto getAptInfo(String aptcode) throws Exception;
+	void addSearchCnt(String aptcode) throws Exception;
+	List<AptSearchCnt> searchApt() throws Exception;
 	List<HouseInfoDto> getAptInDong(String dong) throws Exception;
 	List<HouseDetail> getAptDetail(String aptcode) throws SQLException;
 	List<HouseDetail> getAptDetailDesc(String aptcode) throws SQLException;

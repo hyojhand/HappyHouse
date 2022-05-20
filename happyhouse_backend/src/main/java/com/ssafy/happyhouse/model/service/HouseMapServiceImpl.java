@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.happyhouse.model.AptSearchCnt;
 import com.ssafy.happyhouse.model.HouseDetail;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
@@ -35,6 +36,16 @@ public class HouseMapServiceImpl implements HouseMapService {
 	@Override
 	public HouseInfoDto getAptInfo(String aptcode) throws Exception {
 		return houseMapMapper.getAptInfo(aptcode);
+	}
+	
+	@Override
+	public void addSearchCnt(String aptcode) throws Exception {
+		houseMapMapper.addSearchCnt(aptcode);
+	}
+	
+	@Override
+	public List<AptSearchCnt> searchApt() throws Exception {
+		return houseMapMapper.searchApt();
 	}
 
 	@Override

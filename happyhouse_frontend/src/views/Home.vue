@@ -47,12 +47,25 @@
         </template>
         <news-list></news-list>
       </b-carousel-slide>
+      <!-- 최다 검색 -->
+      <b-carousel-slide>
+        <template v-slot:img>
+          <img
+            style="width: 100vw; height: 100vh"
+            class="news-img"
+            src="@/assets/hot.jpg"
+            alt="image slot"
+          />
+        </template>
+        <popular-list></popular-list>
+      </b-carousel-slide>
     </b-carousel>
   </div>
 </template>
 
 <script>
 import NewsList from "@/components/news/NewsList.vue";
+import PopularList from "@/components/popular/PopularList.vue";
 
 export default {
   name: "Main",
@@ -61,6 +74,7 @@ export default {
   },
   components: {
     NewsList,
+    PopularList,
   },
   methods: {
     moveHouse() {

@@ -67,10 +67,12 @@ export default {
       });
     },
     selectDong(event) {
+      let aptcode = event.target.value;
+      http.post(`/map/aptcnt/${aptcode}`);
       // 동 선택후, Map으로 넘어가면서 aptcode 넘기기
       this.$router.push({
         name: "HouseMap",
-        params: { aptcode: event.target.value },
+        params: { aptcode: aptcode },
       });
     },
   },

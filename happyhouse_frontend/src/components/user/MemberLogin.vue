@@ -26,19 +26,19 @@
         </b-form-group>
         <b-button
           type="button"
-          variant="light"
-          class="mt-3 ml-2 float-right"
-          size="sm"
-          @click="checkValue"
-          >로그인</b-button
-        >
-        <b-button
-          type="button"
           variant="secondary"
           class="mt-3 float-right"
           size="sm"
           @click="moveJoin"
           >회원가입</b-button
+        >
+        <b-button
+          type="button"
+          variant="light"
+          class="mt-3 mr-2 float-right"
+          size="sm"
+          @click="checkValue"
+          >로그인</b-button
         >
       </b-form>
     </div>
