@@ -1,6 +1,8 @@
 <template>
-  <b-dropdown variant="link" dropright :text="writer" no-caret>
-    <b-dropdown-item v-b-modal="'modal-' + no">쪽지 보내기</b-dropdown-item>
+  <b-dropdown variant="link" dropright :text="writer" no-caret v-if="!isWriter">
+    <b-dropdown-item v-b-modal="'modal-' + no" v-if="isLogin"
+      >쪽지 보내기</b-dropdown-item
+    >
     <b-modal
       :id="'modal-' + no"
       :ref="'modal-' + no"
@@ -32,24 +34,42 @@
 
 <script>
 import http from "@/util/http-common.js";
+import { mapState } from "vuex";
+import jwt_decode from "jwt-decode";
+
 export default {
   props: {
     writer: String,
     no: Number,
+    isWriter: Boolean,
   },
   data() {
     return {
-      send: "ssafy",
+      send: "",
       title: "",
       content: "",
+      userInfo: [],
     };
+  },
+  computed: {
+    ...mapState(["isLogin"]),
+  },
+  async created() {
+    if (this.isLogin) {
+      const decode = jwt_decode(sessionStorage.getItem("access-token"));
+      http.defaults.headers["access-token"] =
+        sessionStorage.getItem("access-token");
+      await http.get(`/member/info/${decode.userid}`).then(({ data }) => {
+        this.userInfo = data.userInfo;
+      });
+    }
   },
   methods: {
     sendMsg(no) {
       console.log(this.msg);
       http
         .post(`/message`, {
-          send: this.send,
+          send: this.userInfo.userid,
           receive: this.$props.writer,
           title: this.title,
           content: this.content,

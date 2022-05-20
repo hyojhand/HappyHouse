@@ -25,6 +25,7 @@
                 <writer-menu
                   :writer="article.writer"
                   :no="article.articleno"
+                  :isWriter="this.isWriter"
                 ></writer-menu>
                 | {{ article.regtime }}
               </div>
@@ -75,7 +76,6 @@
 </template>
 
 <script>
-// import moment from "moment";
 import ReplyList from "@/components/board/child/ReplyList.vue";
 import WriterMenu from "@/components/board/WriterMenu.vue";
 import http from "@/util/http-common";
@@ -94,6 +94,8 @@ export default {
       isWriter: false,
       isLike: false,
       userInfo: [],
+      userid: "",
+      articleno: Number,
     };
   },
   computed: {
@@ -103,42 +105,40 @@ export default {
         return this.article.content.split("\n").join("<br>");
       return "";
     },
-    // changeDateFormat() {
-    //   return moment(new Date(this.article.regtime)).format(
-    //     "YYYY.MM.DD hh:mm:ss"
-    //   );
-    // },
-    // info() {
-    //   return `<div><h6>${this.article.writer}</div><div>${changeDateFormat}</h6></div>`;
-    // },
   },
   async created() {
+    await http.get(`/board/${this.$route.params.no}`).then(({ data }) => {
+      this.article = data;
+    });
+
     if (this.isLogin) {
       const decode = jwt_decode(sessionStorage.getItem("access-token"));
       http.defaults.headers["access-token"] =
         sessionStorage.getItem("access-token");
       await http.get(`/member/info/${decode.userid}`).then(({ data }) => {
         this.userInfo = data.userInfo;
-        console.log(this.userInfo);
       });
-    }
 
-    await http.get(`/board/${this.$route.params.no}`).then(({ data }) => {
-      this.article = data;
-    });
-    await http.get(`/board/like/${this.$route.params.no}`).then(({ data }) => {
-      console.log(data);
-      this.isLike = data;
-    });
+      await http
+        .post(`/board/like`, {
+          userid: this.userInfo.userid,
+          articleno: this.article.articleno,
+        })
+        .then(({ data }) => {
+          console.log("좋아요인지 확인 시작 후");
+          console.log(data);
+          this.isLike = data;
+        });
+
+      if (this.article.writer === this.userInfo.userid) {
+        this.isWriter = true;
+      } else {
+        this.isWriter = false;
+      }
+      console.log(this.isLike);
+    }
 
     // 사용자 정보 가져와서 사용자이름과 작성자가 같은지 확인
-
-    if (this.article.writer === this.userInfo.userid) {
-      this.isWriter = true;
-    } else {
-      this.isWriter = false;
-    }
-    // 작성자 본인인지 알려주는 axios 필요 (isWriter 변경)
   },
   methods: {
     moveListArticle() {
@@ -152,7 +152,6 @@ export default {
         name: "BoardUpdate",
         params: { no: this.article.articleno },
       });
-      //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
     },
     deleteArticle() {
       console.log(this.article);
@@ -166,17 +165,27 @@ export default {
     modifyLike() {
       if (this.isLogin) {
         if (!this.isLike) {
-          http.put(`/board/like/${this.article.articleno}`).then(({ data }) => {
-            let msg = "좋아요 처리시 문제가 발생했습니다.";
-            if (data === "success") {
-              msg = "좋아요가 추가되었습니다.";
-            }
-            alert(msg);
-            this.isLike = !this.isLike;
-          });
+          http
+            .put("/board/like", {
+              userid: this.userInfo.userid,
+              articleno: this.article.articleno,
+            })
+            .then(({ data }) => {
+              let msg = "좋아요 처리시 문제가 발생했습니다.";
+              if (data === "success") {
+                msg = "좋아요가 추가되었습니다.";
+              }
+              alert(msg);
+              this.isLike = !this.isLike;
+            });
         } else {
           http
-            .delete(`/board/dislike/${this.article.articleno}`)
+            .delete("/board/dislike", {
+              params: {
+                userid: this.userInfo.userid,
+                articleno: this.article.articleno,
+              },
+            })
             .then(({ data }) => {
               let msg = "좋아요 취소 처리시 문제가 발생했습니다.";
               if (data === "success") {

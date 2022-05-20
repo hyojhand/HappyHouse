@@ -2,7 +2,10 @@
   <b-tr>
     <b-td style="width: 50%; line-height: 40px">
       <router-link
-        :to="{ name: 'BoardView', params: { no: articleno } }"
+        :to="{
+          name: 'BoardView',
+          params: { no: articleno },
+        }"
         style="font-weight: bold; font-size: 18px; color: black"
         >{{ title }}</router-link
       >
@@ -27,6 +30,7 @@ export default {
     title: String,
     regtime: String,
   },
+
   computed: {
     changeDateFormat() {
       return moment(new Date(this.regtime)).format("MM.DD hh:mm");
