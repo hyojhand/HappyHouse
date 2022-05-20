@@ -60,6 +60,11 @@
             >
           </li>
         </ul>
+        <ul>
+          <li>
+            <router-link :to="{ name: 'Admin' }">관리자 페이지</router-link>
+          </li>
+        </ul>
       </div>
     </b-sidebar>
   </div>

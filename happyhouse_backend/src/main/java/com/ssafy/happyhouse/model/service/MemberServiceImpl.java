@@ -56,8 +56,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member getMember(String userId) throws Exception {
-		return memberMapper.getMember(userId);
+	public List<Member> searchMember(String keyword) throws Exception {
+		return memberMapper.searchMember(keyword);
 	}
 
 	

@@ -22,6 +22,16 @@
       @click="search"
       ><b-icon icon="search"></b-icon
     ></b-button>
+    <b-row class="mb-5 mr-3">
+      <b-col class="text-right">
+        <b-button variant="secondary" size="sm" @click="moveMainBoard"
+          ><b-icon icon="grid1x2"></b-icon> 메인</b-button
+        >
+        <b-button variant="dark" size="sm" class="ml-3" @click="moveWrite"
+          ><b-icon icon="vector-pen"></b-icon> 글쓰기</b-button
+        >
+      </b-col>
+    </b-row>
     <b-row>
       <b-col v-if="articles.length">
         <b-table-simple hover responsive>
@@ -33,13 +43,6 @@
             />
           </tbody>
         </b-table-simple>
-      </b-col>
-    </b-row>
-    <b-row class="mb-1">
-      <b-col class="text-right">
-        <b-button variant="secondary" size="sm" @click="moveWrite()"
-          ><b-icon icon="vector-pen"></b-icon> 글쓰기</b-button
-        >
       </b-col>
     </b-row>
   </b-container>
@@ -72,6 +75,9 @@ export default {
   methods: {
     moveWrite() {
       this.$router.push({ name: "BoardWrite" });
+    },
+    moveMainBoard() {
+      this.$router.push({ name: "Board" });
     },
     search() {
       if (this.keyword == "") {

@@ -22,6 +22,20 @@
 		where userid = #{userid}
 	</select>
 	
+	<select id="listMember" resultType="Member">
+		select *
+		from USER
+		order by joindate desc
+	</select>
+	
+	<select id="searchMember" parameterType="String" resultType="Member">
+		select *
+		from USER
+		where userid like concat('%', #{keyword}, '%') or
+		username like concat('%', #{keyword}, '%') or
+		email like concat('%', #{keyword}, '%')
+		order by joindate desc
+	</select>
 	
 	<select id="idCheck" parameterType="string" resultType="int">
       select

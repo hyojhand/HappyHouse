@@ -1,7 +1,6 @@
 package com.ssafy.happyhouse.model.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,8 +15,7 @@ public interface MemberMapper {
 	int idCheck(String checkId) throws Exception;
 	public int updateMember(Member member) throws Exception;
 	public int deleteMember(String userId) throws Exception;
-	
-	List<Member> listMember() throws Exception;
-	Member getMember(String userId) throws Exception;
+	public List<Member> listMember() throws Exception;
+	public List<Member> searchMember(String keyword) throws Exception;
 	
 }

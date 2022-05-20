@@ -16,6 +16,24 @@ const routes = [
     component: () => import("@/views/Instargram.vue"),
   },
   {
+    path: "/admin",
+    name: "Admin",
+    component: () => import("@/views/Admin.vue"),
+    redirect: "/admin/member",
+    children: [
+      {
+        path: "member",
+        name: "AdminMember",
+        component: () => import("@/components/admin/AdminMember.vue"),
+      },
+      {
+        path: "search",
+        name: "AdminSearch",
+        component: () => import("@/components/admin/AdminSearch.vue"),
+      },
+    ],
+  },
+  {
     path: "/user",
     name: "Member",
     component: () => import("@/views/Member.vue"),

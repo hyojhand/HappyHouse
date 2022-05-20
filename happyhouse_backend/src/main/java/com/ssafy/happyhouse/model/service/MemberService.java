@@ -14,9 +14,8 @@ public interface MemberService {
 	int idCheck(String checkId) throws Exception;
 	public boolean updateMember(Member member) throws Exception;
 	public boolean deleteMember(String userId) throws Exception;
-	
-	List<Member> listMember() throws Exception;
-	Member getMember(String userId) throws Exception;
+	public List<Member> listMember() throws Exception;
+	public List<Member> searchMember(String keyword) throws Exception;
 	
 	
 }

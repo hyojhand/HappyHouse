@@ -49,3 +49,9 @@ CREATE TABLE MESSAGE (
     constraint fk_message_send foreign key (send) references USER(userid) on delete cascade,
     constraint fk_message_receive foreign key (receive) references USER(userid) on delete cascade
 );
+
+CREATE TABLE SEARCHAPT (
+	dongcode int primary key,
+    cnt int default 0,
+    constraint fk_searchapt_dongcode foreign key (dongcode) references dongcode(dongCode)
+);
