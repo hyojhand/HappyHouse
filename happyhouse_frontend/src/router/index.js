@@ -11,11 +11,6 @@ const routes = [
     component: Home,
   },
   {
-    path: "/instargram",
-    name: "Instargram",
-    component: () => import("@/views/Instargram.vue"),
-  },
-  {
     path: "/admin",
     name: "Admin",
     component: () => import("@/views/Admin.vue"),
