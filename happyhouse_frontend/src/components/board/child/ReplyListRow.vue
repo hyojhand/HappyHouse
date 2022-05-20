@@ -32,8 +32,11 @@
 
 <script>
 import moment from "moment";
-import http from "@/util/http-common.js";
 import WriterMenu from "@/components/board/WriterMenu.vue";
+import http from "@/util/http-common";
+import { mapState } from "vuex";
+import jwt_decode from "jwt-decode";
+
 export default {
   name: "BoardListRow",
   props: {
@@ -47,13 +50,28 @@ export default {
   },
   data() {
     return {
-      isWriter: true,
+      isWriter: false,
       isModify: true,
       nreplyid: "",
       ncontent: "",
     };
   },
+  created() {
+    if (this.isLogin) {
+      const decode = jwt_decode(sessionStorage.getItem("access-token"));
+      http.defaults.headers["access-token"] =
+        sessionStorage.getItem("access-token");
+      http.get(`/member/info/${decode.userid}`).then(({ data }) => {
+        this.userInfo = data.userInfo;
+      });
+    }
+
+    if (this.writer == this.userInfo.userid) {
+      this.isWriter = true;
+    }
+  },
   computed: {
+    ...mapState(["isLogin"]),
     changeDateFormat() {
       return moment(new Date(this.regtime)).format("YY.MM.DD hh:mm:ss");
     },

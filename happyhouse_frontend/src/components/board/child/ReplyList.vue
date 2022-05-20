@@ -36,8 +36,10 @@
 </template>
 
 <script>
-import http from "@/util/http-common";
 import ReplyListRow from "@/components/board/child/ReplyListRow";
+import http from "@/util/http-common";
+import { mapState } from "vuex";
+import jwt_decode from "jwt-decode";
 
 export default {
   name: "ReplyList",
@@ -47,32 +49,50 @@ export default {
   data() {
     return {
       replies: [],
+      userInfo: [],
       content: "",
     };
+  },
+  computed: {
+    ...mapState(["isLogin"]),
   },
   created() {
     http.get(`/reply/${this.$route.params.no}`).then(({ data }) => {
       this.replies = data;
     });
+
+    if (this.isLogin) {
+      const decode = jwt_decode(sessionStorage.getItem("access-token"));
+      http.defaults.headers["access-token"] =
+        sessionStorage.getItem("access-token");
+      http.get(`/member/info/${decode.userid}`).then(({ data }) => {
+        this.userInfo = data.userInfo;
+      });
+    }
   },
   methods: {
     writeReply() {
-      http
-        .post(`/reply/${this.$route.params.no}`, {
-          articleno: this.$route.params.no,
-          writer: "ssafy",
-          content: this.content,
-        })
-        .then(({ data }) => {
-          let msg = "댓글이 작성되었습니다.";
-          if (data === "fail") {
-            msg = "댓글 작성시 문제가 발생했습니다.";
-          } else {
-            this.replies = data;
-            this.$refs.input.$el.value = "";
-          }
-          alert(msg);
-        });
+      if (this.isLogin) {
+        http
+          .post(`/reply/${this.$route.params.no}`, {
+            articleno: this.$route.params.no,
+            writer: this.userInfo.userid,
+            content: this.content,
+          })
+          .then(({ data }) => {
+            let msg = "댓글이 작성되었습니다.";
+            if (data === "fail") {
+              msg = "댓글 작성시 문제가 발생했습니다.";
+            } else {
+              this.replies = data;
+              this.$refs.input.$el.value = "";
+            }
+            alert(msg);
+          });
+      } else {
+        alert("댓글작성은 로그인이 필요합니다!");
+        this.$router.push({ name: "SignIn" });
+      }
     },
   },
 };

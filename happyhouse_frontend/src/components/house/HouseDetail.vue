@@ -8,6 +8,7 @@
     <b-row class="mb-3 mt-1">
       <b-col
         ><b-img
+          id="detailImg"
           :src="require(`@/assets/apart_img/apart${selectApartImgNum}.jpg`)"
           fluid-grow
         ></b-img
@@ -56,4 +57,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+#detailImg {
+  height: 500px;
+}
+</style>

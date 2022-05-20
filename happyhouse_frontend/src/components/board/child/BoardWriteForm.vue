@@ -3,16 +3,6 @@
     <b-row class="mb-1">
       <b-col style="text-align: left">
         <b-form @submit="onSubmit" @reset="onReset">
-          <b-form-group id="writer-group" label="작성자 :" label-for="writer">
-            <b-form-input
-              id="writer"
-              v-model="userInfo.username"
-              type="text"
-              required
-              readonly
-            ></b-form-input>
-          </b-form-group>
-
           <b-form-group id="subject-group" label="제목 :" label-for="title">
             <b-form-input
               id="title"
@@ -62,8 +52,8 @@
 
 <script>
 import http from "@/util/http-common";
-import jwt_decode from "jwt-decode";
 import { mapState } from "vuex";
+import jwt_decode from "jwt-decode";
 
 export default {
   name: "BoardWriteForm",
@@ -84,8 +74,8 @@ export default {
   },
   created() {
     if (!this.isLogin) {
-      alert("로그인된 사용자만 가능합니다!");
-      this.$router.push({ name: "Home" });
+      alert("글작성은 로그인이 필요합니다!");
+      this.$router.push({ name: "SignIn" });
     }
 
     if (this.type === "modify") {
@@ -102,7 +92,6 @@ export default {
         sessionStorage.getItem("access-token");
       http.get(`/member/info/${decode.userid}`).then(({ data }) => {
         this.userInfo = data.userInfo;
-        console.log(this.userInfo);
       });
     }
   },
@@ -154,7 +143,7 @@ export default {
       http
         .put(`/board/${this.article.articleno}`, {
           articleno: this.article.articleno,
-          writer: this.article.writer,
+          writer: this.userInfo.userid,
           title: this.article.title,
           content: this.article.content,
         })

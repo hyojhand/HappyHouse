@@ -1,28 +1,38 @@
 <template>
-  <div class="form-group form-inline justify-content-center">
-    <label class="mr-2" for="sido">시/도 : </label>
-    <select class="form-control" id="sido" @change="selectCity($event)">
-      <option value="0">선택</option>
-      <option :value="city.sidoCode" v-for="city in cities" :key="city.sido">
-        {{ city.sidoName }}
-      </option>
-    </select>
-    <label class="mr-2 ml-3" for="gugun">구/군 : </label>
-    <select class="form-control" id="gugun" @change="selectGugun($event)">
-      <option value="0">선택</option>
-      <option :value="gu.gugunCode" v-for="gu in guguns" :key="gu.gugun">
-        {{ gu.gugunName }}
-      </option>
-    </select>
-
-    <label class="mr-2 ml-3" for="dong">읍/면/동 : </label>
-    <select class="form-control" id="dong" @change="selectDong($event)">
-      <option value="0">선택</option>
-      <option :value="don.dongCode" v-for="don in dongs" :key="don.dong">
-        {{ don.dongName }}
-      </option>
-    </select>
-  </div>
+  <b-container>
+    <div class="form-group form-inline justify-content-center">
+      <div class="form-horizontal">
+        <h1>Find Your Happy House</h1>
+        <div class="form-inline">
+          <label class="mr-2" for="sido">시/도 : </label>
+          <select class="form-control" id="sido" @change="selectCity($event)">
+            <option value="0">선택</option>
+            <option
+              :value="city.sidoCode"
+              v-for="city in cities"
+              :key="city.sido"
+            >
+              {{ city.sidoName }}
+            </option>
+          </select>
+          <label class="mr-2 ml-3" for="gugun">구/군 : </label>
+          <select class="form-control" id="gugun" @change="selectGugun($event)">
+            <option value="0">선택</option>
+            <option :value="gu.gugunCode" v-for="gu in guguns" :key="gu.gugun">
+              {{ gu.gugunName }}
+            </option>
+          </select>
+          <label class="mr-2 ml-3" for="dong">읍/면/동 : </label>
+          <select class="form-control" id="dong" @change="selectDong($event)">
+            <option value="0">선택</option>
+            <option :value="don.dongCode" v-for="don in dongs" :key="don.dong">
+              {{ don.dongName }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </b-container>
 </template>
 
 <script>
