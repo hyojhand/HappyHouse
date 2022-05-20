@@ -70,20 +70,24 @@ export default {
     };
   },
   created() {
-    this.sidoName = this.$route.params.sidoName;
-    this.gugunName = this.$route.params.gugunName;
-    this.dong = this.$route.params.dong;
-    this.aptCode = this.$route.params.aptcode;
-    http
-      .get(`/map/aptdetail/${this.$route.params.aptcode}`)
-      .then(({ data }) => {
-        console.log(data);
-        this.apts = data;
-        if (data != null) {
-          this.$store.dispatch("selectApt", data[0]);
-          this.$store.dispatch("selectApartImgNum", "1");
-        }
-      });
+    if (this.$route.params.type == "bookmark") {
+      console.log("bookmark");
+    } else {
+      this.sidoName = this.$route.params.sidoName;
+      this.gugunName = this.$route.params.gugunName;
+      this.dong = this.$route.params.dong;
+      this.aptCode = this.$route.params.aptcode;
+      http
+        .get(`/map/aptdetail/${this.$route.params.aptcode}`)
+        .then(({ data }) => {
+          console.log(data);
+          this.apts = data;
+          if (data != null) {
+            this.$store.dispatch("selectApt", data[0]);
+            this.$store.dispatch("selectApartImgNum", "1");
+          }
+        });
+    }
   },
   methods: {
     sortName() {

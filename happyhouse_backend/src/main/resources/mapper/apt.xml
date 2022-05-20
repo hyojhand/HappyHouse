@@ -41,7 +41,7 @@
 	</update>
 	
 	<select id="searchApt" resultType="aptSearchCnt">
-		select d.dongCode, concat(d.sidoName, ' ', d.gugunName, ' ', d.dong) address, s.cnt
+		select d.dongCode, concat(d.sidoName, ' ', d.gugunName, ' ', d.dongName) address, s.cnt
 			from dongcode d, searchapt s
 		where d.dongCode = s.dongcode
 		order by s.cnt desc

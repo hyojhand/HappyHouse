@@ -25,6 +25,15 @@
               >
             </li>
             <li>
+              <router-link
+                :to="{
+                  name: 'HouseList',
+                  params: { type: 'bookmark' },
+                }"
+                ><b-icon icon="bookmark"></b-icon> 북마크</router-link
+              >
+            </li>
+            <li>
               <a href="#" class="link" @click="logout"
                 ><b-icon icon="person-circle"></b-icon> 로그아웃
               </a>
