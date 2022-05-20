@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class HouseDetail {
 	
-	private int aptCode;
-	private String aptName;
+	private long aptCode;
+	private String apartmentName;
 	private String dongCode;
-	private String dongName;
+	private String dong;
 	private String sidoName;
 	private String gugunName;
 	private int buildYear;

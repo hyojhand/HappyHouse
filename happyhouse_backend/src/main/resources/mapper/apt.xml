@@ -18,14 +18,14 @@
 	</select>
 	
 	<select id="getDongInGugun" parameterType="string" resultType="houseInfoDto">
-		select distinct dongName, dongCode
+		select distinct dong, dongCode
 		from houseinfo
 		where left(dongCode, 5) = #{gugun}
-		order by dongName
+		order by dong
 	</select>
 	
 	<select id="getAptInfo" parameterType="string" resultType="houseInfoDto">
-		select distinct si.sidoName, gu.gugunName, dongName
+		select distinct si.sidoName, gu.gugunName, dong
 		from houseinfo h
 		left join sidocode si
 		on left(h.dongcode,2) = left(si.sidocode,2)
@@ -41,7 +41,7 @@
 	</update>
 	
 	<select id="searchApt" resultType="aptSearchCnt">
-		select d.dongCode, concat(d.sidoName, ' ', d.gugunName, ' ', d.dongName) address, s.cnt
+		select d.dongCode, concat(d.sidoName, ' ', d.gugunName, ' ', d.dong) address, s.cnt
 			from dongcode d, searchapt s
 		where d.dongCode = s.dongcode
 		order by s.cnt desc
@@ -49,7 +49,7 @@
 	</select>
 	
 	<select id="getAptInDong" parameterType="string" resultType="houseInfoDto">
-		select h.aptCode, h.aptName, h.buildyear, h.dongCode, h.dongName, h.jibun, h.lat, h.lng, si.sidoname, gu.gugunname,
+		select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, h.jibun, h.lat, h.lng, si.sidoname, gu.gugunname,
 				(select dealAmount from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentPrice
 		from houseinfo h
 		left join sidocode si
@@ -57,11 +57,11 @@
 		left join guguncode gu
 		on left(h.dongcode,5) = left(gu.guguncode,5)
 		where dongCode = #{dong} 
-		order by aptName
+		order by apartmentName
 	</select>
 	
 	<select id="getAptDetail" parameterType="string" resultType="houseDetail">
-		select h.aptCode, h.aptName, h.buildyear, h.dongCode, h.dongName, si.sidoname, gu.gugunname,
+		select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname,
 				(select dealAmount from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentPrice,
                 (select dealYear from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentYear,
                 (select dealMonth from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentMonth,
@@ -74,11 +74,11 @@
 		left join guguncode gu
 		on left(h.dongcode,5) = left(gu.guguncode,5)
 		where dongCode = #{aptcode} 
-        order by aptName;
+        order by apartmentName;
 	</select>
 	
 	<select id="getAptDetailDesc" parameterType="string" resultType="houseDetail">
-		select h.aptCode, h.aptName, h.buildyear, h.dongCode, h.dongName, si.sidoname, gu.gugunname,
+		select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname,
 				(select dealAmount from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentPrice,
                 (select dealYear from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentYear,
                 (select dealMonth from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentMonth,
@@ -91,11 +91,11 @@
 		left join guguncode gu
 		on left(h.dongcode,5) = left(gu.guguncode,5)
 		where dongCode = #{aptcode} 
-        order by aptName DESC;
+        order by apartmentName DESC;
 	</select>
 	
 	<select id="getAptDetailYearSort" parameterType="string" resultType="houseDetail">
-		select h.aptCode, h.aptName, h.buildyear, h.dongCode, h.dongName, si.sidoname, gu.gugunname,
+		select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname,
 				(select dealAmount from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentPrice,
                 (select dealYear from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentYear,
                 (select dealMonth from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentMonth,
@@ -112,7 +112,7 @@
 	</select>
 	
 	<select id="getAptDetailYearSortDesc" parameterType="string" resultType="houseDetail">
-		select h.aptCode, h.aptName, h.buildyear, h.dongCode, h.dongName, si.sidoname, gu.gugunname,
+		select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname,
 				(select dealAmount from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentPrice,
                 (select dealYear from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentYear,
                 (select dealMonth from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentMonth,
@@ -129,7 +129,7 @@
 	</select>
 	
 	<select id="getAptDetailPriceSort" parameterType="string" resultType="houseDetail">
-		select h.aptCode, h.aptName, h.buildyear, h.dongCode, h.dongName, si.sidoname, gu.gugunname,
+		select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname,
 				(select dealAmount from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentPrice,
                 (select dealYear from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentYear,
                 (select dealMonth from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentMonth,
@@ -146,7 +146,7 @@
 	</select>
 	
 	<select id="getAptDetailPriceSortDesc" parameterType="string" resultType="houseDetail">
-		select h.aptCode, h.aptName, h.buildyear, h.dongCode, h.dongName, si.sidoname, gu.gugunname,
+		select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname,
 				(select dealAmount from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentPrice,
                 (select dealYear from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentYear,
                 (select dealMonth from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentMonth,
@@ -163,7 +163,7 @@
 	</select>
 	
 	<select id="getAptDetailAreaSort" parameterType="string" resultType="houseDetail">
-		select h.aptCode, h.aptName, h.buildyear, h.dongCode, h.dongName, si.sidoname, gu.gugunname,
+		select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname,
 				(select dealAmount from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentPrice,
                 (select dealYear from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentYear,
                 (select dealMonth from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentMonth,
@@ -180,7 +180,7 @@
 	</select>
 	
 	<select id="getAptDetailAreaSortDesc" parameterType="string" resultType="houseDetail">
-		select h.aptCode, h.aptName, h.buildyear, h.dongCode, h.dongName, si.sidoname, gu.gugunname,
+		select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname,
 				(select dealAmount from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentPrice,
                 (select dealYear from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentYear,
                 (select dealMonth from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentMonth,
@@ -197,15 +197,15 @@
 	</select>
 	
 	<select id="getAptWord" parameterType="string" resultType="houseInfoDto">
-		select h.aptCode, h.aptName, h.buildyear, h.dongCode, h.dongName, h.jibun, h.lat, h.lng, si.sidoname, gu.gugunname,
+		select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, h.jibun, h.lat, h.lng, si.sidoname, gu.gugunname,
 				(select dealAmount from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentPrice
 		from houseinfo h
 		left join sidocode si
 		on left(h.dongcode,2) = left(si.sidocode,2)
 		left join guguncode gu
 		on left(h.dongcode,5) = left(gu.guguncode,5)
-		where aptName like concat('%', #{aptName}, '%')
-		order by aptName
+		where apartmentName like concat('%', #{apartmentName}, '%')
+		order by apartmentName
 	</select>
 	
 	<insert id="insertBookmark" parameterType="bookmark">

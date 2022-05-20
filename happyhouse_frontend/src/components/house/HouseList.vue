@@ -1,8 +1,8 @@
 <template>
   <div>
     <h2 class="m-4">
-      {{ this.sidoName }} {{ this.gugunName }} {{ this.dongName }} 지역 아파트
-      최근 거래정보
+      {{ this.sidoName }} {{ this.gugunName }} {{ this.dong }} 지역 아파트 최근
+      거래정보
     </h2>
 
     <div>
@@ -66,13 +66,13 @@ export default {
       aptCode: "",
       sidoName: "",
       gugunName: "",
-      dongName: "",
+      dong: "",
     };
   },
   created() {
     this.sidoName = this.$route.params.sidoName;
     this.gugunName = this.$route.params.gugunName;
-    this.dongName = this.$route.params.dongName;
+    this.dong = this.$route.params.dong;
     this.aptCode = this.$route.params.aptcode;
     http
       .get(`/map/aptdetail/${this.$route.params.aptcode}`)

@@ -2,7 +2,7 @@
   <b-container>
     <h3 class="underline-blue">
       <b-icon icon="house-fill"></b-icon> {{ sidoName }} {{ gugunName }}
-      {{ dongName }} 아파트 목록입니다.
+      {{ dong }} 아파트 목록입니다.
     </h3>
     <div id="map"></div>
     <br />
@@ -18,11 +18,12 @@ export default {
     return {
       sidoName: "",
       gugunName: "",
-      dongName: "",
+      dong: "",
 
       map: null,
       markers: [],
       markerPositions: [],
+      isRe: false,
     };
   },
   created() {
@@ -30,7 +31,7 @@ export default {
     http.get(`/map/aptinfo/${this.$route.params.aptcode}`).then(({ data }) => {
       this.sidoName = data.sidoName;
       this.gugunName = data.gugunName;
-      this.dongName = data.dongName;
+      this.dong = data.dong;
     });
     // 아파트 리스트 받아오기
     http.get(`/map/apt/${this.$route.params.aptcode}`).then(({ data }) => {
@@ -38,6 +39,9 @@ export default {
       this.markerPositions = data;
       // console.log(this.markerPositions);
     });
+    if (!this.isRe) {
+      this.isRe = true;
+    }
   },
   mounted() {
     if (!window.kakao || !window.kakao.maps) {
@@ -119,7 +123,7 @@ export default {
           aptcode: this.$route.params.aptcode,
           sidoName: this.sidoName,
           gugunName: this.gugunName,
-          dongName: this.dongName,
+          dong: this.dong,
         },
       });
     },

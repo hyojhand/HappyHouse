@@ -16,11 +16,11 @@
     </b-col>
     <b-col cols="6" class="align-self-center text-left">
       <div class="AptName">
-        <strong>{{ apt.aptName }} </strong>
+        <strong>{{ apt.apartmentName }} </strong>
       </div>
       <div>
         <strong>주소</strong> : {{ apt.sidoName }} {{ apt.gugunName }}
-        {{ apt.dongName }}
+        {{ apt.dong }}
       </div>
       <div><strong>건축년도</strong> : {{ apt.buildYear }} 년</div>
       <div><strong>거래가</strong> : {{ apt.recentPrice }} 만원</div>

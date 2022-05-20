@@ -26,7 +26,7 @@
           <select class="form-control" id="dong" @change="selectDong($event)">
             <option value="0">선택</option>
             <option :value="don.dongCode" v-for="don in dongs" :key="don.dong">
-              {{ don.dongName }}
+              {{ don.dong }}
             </option>
           </select>
         </div>
