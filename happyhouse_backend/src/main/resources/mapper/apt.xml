@@ -196,7 +196,6 @@
         order by area DESC;
 	</select>
 	
-	
 	<select id="getAptWord" parameterType="string" resultType="houseInfoDto">
 		select h.aptCode, h.aptName, h.buildyear, h.dongCode, h.dongName, h.jibun, h.lat, h.lng, si.sidoname, gu.gugunname,
 				(select dealAmount from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentPrice
@@ -207,6 +206,21 @@
 		on left(h.dongcode,5) = left(gu.guguncode,5)
 		where aptName like concat('%', #{aptName}, '%')
 		order by aptName
+	</select>
+	
+	<insert id="insertBookmark" parameterType="bookmark">
+		insert into bookmark
+		values (#{userid}, #{aptCode})
+	</insert>
+	
+	<delete id="deleteBookmark" parameterType="bookmark">
+		delete from bookmark
+		where userid = #{userid} and aptCode = #{aptCode}
+	</delete>
+	
+	<select id="selectBookmark" parameterType="bookmark" resultType="bookmark">
+		select * from bookmark
+		where userid = #{userid} and aptCode = #{aptCode}
 	</select>
 	
 </mapper>

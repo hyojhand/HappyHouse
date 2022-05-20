@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.happyhouse.model.AptSearchCnt;
+import com.ssafy.happyhouse.model.Bookmark;
 import com.ssafy.happyhouse.model.HouseDetail;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
@@ -97,7 +98,20 @@ public class HouseMapServiceImpl implements HouseMapService {
 	public List<HouseInfoDto> getAptWord(String word) throws Exception {
 		return houseMapMapper.getAptWord(word);
 	}
+
+	@Override
+	public int bookmark(Bookmark bookmark) throws Exception {
+		return houseMapMapper.insertBookmark(bookmark);
+	}
 	
+	@Override
+	public int subBookmark(Bookmark bookmark) throws Exception {
+		return houseMapMapper.deleteBookmark(bookmark);
+	}
 	
+	@Override
+	public boolean isBookmark(Bookmark bookmark) throws Exception {
+		return houseMapMapper.selectBookmark(bookmark).size() == 1;
+	}
 
 }

@@ -2,8 +2,17 @@
   <b-container class="bv-example-row">
     <b-row class="mt-3 mb-3">
       <b-col
-        ><h3>{{ selectApart.aptName }}</h3></b-col
-      >
+        ><h3>
+          {{ selectApart.aptName }}
+          &nbsp;&nbsp;<b-icon
+            v-if="isBookmark"
+            icon="bookmark-heart"
+            variant="info"
+            @click="nobookmark"
+          ></b-icon
+          ><b-icon v-else icon="bookmark-heart" @click="bookmark"></b-icon>
+        </h3>
+      </b-col>
     </b-row>
     <b-row class="mb-3 mt-1">
       <b-col
@@ -42,16 +51,96 @@
 
 <script>
 import { mapState } from "vuex";
+import http from "@/util/http-common";
+import jwt_decode from "jwt-decode";
 
 export default {
   name: "HouseDetail",
+  data() {
+    return {
+      userInfo: {},
+      isBookmark: "",
+    };
+  },
   computed: {
-    ...mapState(["selectApart", "selectApartImgNum"]),
+    ...mapState(["selectApart", "selectApartImgNum", "isLogin"]),
+  },
+  async created() {
+    if (!this.isLogin) {
+      alert("로그인된 사용자만 가능합니다!");
+    }
+    if (this.isLogin) {
+      const decode = jwt_decode(sessionStorage.getItem("access-token"));
+      http.defaults.headers["access-token"] =
+        sessionStorage.getItem("access-token");
+      await http.get(`/member/info/${decode.userid}`).then(({ data }) => {
+        this.userInfo = data.userInfo;
+        console.log(this.userInfo);
+      });
+      http
+        .get(`map/bookmark`, {
+          params: {
+            userid: this.userInfo.userid,
+            aptCode: this.selectApart.aptCode,
+          },
+        })
+        .then(({ data }) => {
+          this.isBookmark = data;
+          console.log("bookmark", this.isBookmark);
+        });
+    }
+  },
+  updated() {
+    http
+      .get(`map/bookmark`, {
+        params: {
+          userid: this.userInfo.userid,
+          aptCode: this.selectApart.aptCode,
+        },
+      })
+      .then(({ data }) => {
+        this.isBookmark = data;
+        console.log("bookmark", this.isBookmark);
+      });
   },
   filters: {
     price(value) {
       if (!value) return value;
       return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+  },
+  methods: {
+    bookmark() {
+      http
+        .post(`map/bookmark`, {
+          userid: this.userInfo.userid,
+          aptCode: this.selectApart.aptCode,
+        })
+        .then(({ data }) => {
+          let msg = "북마크 저장시 문제가 발생했습니다.";
+          if (data === "success") {
+            msg = "북마크하였습니다.";
+            this.isBookmark = true;
+          }
+          alert(msg);
+        });
+    },
+    nobookmark() {
+      http
+        .delete(`map/bookmark`, {
+          params: {
+            userid: this.userInfo.userid,
+            aptCode: this.selectApart.aptCode,
+          },
+        })
+        .then(({ data }) => {
+          let msg = "북마크 삭제시 문제가 발생했습니다.";
+          if (data === "success") {
+            msg = "북마크가 삭제되었습니다.";
+            this.isBookmark = false;
+          }
+          alert(msg);
+        });
     },
   },
 };

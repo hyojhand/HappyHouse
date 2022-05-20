@@ -56,4 +56,12 @@ CREATE TABLE SEARCHAPT (
     constraint fk_searchapt_dongcode foreign key (dongcode) references dongcode(dongCode)
 );
 
+CREATE TABLE BOOKMARK (
+	userid varchar(20),
+    aptCode int,
+    primary key (userid, aptCode),
+    constraint fk_bookmark_userid foreign key (userid) references USER(userid) on delete cascade,
+    constraint fk_bookmark_aptCode foreign key (aptCode) references houseinfo(aptCode)
+);
+
 INSERT INTO SEARCHAPT (dongcode) SELECT dongCode FROM dongcode;

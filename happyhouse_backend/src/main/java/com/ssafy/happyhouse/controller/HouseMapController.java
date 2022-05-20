@@ -6,13 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.happyhouse.model.Bookmark;
 import com.ssafy.happyhouse.model.HouseDetail;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
@@ -29,6 +32,9 @@ public class HouseMapController {
 
 	@Autowired
 	private HouseMapService HouseMapService;
+	
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 	
 	@GetMapping("/sido")
 	public ResponseEntity<List<SidoGugunCodeDto>> sido() throws Exception {
@@ -129,6 +135,27 @@ public class HouseMapController {
 	public ResponseEntity<List<HouseInfoDto>> word(@RequestParam("word") String word) throws Exception {
 //		System.out.println("word 실행");
 		return new ResponseEntity<List<HouseInfoDto>>(HouseMapService.getAptWord(word), HttpStatus.OK);
+	}
+	
+	@GetMapping("/bookmark")
+	public ResponseEntity<Boolean> isBookmark(@RequestParam String userid, @RequestParam int aptCode) throws Exception {
+		return new ResponseEntity<Boolean>(HouseMapService.isBookmark(new Bookmark(userid, aptCode)), HttpStatus.OK);
+	}
+	
+	@PostMapping("/bookmark")
+	public ResponseEntity<String> addBookmark(@RequestBody Bookmark bookmark) throws Exception {
+		if (HouseMapService.bookmark(bookmark) == 1) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@DeleteMapping("/bookmark")
+	public ResponseEntity<String> subBookmark(@RequestParam String userid, @RequestParam int aptCode) throws Exception {
+		if (HouseMapService.subBookmark(new Bookmark(userid, aptCode)) == 1) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
 }

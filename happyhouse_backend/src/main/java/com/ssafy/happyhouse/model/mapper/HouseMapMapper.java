@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.happyhouse.model.AptSearchCnt;
+import com.ssafy.happyhouse.model.Bookmark;
 import com.ssafy.happyhouse.model.HouseDetail;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 import com.ssafy.happyhouse.model.SidoGugunCodeDto;
@@ -34,5 +35,9 @@ public interface HouseMapMapper {
 	
 	
 	List<HouseInfoDto> getAptWord(String word) throws SQLException;
+	
+	int insertBookmark(Bookmark bookmark) throws SQLException;
+	int deleteBookmark(Bookmark bookmark) throws SQLException;
+	List<Bookmark> selectBookmark(Bookmark bookmark) throws SQLException;
 	
 }
