@@ -8,6 +8,6 @@ import lombok.Data;
 public class Bookmark {
 
 	private String userid;
-	private int aptCode;
+	private long aptCode;
 
 }

@@ -3,7 +3,7 @@
     <b-row class="mt-3 mb-3">
       <b-col
         ><h3>
-          {{ selectApart.aptName }}
+          {{ selectApart.apartmentName }}
           &nbsp;&nbsp;<b-icon
             v-if="isBookmark"
             icon="bookmark-heart"
@@ -66,9 +66,6 @@ export default {
     ...mapState(["selectApart", "selectApartImgNum", "isLogin"]),
   },
   async created() {
-    if (!this.isLogin) {
-      alert("로그인된 사용자만 가능합니다!");
-    }
     if (this.isLogin) {
       const decode = jwt_decode(sessionStorage.getItem("access-token"));
       http.defaults.headers["access-token"] =
@@ -111,6 +108,11 @@ export default {
   },
   methods: {
     bookmark() {
+      if (!this.isLogin) {
+        alert("로그인이 필요합니다 !");
+        this.$router.push({ name: "SignIn" });
+      }
+
       http
         .post(`map/bookmark`, {
           userid: this.userInfo.userid,
@@ -148,6 +150,6 @@ export default {
 
 <style scoped>
 #detailImg {
-  height: 500px;
+  height: 400px;
 }
 </style>

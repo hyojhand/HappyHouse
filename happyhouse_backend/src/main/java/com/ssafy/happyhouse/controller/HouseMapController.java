@@ -138,7 +138,7 @@ public class HouseMapController {
 	}
 	
 	@GetMapping("/bookmark")
-	public ResponseEntity<Boolean> isBookmark(@RequestParam String userid, @RequestParam int aptCode) throws Exception {
+	public ResponseEntity<Boolean> isBookmark(@RequestParam String userid, @RequestParam long aptCode) throws Exception {
 		return new ResponseEntity<Boolean>(HouseMapService.isBookmark(new Bookmark(userid, aptCode)), HttpStatus.OK);
 	}
 	
@@ -151,7 +151,7 @@ public class HouseMapController {
 	}
 	
 	@DeleteMapping("/bookmark")
-	public ResponseEntity<String> subBookmark(@RequestParam String userid, @RequestParam int aptCode) throws Exception {
+	public ResponseEntity<String> subBookmark(@RequestParam String userid, @RequestParam long aptCode) throws Exception {
 		if (HouseMapService.subBookmark(new Bookmark(userid, aptCode)) == 1) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}

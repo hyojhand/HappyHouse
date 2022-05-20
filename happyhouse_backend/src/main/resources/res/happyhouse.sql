@@ -50,15 +50,19 @@ CREATE TABLE MESSAGE (
     constraint fk_message_receive foreign key (receive) references USER(userid) on delete cascade
 );
 
+DROP TABLE SEARCHAPT;
 CREATE TABLE SEARCHAPT (
 	dongcode varchar(10) primary key,
     cnt int default 0,
     constraint fk_searchapt_dongcode foreign key (dongcode) references dongcode(dongCode)
 );
 
+DROP TABLE BOOKMARK;
+use happyhouse;
+DESC houseinfo;
 CREATE TABLE BOOKMARK (
 	userid varchar(20),
-    aptCode int,
+    aptCode bigint,
     primary key (userid, aptCode),
     constraint fk_bookmark_userid foreign key (userid) references USER(userid) on delete cascade,
     constraint fk_bookmark_aptCode foreign key (aptCode) references houseinfo(aptCode)
