@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import http from "@/util/http-common";
 import jwt_decode from "jwt-decode";
 export default {
@@ -107,10 +107,11 @@ export default {
     ...mapState("memberStore", ["isLogin"]),
   },
   methods: {
+    ...mapActions("memberStore", ["setIsNotLogin"]),
     logout() {
       console.log("로그아웃 시작");
       sessionStorage.removeItem("access-token");
-      this.$store.dispatch("setIsNotLogin");
+      this.setIsNotLogin();
       alert("로그아웃 성공!");
       this.$router.push({ name: "Home" });
     },
