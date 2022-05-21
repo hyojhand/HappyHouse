@@ -1,12 +1,13 @@
 <template>
   <div>
-    <h2 class="m-4">
+    <h2 class="m-4" v-if="type == 'bookmark'">나의 북마크 아파트 정보</h2>
+    <h2 class="m-4" v-else>
       {{ this.selectArea.sidoName }}
       {{ this.selectArea.gugunName }}
       {{ this.selectArea.dongName }} 지역 아파트 최근 거래정보
     </h2>
 
-    <div>
+    <div v-if="type != 'bookmark'">
       <span class="mr-4"
         >정렬 기준 : <b>{{ sortBy }}</b></span
       >
@@ -44,9 +45,9 @@
         </b-col>
       </b-row>
     </b-container>
-    <b-container v-else class="bv-example-row mt-3">
+    <b-container v-else style="margin-top: 350px; font-size: 20px">
       <b-row>
-        <b-col><b-alert show>아파트 목록이 없습니다.</b-alert></b-col>
+        <b-col>아파트 목록이 없습니다 :&#40;</b-col>
       </b-row>
     </b-container>
   </div>
@@ -70,7 +71,6 @@ export default {
       sortBy: "이름",
       sortDesc: false,
       apts: [],
-
       userInfo: {},
       type: "",
       flag: false,

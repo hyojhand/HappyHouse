@@ -144,6 +144,11 @@ const routes = [
       },
     ],
   },
+  {
+    path: "*",
+    name: "Error",
+    component: () => import("@/views/Error.vue"),
+  },
 ];
 
 const router = new VueRouter({

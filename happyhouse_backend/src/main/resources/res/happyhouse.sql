@@ -11,10 +11,12 @@ CREATE TABLE BOARD (
     constraint fk_board_writer foreign key (writer) references USER(userid) on delete cascade
 );
 
+ALTER TABLE user MODIFY COLUMN userpwd varchar(64) NOT NULL;
+
 CREATE TABLE USER (
 	userid 		varchar(20) 	primary key,
     username 	varchar(20) 	not null,
-    userpwd 	varchar(30) 	not null,
+    userpwd 	varchar(64) 	not null,
     email 		varchar(30) 	not null,
     joindate 	timestamp 		default current_timestamp,
     isadmin		int				default 0
@@ -50,16 +52,12 @@ CREATE TABLE MESSAGE (
     constraint fk_message_receive foreign key (receive) references USER(userid) on delete cascade
 );
 
-DROP TABLE SEARCHAPT;
 CREATE TABLE SEARCHAPT (
 	dongcode varchar(10) primary key,
     cnt int default 0,
     constraint fk_searchapt_dongcode foreign key (dongcode) references dongcode(dongCode)
 );
 
-DROP TABLE BOOKMARK;
-use happyhouse;
-DESC houseinfo;
 CREATE TABLE BOOKMARK (
 	userid varchar(20),
     aptCode bigint,

@@ -94,6 +94,6 @@ export default {
   top: 40%;
 }
 .news-img + div {
-  top: 20%;
+  top: 5%;
 }
 </style>

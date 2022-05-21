@@ -13,7 +13,7 @@
         </b-card>
       </b-card-group>
     </div>
-    <div class="mt-3">
+    <div class="mt-3 mb-5">
       <b-card-group deck>
         <b-card text-variant="dark" class="text-center" v-for="i in 3" :key="i">
           <h6 v-html="news[i + 2].title"></h6>
@@ -25,6 +25,9 @@
         </b-card>
       </b-card-group>
     </div>
+    <a href="https://www.ssafy.com/ksp/jsp/swp/swpMain.jsp" target="_blank"
+      ><img src="@/assets/banner.png"
+    /></a>
   </div>
 </template>
 

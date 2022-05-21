@@ -90,11 +90,11 @@ public class MemberController {
 				log.debug("로그인 토큰정보 : {}", token);
 				resultMap.put("access-token", token);
 				resultMap.put("message", SUCCESS);
-				status = HttpStatus.ACCEPTED;
+				resultMap.put("isadmin", loginUser.getIsadmin());
 			} else {
 				resultMap.put("message", FAIL);
-				status = HttpStatus.ACCEPTED;
 			}
+			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
 			log.error("로그인 실패 : {}", e);
 			resultMap.put("message", e.getMessage());
@@ -119,6 +119,7 @@ public class MemberController {
 				log.info("로그인 유저 정보 : {} ", member);
 				resultMap.put("userInfo", member);
 				resultMap.put("message", SUCCESS);
+				resultMap.put("isadmin", member.getIsadmin());
 				status = HttpStatus.ACCEPTED;
 			} catch (Exception e) {
 				log.error("정보조회 실패 : {}", e);

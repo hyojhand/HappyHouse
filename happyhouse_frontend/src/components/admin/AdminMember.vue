@@ -10,9 +10,9 @@
             class="mr-3"
             v-model="keyword"
             placeholder="검색어를 입력하세요"
-            @keyup="search"
+            @keyup.enter="search"
           ></b-form-input>
-          <b-button><b-icon icon="search"></b-icon></b-button>
+          <b-button @click="search"><b-icon icon="search"></b-icon></b-button>
         </b-row>
         <table class="text-light w-100" style="margin-top: 100px">
           <tr style="font-weight: bold; font-size: 20px; line-height: 80px">

@@ -15,6 +15,7 @@
       style="position: absolute; top: 230px; right: 250px; width: 300px"
       v-model="keyword"
       placeholder="검색어를 입력하세요"
+      @keyup.enter="search"
     ></b-form-input>
     <b-button
       style="position: absolute; top: 230px; right: 200px"

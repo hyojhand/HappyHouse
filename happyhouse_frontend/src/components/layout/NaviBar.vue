@@ -10,12 +10,14 @@
       "
       ><b-icon
         icon="three-dots-vertical"
-        style="width: 30px; height: 30px; color: pink"
+        style="width: 30px; height: 30px; color: ivory"
       ></b-icon
     ></b-button>
     <b-sidebar id="my-sidebar-right" right shadow>
+      <h5 v-if="isLogin" style="float: right; margin-right: 20px">
+        {{ this.userInfo.username }}님 반갑습니다 :&#41;
+      </h5>
       <div class="px-2 py-5">
-        <div v-if="isLogin">{{ this.userInfo.username }} 님 반갑습니다 ^^</div>
         <ul>
           <div v-if="isLogin">
             <li>
@@ -69,7 +71,7 @@
             >
           </li>
         </ul>
-        <ul>
+        <ul v-if="isLogin && isadmin">
           <li>
             <router-link :to="{ name: 'Admin' }">관리자 페이지</router-link>
           </li>
@@ -104,14 +106,15 @@ export default {
     });
   },
   computed: {
-    ...mapState("memberStore", ["isLogin"]),
+    ...mapState("memberStore", ["isLogin", "isadmin"]),
   },
   methods: {
-    ...mapActions("memberStore", ["setIsNotLogin"]),
+    ...mapActions("memberStore", ["setIsNotLogin", "setIsNotAdmin"]),
     logout() {
       console.log("로그아웃 시작");
       sessionStorage.removeItem("access-token");
       this.setIsNotLogin();
+      this.setisNotAdmin();
       alert("로그아웃 성공!");
       this.$router.push({ name: "Home" });
     },

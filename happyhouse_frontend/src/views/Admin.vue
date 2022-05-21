@@ -23,11 +23,10 @@
 export default {
   name: "Admin",
   created() {
-    // 고칠 파트 =======================================================================
-    // if (!this.isLogin) {
-    //   alert("관리자만 접근가능한 페이지입니다.");
-    //   this.$router.push({ name: "Home" });
-    // }
+    if (!this.isadmin) {
+      alert("관리자만 접근가능한 페이지입니다.");
+      this.$router.push({ name: "Home" });
+    }
   },
 
   methods: {

@@ -7,17 +7,17 @@
 
 	<insert id="registerMember" parameterType="Member">
 		insert into USER (userid, username, userpwd, email, joindate)
-		values (#{userid}, #{username}, #{userpwd}, #{email}, now())
+		values (#{userid}, #{username}, SHA2(#{userpwd}, 256), #{email}, now())
 	</insert>
 	
 	<select id="login" parameterType="Member" resultType="Member">
-		select username, userid, email, joindate
+		select username, userid, email, joindate, isadmin
 		from USER
-		where userid = #{userid} and userpwd = #{userpwd}
+		where userid = #{userid} and userpwd = SHA2(#{userpwd}, 256)
 	</select>
 	
 	<select id="userInfo" parameterType="String" resultType="Member">
-		select username, userid, email, joindate
+		select username, userid, email, joindate, isadmin
 		from USER
 		where userid = #{userid}
 	</select>
@@ -46,7 +46,7 @@
    
    <update id="updateMember" parameterType="Member">
       update USER
-      set username = #{username}, userpwd = #{userpwd}, email = #{email}   
+      set username = #{username}, userpwd = SHA2(#{userpwd}, 256), email = #{email}   
       where userid = #{userid}
    </update>
    
