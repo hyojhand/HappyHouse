@@ -9,6 +9,7 @@ export default new Vuex.Store({
     isLogin: false,
     selectApart: {},
     selectApartImgNum: "",
+    cafeList: [],
   },
   actions: {
     async goLogin({ commit }, user) {
@@ -35,44 +36,43 @@ export default new Vuex.Store({
     selectApartImgNum({ commit }, num) {
       commit("SELECT_APART_IMG_NUM", num);
     },
-    async getStoreList({ commit }, gugunCode) {
+    async getCafeList({ commit }, gugunCode) {
       console.log("getStoreList 시작");
       // vue cli enviroment variables 검색
       //.env.local file 생성.
       // 반드시 VUE_APP으로 시작해야 한다.
       const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
-      // const SERVICE_KEY =
-      //   "9Xo0vlglWcOBGUDxH8PPbuKnlBwbWU6aO7%2Bk3FV4baF9GXok1yxIEF%2BIwr2%2B%2F%2F4oVLT8bekKU%2Bk9ztkJO0wsBw%3D%3D";
       const SERVICE_URL =
-        "http://apis.data.go.kr/B553077/api/open/sdsc2/storeOne";
-
-      // const params = {
-      //   serviceKey: SERVICE_KEY, //decodeURIComponent(SERVICE_KEY),
-      //   key: signguCd,
-      //   divId: "signguCd", //ctprvnCd, signguCd, adongCd
-      //   type: "json",
-      //   indsLclsCd: "Q",
-      //   // indsMclsCd: "Q12",
-      //   // indsSclsCd: "Q12A01",
-      //   pageNo: 1,
-      //   numOfRows: 100,
-      // };
+        "http://apis.data.go.kr/B553077/api/open/sdsc2/storeListInDong";
 
       const params = {
-        key: "19911025",
-        serviceKey: SERVICE_KEY,
+        serviceKey: decodeURIComponent(SERVICE_KEY),
+        pageNo: 1,
+        numOfRows: 50,
+        // divId: "ldongCd", //ctprvnCd, signguCd, adongCd
+        // key: aptCode,
+        divId: "signguCd", //ctprvnCd, signguCd, adongCd
+        key: gugunCode,
+        // indsLclsCd: "Q", // 음식
+        indsMclsCd: "Q12", // 커피점/카페
+        // indsSclsCd: "Q12A01", // 커피전문점/카페/다방
+        type: "json",
       };
 
       await http
         .get(SERVICE_URL, { params })
         .then(({ data }) => {
           console.log("axios success 부분");
-
           console.log(data);
           console.log(gugunCode);
-          console.log(commit, data);
 
-          // commit("SET_HOUSE_LIST", data.response.body.items.item);
+          // console.log(data.body);
+          console.log(data.body.items);
+          // console.log(data.body.items[0]);
+          console.log(data.body.items[0].lat);
+          console.log(data.body.items[0].lon);
+
+          commit("SET_CAFE_LIST", data.body.items);
         })
         .catch((error) => {
           console.log("axios fail 부분");
@@ -94,6 +94,9 @@ export default new Vuex.Store({
     },
     SELECT_APART_IMG_NUM: (state, num) => {
       state.selectApartImgNum = num;
+    },
+    SET_CAFE_LIST: (state, cafeItems) => {
+      state.cafeList = cafeItems;
     },
   },
 

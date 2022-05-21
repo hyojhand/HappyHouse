@@ -3,7 +3,6 @@
     <div class="form-group form-inline justify-content-center">
       <div class="form-horizontal">
         <h1>Find Your Happy House</h1>
-        <button @click="testApi">test</button>
         <div class="form-inline">
           <label class="mr-2" for="sido">시/도 : </label>
           <select class="form-control" id="sido" @change="selectCity($event)">
@@ -47,6 +46,7 @@ export default {
     return {
       cities: [],
       guguns: [],
+      selectGuguncode: "",
       dongs: [],
     };
   },
@@ -56,19 +56,19 @@ export default {
     });
   },
   methods: {
-    ...mapActions(["getStoreList"]),
-    testApi() {
-      http.get("/test/api").then(({ data }) => {
-        console.log(data);
-      });
-    },
+    // ...mapActions(houseStore[("getSido", "getGugun", "getDong", "getApart")] ),
+    ...mapActions(["getCafeList"]),
+
     selectCity(event) {
+      // this.getSido(event.target.value);
       // 도시선택 후, 해당 도시 구/군 데이터 가져오기
       http.get(`/map/gugun/${event.target.value}`).then(({ data }) => {
         this.guguns = data;
       });
     },
     selectGugun(event) {
+      // this.getGugun(event.target.value);
+      this.selectGuguncode = event.target.value;
       // 구/군 선택 후, 해당 도시 동 데이터 가져오기
       http.get(`/map/dong/${event.target.value}`).then(({ data }) => {
         this.dongs = data;
@@ -81,7 +81,11 @@ export default {
 
       // 상권정보
       console.log("여기부터 상권정보 시작");
-      await this.getStoreList(aptcode);
+      // this.getStoreList({
+      //   gugunCode: this.selectGuguncode,
+      //   AptCode: aptcode,
+      // });
+      this.getCafeList(this.selectGuguncode);
       console.log("여기까지 상권정보 호출 끝");
 
       this.$router.push({
