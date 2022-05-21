@@ -3,6 +3,7 @@
     <div class="form-group form-inline justify-content-center">
       <div class="form-horizontal">
         <h1>Find Your Happy House</h1>
+        <button @click="testApi">test</button>
         <div class="form-inline">
           <label class="mr-2" for="sido">시/도 : </label>
           <select class="form-control" id="sido" @change="selectCity($event)">
@@ -37,6 +38,7 @@
 
 <script>
 import http from "@/util/http-common";
+import { mapActions } from "vuex";
 
 export default {
   name: "HouseSearchBar",
@@ -54,6 +56,12 @@ export default {
     });
   },
   methods: {
+    ...mapActions(["getStoreList"]),
+    testApi() {
+      http.get("/test/api").then(({ data }) => {
+        console.log(data);
+      });
+    },
     selectCity(event) {
       // 도시선택 후, 해당 도시 구/군 데이터 가져오기
       http.get(`/map/gugun/${event.target.value}`).then(({ data }) => {
@@ -66,10 +74,16 @@ export default {
         this.dongs = data;
       });
     },
-    selectDong(event) {
+    async selectDong(event) {
       let aptcode = event.target.value;
-      http.post(`/map/aptcnt/${aptcode}`);
+      await http.post(`/map/aptcnt/${aptcode}`);
       // 동 선택후, Map으로 넘어가면서 aptcode 넘기기
+
+      // 상권정보
+      console.log("여기부터 상권정보 시작");
+      await this.getStoreList(aptcode);
+      console.log("여기까지 상권정보 호출 끝");
+
       this.$router.push({
         name: "HouseMap",
         params: { aptcode: aptcode },

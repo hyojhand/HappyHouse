@@ -35,6 +35,52 @@ export default new Vuex.Store({
     selectApartImgNum({ commit }, num) {
       commit("SELECT_APART_IMG_NUM", num);
     },
+    async getStoreList({ commit }, gugunCode) {
+      console.log("getStoreList 시작");
+      // vue cli enviroment variables 검색
+      //.env.local file 생성.
+      // 반드시 VUE_APP으로 시작해야 한다.
+      const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
+      // const SERVICE_KEY =
+      //   "9Xo0vlglWcOBGUDxH8PPbuKnlBwbWU6aO7%2Bk3FV4baF9GXok1yxIEF%2BIwr2%2B%2F%2F4oVLT8bekKU%2Bk9ztkJO0wsBw%3D%3D";
+      const SERVICE_URL =
+        "http://apis.data.go.kr/B553077/api/open/sdsc2/storeOne";
+
+      // const params = {
+      //   serviceKey: SERVICE_KEY, //decodeURIComponent(SERVICE_KEY),
+      //   key: signguCd,
+      //   divId: "signguCd", //ctprvnCd, signguCd, adongCd
+      //   type: "json",
+      //   indsLclsCd: "Q",
+      //   // indsMclsCd: "Q12",
+      //   // indsSclsCd: "Q12A01",
+      //   pageNo: 1,
+      //   numOfRows: 100,
+      // };
+
+      const params = {
+        key: "19911025",
+        serviceKey: SERVICE_KEY,
+      };
+
+      await http
+        .get(SERVICE_URL, { params })
+        .then(({ data }) => {
+          console.log("axios success 부분");
+
+          console.log(data);
+          console.log(gugunCode);
+          console.log(commit, data);
+
+          // commit("SET_HOUSE_LIST", data.response.body.items.item);
+        })
+        .catch((error) => {
+          console.log("axios fail 부분");
+          console.log(error);
+        });
+
+      console.log("getStoreList 끝");
+    },
   },
   mutations: {
     SET_IS_LOGIN: (state) => {

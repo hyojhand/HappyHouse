@@ -83,7 +83,6 @@
 import { mapState } from "vuex";
 import http from "@/util/http-common";
 import jwt_decode from "jwt-decode";
-
 export default {
   name: "NaviBar",
   data() {

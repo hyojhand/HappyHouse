@@ -26,24 +26,24 @@ export default {
       isRe: false,
     };
   },
-  created() {
+  async created() {
     // 검색한 지역명 받아오기
-    http.get(`/map/aptinfo/${this.$route.params.aptcode}`).then(({ data }) => {
-      this.sidoName = data.sidoName;
-      this.gugunName = data.gugunName;
-      this.dong = data.dong;
-    });
+    await http
+      .get(`/map/aptinfo/${this.$route.params.aptcode}`)
+      .then(({ data }) => {
+        this.sidoName = data.sidoName;
+        this.gugunName = data.gugunName;
+        this.dong = data.dong;
+      });
     // 아파트 리스트 받아오기
-    http.get(`/map/apt/${this.$route.params.aptcode}`).then(({ data }) => {
-      // console.log(data);
-      this.markerPositions = data;
-      // console.log(this.markerPositions);
-    });
-    if (!this.isRe) {
-      this.isRe = true;
-    }
-  },
-  mounted() {
+    await http
+      .get(`/map/apt/${this.$route.params.aptcode}`)
+      .then(({ data }) => {
+        // console.log(data);
+        this.markerPositions = data;
+        // console.log(this.markerPositions);
+      });
+
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
       const MAP_API_KEY = process.env.VUE_APP_MAP_API_KEY;
@@ -58,14 +58,14 @@ export default {
     }
   },
   methods: {
-    initMap() {
+    async initMap() {
       const container = document.getElementById("map");
       const options = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567),
         level: 8,
       };
       this.map = new kakao.maps.Map(container, options);
-      this.displayMarkers();
+      await this.displayMarkers();
     },
     displayMarkers() {
       var bounds = new kakao.maps.LatLngBounds();
