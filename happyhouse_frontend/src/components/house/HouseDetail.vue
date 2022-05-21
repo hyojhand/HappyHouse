@@ -139,7 +139,12 @@ export default {
           let msg = "북마크 삭제시 문제가 발생했습니다.";
           if (data === "success") {
             msg = "북마크가 삭제되었습니다.";
-            this.isBookmark = false;
+            console.log(this);
+            if (this.$route.params.type == "bookmark") {
+              this.$emit("deleteBookmark", true);
+            } else {
+              this.isBookmark = false;
+            }
           }
           alert(msg);
         });

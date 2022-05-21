@@ -223,4 +223,23 @@
 		where userid = #{userid} and aptCode = #{aptCode}
 	</select>
 	
+	<select id="getBookmark" parameterType="string" resultType="houseDetail">
+		select a.aptCode, i.apartmentName, i.buildyear, i.dongCode, i.dong, si.sidoname, gu.gugunname, hd.dealAmount recentPrice, hd.dealYear recentYear, hd.dealMonth recentMonth, hd.dealDay recentDay, hd.area, hd.floor
+			from (select b.aptCode, max(no) num
+				from bookmark b, housedeal d
+				where b.aptCode = d.aptCode
+				and userid = #{userid} group by b.aptCode
+				) a,
+			    houseinfo i, housedeal hd, sidocode si, guguncode gu
+			where a.aptCode = i.aptCode and i.aptCode = hd.aptCode and left(i.dongcode, 2) = left(si.sidocode, 2) and left(i.dongcode, 5) = left(gu.guguncode, 5) and a.num = hd.no;
+	</select>
+	
+	<select id="getMostBookmark" resultType="houseInfoDto">
+	select h.apartmentName, si.sidoname, gu.gugunname, h.dong
+		from houseinfo h, sidocode si, guguncode gu, (select aptCode from bookmark group by aptCode order by count(*) limit 10) a
+		where h.aptCode = a.aptCode and
+		left(h.dongcode, 2) = left(si.sidocode, 2) and
+		left(h.dongcode, 5) = left(gu.guguncode, 5)
+	</select>
+	
 </mapper>

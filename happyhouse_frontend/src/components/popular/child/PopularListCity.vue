@@ -6,7 +6,7 @@
       :key="i"
       style="color: white; font-size: 20px"
     >
-      <h2>{{ cities[i].address }}</h2>
+      <h2>{{ cities[i - 1].address }}</h2>
     </div>
   </div>
 </template>
@@ -15,13 +15,7 @@ import http from "@/util/http-common.js";
 export default {
   data() {
     return {
-      cities: [
-        {
-          dongCode: "",
-          address: "",
-          cnt: "",
-        },
-      ],
+      cities: [],
     };
   },
   created() {

@@ -35,7 +35,11 @@
           />
         </b-col>
         <b-col cols="6">
-          <house-detail />
+          <house-detail
+            :type="type"
+            :flag="flag"
+            @deleteBookmark="deleteBookmark"
+          />
         </b-col>
       </b-row>
     </b-container>
@@ -51,6 +55,8 @@
 import HouseListRow from "@/components/house/HouseListRow.vue";
 import HouseDetail from "@/components/house/HouseDetail.vue";
 import http from "@/util/http-common";
+import { mapState } from "vuex";
+import jwt_decode from "jwt-decode";
 
 export default {
   name: "HouseList",
@@ -67,26 +73,55 @@ export default {
       sidoName: "",
       gugunName: "",
       dong: "",
+      userInfo: {},
+      type: "",
+      flag: false,
     };
   },
-  created() {
+  computed: {
+    ...mapState(["isLogin"]),
+  },
+  async created() {
+    if (!this.isLogin) {
+      alert("로그인된 사용자만 가능합니다!");
+      this.$router.push({ name: "Home" });
+    }
+    if (this.isLogin) {
+      const decode = jwt_decode(sessionStorage.getItem("access-token"));
+      http.defaults.headers["access-token"] =
+        sessionStorage.getItem("access-token");
+      await http.get(`/member/info/${decode.userid}`).then(({ data }) => {
+        this.userInfo = data.userInfo;
+        console.log(this.userInfo);
+      });
+    }
     if (this.$route.params.type == "bookmark") {
+      this.type = "bookmark";
       console.log("bookmark");
-    } else {
-      this.sidoName = this.$route.params.sidoName;
-      this.gugunName = this.$route.params.gugunName;
-      this.dong = this.$route.params.dong;
-      this.aptCode = this.$route.params.aptcode;
       http
-        .get(`/map/aptdetail/${this.$route.params.aptcode}`)
+        .get(`/map/bookmark/list/${this.userInfo.userid}`)
         .then(({ data }) => {
           console.log(data);
           this.apts = data;
+          this.aptCode = data[0].aptCode;
           if (data != null) {
             this.$store.dispatch("selectApt", data[0]);
             this.$store.dispatch("selectApartImgNum", "1");
           }
         });
+    } else {
+      this.sidoName = this.$route.params.sidoName;
+      this.gugunName = this.$route.params.gugunName;
+      this.dong = this.$route.params.dong;
+      this.aptCode = this.$route.params.aptcode;
+      http.get(`/map/aptdetail/${this.aptCode}`).then(({ data }) => {
+        console.log(data);
+        this.apts = data;
+        if (data != null) {
+          this.$store.dispatch("selectApt", data[0]);
+          this.$store.dispatch("selectApartImgNum", "1");
+        }
+      });
     }
   },
   methods: {
@@ -189,6 +224,21 @@ export default {
           .get(`/map/aptdetail/area/${this.$route.params.aptcode}`)
           .then(({ data }) => {
             this.apts = data;
+            if (data != null) {
+              this.$store.dispatch("selectApt", data[0]);
+              this.$store.dispatch("selectApartImgNum", "1");
+            }
+          });
+      }
+    },
+    deleteBookmark(flag) {
+      if (flag) {
+        http
+          .get(`/map/bookmark/list/${this.userInfo.userid}`)
+          .then(({ data }) => {
+            console.log(data);
+            this.apts = data;
+            this.aptCode = data[0].aptCode;
             if (data != null) {
               this.$store.dispatch("selectApt", data[0]);
               this.$store.dispatch("selectApartImgNum", "1");

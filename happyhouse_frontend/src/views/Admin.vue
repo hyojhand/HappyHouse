@@ -8,6 +8,9 @@
         <div class="mt-5">
           <a class="text-light" @click="moveAdminSearch">검색 통계</a>
         </div>
+        <div class="mt-5">
+          <a class="text-light" @click="moveAdminBookmark">북마크 통계</a>
+        </div>
       </div>
       <b-col class="text-center align-self-center" style="margin-top: 100px">
         <router-view></router-view>
@@ -36,6 +39,11 @@ export default {
     moveAdminSearch() {
       this.$router.push({
         name: "AdminSearch",
+      });
+    },
+    moveAdminBookmark() {
+      this.$router.push({
+        name: "AdminBookmark",
       });
     },
   },

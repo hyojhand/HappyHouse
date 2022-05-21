@@ -113,5 +113,15 @@ public class HouseMapServiceImpl implements HouseMapService {
 	public boolean isBookmark(Bookmark bookmark) throws Exception {
 		return houseMapMapper.selectBookmark(bookmark).size() == 1;
 	}
+	
+	@Override
+	public List<HouseDetail> retrieveBookmark(String userid) throws Exception {
+		return houseMapMapper.getBookmark(userid);
+	}
+
+	@Override
+	public List<HouseInfoDto> getMostBookmark() throws Exception {
+		return houseMapMapper.getMostBookmark();
+	}
 
 }

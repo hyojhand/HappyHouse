@@ -39,5 +39,7 @@ public interface HouseMapMapper {
 	int insertBookmark(Bookmark bookmark) throws SQLException;
 	int deleteBookmark(Bookmark bookmark) throws SQLException;
 	List<Bookmark> selectBookmark(Bookmark bookmark) throws SQLException;
+	List<HouseDetail> getBookmark(String userid) throws SQLException;
+	List<HouseInfoDto> getMostBookmark() throws SQLException;
 	
 }

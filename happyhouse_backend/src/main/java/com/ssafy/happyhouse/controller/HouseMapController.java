@@ -158,4 +158,9 @@ public class HouseMapController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+	@GetMapping("/bookmark/list/{userid}")
+	public ResponseEntity<List<HouseDetail>> retrieveBookmark(@PathVariable String userid) throws Exception {
+		return new ResponseEntity<List<HouseDetail>>(HouseMapService.retrieveBookmark(userid), HttpStatus.OK);
+	}
+	
 }

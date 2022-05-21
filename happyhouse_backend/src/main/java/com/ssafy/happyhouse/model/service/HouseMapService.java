@@ -35,5 +35,7 @@ public interface HouseMapService {
 	int bookmark(Bookmark bookmark) throws Exception;
 	int subBookmark(Bookmark bookmark) throws Exception;
 	boolean isBookmark(Bookmark bookmark) throws Exception;
+	List<HouseDetail> retrieveBookmark(String userid) throws Exception;
+	List<HouseInfoDto> getMostBookmark() throws Exception;
 	
 }

@@ -13,31 +13,12 @@
 </template>
 
 <script>
-import http from "@/util/http-common.js";
 import PopularListCity from "@/components/popular/child/PopularListCity.vue";
 import PopularListBookmark from "@/components/popular/child/PopularListBookmark.vue";
 export default {
   components: {
     PopularListCity,
     PopularListBookmark,
-  },
-  created() {
-    http.get(`/news`).then(({ data }) => {
-      this.news = data.items;
-    });
-  },
-  data() {
-    return {
-      news: [
-        {
-          title: "",
-          description: "",
-          link: "",
-          originallink: "",
-          pubDate: "",
-        },
-      ],
-    };
   },
 };
 </script>
