@@ -114,7 +114,7 @@ export default {
       console.log("로그아웃 시작");
       sessionStorage.removeItem("access-token");
       this.setIsNotLogin();
-      this.setisNotAdmin();
+      this.setIsNotAdmin();
       alert("로그아웃 성공!");
       this.$router.push({ name: "Home" });
     },

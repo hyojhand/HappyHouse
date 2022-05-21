@@ -10,8 +10,7 @@ import com.ssafy.happyhouse.model.Reply;
 
 @Mapper
 public interface MypageMapper {
- 	public List<Message> selectReceiveMessage(String userid);
- 	public List<Message> selectSendMessage(String userid);
+ 	public List<Message> selectMessage(String userid);
  	public List<BoardDto> selectBoard(String userid);
  	public List<Reply> selectReply(String userid);
  	public List<BoardDto> selectLike(String userid);

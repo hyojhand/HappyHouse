@@ -17,14 +17,9 @@ public class MypageServiceImpl implements MypageService {
 	private MypageMapper mypageMapper;
 
     @Override
-	public List<Message> retrieveReceiveMessage(String userid) {
-    	return mypageMapper.selectReceiveMessage(userid);
+	public List<Message> retrieveMessage(String userid) {
+    	return mypageMapper.selectMessage(userid);
 	}
-    
-    @Override
-    public List<Message> retrieveSendMessage(String userid) {
-    	return mypageMapper.selectSendMessage(userid);
-    }
     
     @Override
     public List<BoardDto> retrieveBoard(String userid) {

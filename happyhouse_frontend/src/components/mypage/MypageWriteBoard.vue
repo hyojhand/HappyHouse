@@ -16,7 +16,17 @@
             style="line-height: 50px"
           >
             <td>{{ article.title }}</td>
-            <td>{{ article.content }}</td>
+            <td
+              style="
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 200px;
+              "
+            >
+              {{ article.content }}
+            </td>
             <td><b-icon icon="heart"></b-icon> {{ article.likey }}</td>
             <td>{{ article.regtime }}</td>
             <td>
@@ -78,4 +88,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+td {
+  padding: 10px;
+}
+</style>

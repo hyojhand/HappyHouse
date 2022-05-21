@@ -6,7 +6,7 @@
         <table class="text-light w-100">
           <tr style="font-weight: bold; font-size: 20px; line-height: 80px">
             <td>제목</td>
-            <td>내용</td>
+            <td style="width: 600px">내용</td>
           </tr>
           <tr
             v-for="article in articles"
@@ -14,7 +14,17 @@
             style="line-height: 50px"
           >
             <td>{{ article.title }}</td>
-            <td>{{ article.content }}</td>
+            <td
+              style="
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 200px;
+              "
+            >
+              {{ article.content }}
+            </td>
             <td>
               <b-button
                 class="btn-light"
@@ -58,7 +68,7 @@ export default {
   created() {
     this.userInfo = this.$route.params.userInfo;
     console.log(this.userInfo);
-    http.get(`/mypage/board/${this.userInfo.userid}`).then(({ data }) => {
+    http.get(`/mypage/like/${this.userInfo.userid}`).then(({ data }) => {
       console.log(data);
       this.articles = data;
     });
@@ -74,4 +84,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+td {
+  padding: 10px;
+}
+</style>

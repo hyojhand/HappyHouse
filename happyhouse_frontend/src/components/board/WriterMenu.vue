@@ -3,12 +3,7 @@
     <b-dropdown-item v-b-modal="'modal-' + no" v-if="isLogin"
       >쪽지 보내기</b-dropdown-item
     >
-    <b-modal
-      :id="'modal-' + no"
-      :ref="'modal-' + no"
-      title="쪽지 보내기"
-      hide-footer
-    >
+    <b-modal :id="'modal-' + no" title="쪽지 보내기" hide-footer>
       <b-form-group id="title-group">
         <b-form-input
           type="text"
@@ -81,7 +76,7 @@ export default {
           }
           alert(msg);
         });
-      this.$refs[`modal-${no}`].hide();
+      this.$bvModal.hide(`modal-${no}`);
     },
     searchBoard() {
       http.get(`board/writer/${this.$props.writer}`).then(({ data }) => {

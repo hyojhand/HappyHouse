@@ -6,6 +6,9 @@
           <a class="text-light" @click="moveMypageMember">회원정보 수정</a>
         </div>
         <div class="mt-5">
+          <a class="text-light" @click="moveMessage">쪽지함</a>
+        </div>
+        <div class="mt-5">
           <a class="text-light" @click="moveMessageReceive">받은 쪽지</a>
         </div>
         <div class="mt-5">
@@ -21,7 +24,7 @@
           <a class="text-light" @click="moveLikeBoard">좋아요한 게시글</a>
         </div>
       </div>
-      <b-col class="text-center align-self-center" style="margin-top: 100px">
+      <b-col class="text-center">
         <router-view></router-view>
       </b-col>
     </b-row>
@@ -63,6 +66,12 @@ export default {
     moveMypageMember() {
       this.$router.push({
         name: "MypageMember",
+        params: { userInfo: this.userInfo },
+      });
+    },
+    moveMessage() {
+      this.$router.push({
+        name: "MypageMessage",
         params: { userInfo: this.userInfo },
       });
     },

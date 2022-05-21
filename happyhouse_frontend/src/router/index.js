@@ -62,6 +62,11 @@ const routes = [
         component: () => import("@/components/mypage/MypageMessageReceive.vue"),
       },
       {
+        path: "message",
+        name: "MypageMessage",
+        component: () => import("@/components/mypage/MypageMessage.vue"),
+      },
+      {
         path: "send",
         name: "MypageMessageSend",
         component: () => import("@/components/mypage/MypageMessageSend.vue"),

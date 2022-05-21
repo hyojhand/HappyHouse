@@ -4,19 +4,11 @@
 
 <mapper namespace="com.ssafy.happyhouse.model.mapper.MypageMapper">
 	
-	<!-- 해당 유저의 발송 메시지 조회 -->
-	<select id="selectReceiveMessage" resultType="message">
+	<!-- 해당 유저의 발송 혹은 전송 메시지 조회 -->
+	<select id="selectMessage" resultType="message">
 		select *
 		  from message 
-		 where receive = #{userid}
-		 order by messageid desc
-	</select>
-	
-	<!-- 해당 유저의 전송 메시지 조회 -->
-	<select id="selectSendMessage" resultType="message">
-		select *
-		  from message 
-		 where send = #{userid}
+		 where send = #{userid} or receive = #{userid}
 		 order by messageid desc
 	</select>
 	

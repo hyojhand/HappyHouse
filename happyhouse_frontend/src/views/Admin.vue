@@ -20,8 +20,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Admin",
+  computed: {
+    ...mapState("memberStore", ["isadmin"]),
+  },
   created() {
     if (!this.isadmin) {
       alert("관리자만 접근가능한 페이지입니다.");

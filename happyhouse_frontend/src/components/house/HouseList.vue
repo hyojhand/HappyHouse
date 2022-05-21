@@ -17,9 +17,9 @@
     </div>
     <b-container
       v-if="this.apts && this.apts.length != 0"
-      class="bv-example-row mt-3"
+      class="bv-example-row mt-5"
     >
-      <div>
+      <div v-if="type != 'bookmark'">
         <b-nav tabs fill>
           <b-nav-item @click="sortName">이름</b-nav-item>
           <b-nav-item @click="sortYear">건축년도</b-nav-item>
