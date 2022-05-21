@@ -1,27 +1,32 @@
 <template>
   <b-container>
-    <h3 class="underline-blue">
+    <h3 class="map-title">
       <b-icon icon="house-fill"></b-icon> {{ this.selectArea.sidoName }}
       {{ this.selectArea.gugunName }}
       {{ this.selectArea.dongName }}
       아파트 목록입니다.
     </h3>
 
-    <b-form-group
-      label="Select filter more Information"
-      v-slot="{ ariaDescribedby }"
-    >
-      <b-form-checkbox-group
-        v-model="selected"
-        :options="options"
-        :aria-describedby="ariaDescribedby"
-        switches
-      ></b-form-checkbox-group>
-    </b-form-group>
+    <b-row>
+      <b-col>
+        <b-form-group v-slot="{ ariaDescribedby }">
+          <b-form-checkbox-group
+            @change="selectCategory"
+            v-model="selected"
+            :options="options"
+            :aria-describedby="ariaDescribedby"
+            switches
+          ></b-form-checkbox-group>
+        </b-form-group>
+      </b-col>
+
+      <b-col>
+        <span @click="moveList()">아파트 상세정보 확인</span>
+      </b-col>
+    </b-row>
 
     <div id="map"></div>
     <br />
-    <b-button variant="info" @click="moveList()">아파트 상세정보 확인</b-button>
   </b-container>
 </template>
 
@@ -34,30 +39,28 @@ export default {
   data() {
     return {
       map: null,
-      markers: [],
+      markers: [], // 마커를 담을 배열입니다
       markerPositions: [],
+      // placeOverlay: "", // 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이
+      // contentNode: "", // 커스텀 오버레이의 컨텐츠 엘리먼트
+      // currCategory: "", // 현재 선택된 카테고리를 가지고 있을 변수
+      ps: "", // 장소 검색 객체
+      infowindow: "", // 인포윈도우 객체
+      categoryMarkers: [], // 선택한 카테고리 마커 담을 배열
 
       selected: [], // Must be an array reference!
       options: [
-        { text: "Apart", value: "apart" },
         { text: "Cafe", value: "cafe" },
-        { text: "Market", value: "market" },
+        { text: "Bank", value: "bank" },
+        { text: "Education", value: "education" },
         { text: "Hospital", value: "hospital" },
       ],
     };
   },
   computed: {
-    ...mapState("houseStore", ["cafeList", "selectDong", "selectArea"]),
+    ...mapState("houseStore", ["selectDong", "selectArea"]),
   },
   async created() {
-    console.log(this.selectArea);
-    // 검색한 지역명 받아오기
-    // await http.get(`/map/aptinfo/${this.selectDong}`).then(({ data }) => {
-    //   this.sidoName = data.sidoName;
-    //   this.gugunName = data.gugunName;
-    //   this.dong = data.dong;
-    // });
-
     // 아파트 좌표 리스트 받아오기
     await http.get(`/map/apt/${this.selectDong}`).then(({ data }) => {
       this.markerPositions = data;
@@ -83,7 +86,13 @@ export default {
         center: new kakao.maps.LatLng(37.566826, 126.9786567),
         level: 8,
       };
+
+      // 지도 생성
       this.map = new kakao.maps.Map(container, options);
+
+      // // 인포윈도우 객체 생성
+      this.infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+
       await this.displayMarkers();
     },
     displayMarkers() {
@@ -96,38 +105,15 @@ export default {
         });
       }
 
-      for (var k = 0; k < this.cafeList.length; k++) {
-        // var imageSrcCafe = "https://i.dlpng.com/static/png/6478431_preview.png";
-        var imageSrcCafe =
-          "https://cdn-icons.flaticon.com/png/512/8/premium/8106.png?token=exp=1653119711~hmac=c5b90fab6ae5248e128c238d99df4dab";
-        // var imageSrcCafe = "@/assets/cafe_marker.png";
-        var imageSizeCafe = new kakao.maps.Size(36, 37);
-        var imgOptionsCafe = {
-          spriteSize: new kakao.maps.Size(36, 30), // 스프라이트 이미지의 크기
-          //   spriteOrigin: new kakao.maps.Point(0, k * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-          offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        };
-        var markerImageCafe = new kakao.maps.MarkerImage(
-          imageSrcCafe,
-          imageSizeCafe,
-          imgOptionsCafe
-        );
-
-        var storePosition = new kakao.maps.LatLng(
-          this.cafeList[k].lat,
-          this.cafeList[k].lon
-        );
-
-        var markerCafe = new kakao.maps.Marker({
-          map: this.map,
-          position: storePosition,
-          image: markerImageCafe,
+      // 1-2. 표시되어있는 카테고리 marker 삭제
+      if (this.categoryMarkers.length > 0) {
+        this.categoryMarkers.forEach((item) => {
+          item.setMap(null);
         });
-        this.markers.push(markerCafe);
-        markerCafe.setMap(this.map);
+        this.categoryMarkers = [];
       }
 
-      // 2. 마커의 개수만큼 마커 표시
+      // 2. 아파트 마커의 개수만큼 아파트 마커 표시
       for (var i = 0; i < this.markerPositions.length; i++) {
         // 2-1. 마커 이미지 세팅
         var imageSrc =
@@ -149,8 +135,6 @@ export default {
           this.markerPositions[i].lat,
           this.markerPositions[i].lng
         );
-        // console.log(this.markerPositions[i].lat);
-        // console.log(this.markerPositions[i].lng);
 
         // 3. 마커 좌표, 이미지 세팅
         var marker = new kakao.maps.Marker({
@@ -187,6 +171,98 @@ export default {
       // 5. 검색된 위치들 기준으로 지도 범위 재설정
       this.map.setBounds(bounds);
     },
+    // 카테고리 키워드 검색 후 마커찍는 메서드
+    placesSearchCB(data, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        for (var i = 0; i < data.length; i++) {
+          var place = data[i];
+          this.categoryMarkers = new kakao.maps.Marker({
+            // new kakao.maps.Marker({
+            map: this.map,
+            position: new kakao.maps.LatLng(place.y, place.x),
+          });
+
+          // 인포윈도우
+          // 마커에 클릭이벤트를 등록합니다
+          kakao.maps.event.addListener(
+            this.categoryMarkers,
+            "click",
+            function () {
+              // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+              this.infowindow.setContent(
+                '<div style="padding:5px;font-size:12px;">' +
+                  place.place_name +
+                  "</div>"
+              );
+              this.infowindow.open(this.map, this.categoryMarkers);
+            }
+          );
+        }
+      }
+    },
+    selectCategory() {
+      if (this.categoryMarkers.length > 0) {
+        this.categoryMarkers.forEach((item) => {
+          item.setMap(null);
+        });
+        this.categoryMarkers = null;
+      }
+
+      console.log(this.selected);
+      console.log(this.selected.length);
+      console.log(this.categoryMarkers);
+
+      // 장소 검색 객체
+      this.ps = new kakao.maps.services.Places(this.map);
+
+      for (var k = 0; k < this.selected.length; k++) {
+        if (this.selected[k] == "cafe") {
+          // 카페
+          this.ps.categorySearch("CE7", this.placesSearchCB, {
+            useMapBounds: true,
+          });
+        } else if (this.selected[k] == "bank") {
+          // 은행
+          this.ps.categorySearch("BK9", this.placesSearchCB, {
+            useMapBounds: true,
+          });
+        } else if (this.selected[k] == "education") {
+          //학교, 학원, 어린이집/유치원
+          this.ps.categorySearch("SC4", this.placesSearchCB, {
+            useMapBounds: true,
+          });
+          this.ps.categorySearch("AC5", this.placesSearchCB, {
+            useMapBounds: true,
+          });
+          this.ps.categorySearch("PS3", this.placesSearchCB, {
+            useMapBounds: true,
+          });
+        } else if (this.selected[k] == "hospital") {
+          // 병원, 약국
+          this.ps.categorySearch("HP8", this.placesSearchCB, {
+            useMapBounds: true,
+          });
+          this.ps.categorySearch("PM9", this.placesSearchCB, {
+            useMapBounds: true,
+          });
+        }
+      }
+
+      /** 고민할것 */
+      // CS2 편의점
+      // CT1 문화시설
+
+      // MT1 대형마트
+      // PK6 주차장
+      // OL7 주유소, 충전소
+      // SW8 지하철역
+      // AG2 중개업소
+      // PO3 공공기관
+      // AT4 관광명소
+      // AD5 숙박
+      // FD6 음식점
+    },
+
     moveList() {
       this.$router.push({ name: "HouseList" });
     },
@@ -197,10 +273,10 @@ export default {
 <style scoped>
 #map {
   width: 100%;
-  height: 600px;
+  height: 700px;
 }
-.underline-blue {
+.map-title {
   display: inline-block;
-  margin: 30px auto;
+  margin: 30px 50px;
 }
 </style>

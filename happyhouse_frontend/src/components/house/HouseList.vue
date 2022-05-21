@@ -38,6 +38,7 @@
         </b-col>
         <b-col cols="6">
           <house-detail
+            id="house_detail"
             :type="type"
             :flag="flag"
             @deleteBookmark="deleteBookmark"
@@ -229,4 +230,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+#house_detail {
+  position: sticky;
+  top: 100px;
+}
+</style>

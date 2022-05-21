@@ -61,14 +61,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions("houseStore", [
-      "getSido",
-      "getGugun",
-      "getDong",
-      "getArea",
-      "getCafeList",
-    ]),
-    // ...mapActions(["getCafeList"]),
+    ...mapActions("houseStore", ["getSido", "getGugun", "getDong", "getArea"]),
 
     selectCity(event) {
       this.getSido(event.target.value);
@@ -91,10 +84,6 @@ export default {
       this.getDong(aptcode);
       await http.post(`/map/aptcnt/${aptcode}`);
       // 동 선택후, Map으로 넘어가면서 aptcode 넘기기
-
-      // 상권정보
-      this.getCafeList(this.selectGuguncode);
-      console.log("여기까지 상권정보 호출 끝");
 
       http.get(`/map/aptinfo/${aptcode}`).then(({ data }) => {
         this.getArea({
