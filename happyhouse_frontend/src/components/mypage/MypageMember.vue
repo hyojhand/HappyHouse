@@ -85,7 +85,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState("memberStore", ["isLogin"]),
   },
   created() {
     this.userInfo = this.$route.params.userInfo;

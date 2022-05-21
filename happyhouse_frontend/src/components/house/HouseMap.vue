@@ -1,8 +1,10 @@
 <template>
   <b-container>
     <h3 class="underline-blue">
-      <b-icon icon="house-fill"></b-icon> {{ sidoName }} {{ gugunName }}
-      {{ dong }} 아파트 목록입니다.
+      <b-icon icon="house-fill"></b-icon> {{ this.selectArea.sidoName }}
+      {{ this.selectArea.gugunName }}
+      {{ this.selectArea.dongName }}
+      아파트 목록입니다.
     </h3>
 
     <b-form-group
@@ -31,10 +33,6 @@ export default {
   name: "HouseMap",
   data() {
     return {
-      sidoName: "",
-      gugunName: "",
-      dong: "",
-
       map: null,
       markers: [],
       markerPositions: [],
@@ -49,23 +47,21 @@ export default {
     };
   },
   computed: {
-    ...mapState(["storeList"]),
+    ...mapState("houseStore", ["cafeList", "selectDong", "selectArea"]),
   },
   async created() {
+    console.log(this.selectArea);
     // 검색한 지역명 받아오기
-    await http
-      .get(`/map/aptinfo/${this.$route.params.aptcode}`)
-      .then(({ data }) => {
-        this.sidoName = data.sidoName;
-        this.gugunName = data.gugunName;
-        this.dong = data.dong;
-      });
+    // await http.get(`/map/aptinfo/${this.selectDong}`).then(({ data }) => {
+    //   this.sidoName = data.sidoName;
+    //   this.gugunName = data.gugunName;
+    //   this.dong = data.dong;
+    // });
+
     // 아파트 좌표 리스트 받아오기
-    await http
-      .get(`/map/apt/${this.$route.params.aptcode}`)
-      .then(({ data }) => {
-        this.markerPositions = data;
-      });
+    await http.get(`/map/apt/${this.selectDong}`).then(({ data }) => {
+      this.markerPositions = data;
+    });
 
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
@@ -100,7 +96,7 @@ export default {
         });
       }
 
-      for (var k = 0; k < this.storeList.length; k++) {
+      for (var k = 0; k < this.cafeList.length; k++) {
         // var imageSrcCafe = "https://i.dlpng.com/static/png/6478431_preview.png";
         var imageSrcCafe =
           "https://cdn-icons.flaticon.com/png/512/8/premium/8106.png?token=exp=1653119711~hmac=c5b90fab6ae5248e128c238d99df4dab";
@@ -118,8 +114,8 @@ export default {
         );
 
         var storePosition = new kakao.maps.LatLng(
-          this.storeList[k].lat,
-          this.storeList[k].lon
+          this.cafeList[k].lat,
+          this.cafeList[k].lon
         );
 
         var markerCafe = new kakao.maps.Marker({
@@ -192,15 +188,7 @@ export default {
       this.map.setBounds(bounds);
     },
     moveList() {
-      this.$router.push({
-        name: "HouseList",
-        params: {
-          aptcode: this.$route.params.aptcode,
-          sidoName: this.sidoName,
-          gugunName: this.gugunName,
-          dong: this.dong,
-        },
-      });
+      this.$router.push({ name: "HouseList" });
     },
   },
 };

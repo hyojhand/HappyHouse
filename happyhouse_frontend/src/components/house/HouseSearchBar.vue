@@ -56,18 +56,25 @@ export default {
     });
   },
   methods: {
-    // ...mapActions(houseStore[("getSido", "getGugun", "getDong", "getApart")] ),
-    ...mapActions(["getCafeList"]),
+    ...mapActions("houseStore", [
+      "getSido",
+      "getGugun",
+      "getDong",
+      "getArea",
+      "getCafeList",
+    ]),
+    // ...mapActions(["getCafeList"]),
 
     selectCity(event) {
-      // this.getSido(event.target.value);
+      this.getSido(event.target.value);
       // 도시선택 후, 해당 도시 구/군 데이터 가져오기
       http.get(`/map/gugun/${event.target.value}`).then(({ data }) => {
         this.guguns = data;
       });
     },
     selectGugun(event) {
-      // this.getGugun(event.target.value);
+      this.getGugun(event.target.value);
+
       this.selectGuguncode = event.target.value;
       // 구/군 선택 후, 해당 도시 동 데이터 가져오기
       http.get(`/map/dong/${event.target.value}`).then(({ data }) => {
@@ -76,21 +83,24 @@ export default {
     },
     async selectDong(event) {
       let aptcode = event.target.value;
+      this.getDong(aptcode);
       await http.post(`/map/aptcnt/${aptcode}`);
       // 동 선택후, Map으로 넘어가면서 aptcode 넘기기
 
       // 상권정보
-      console.log("여기부터 상권정보 시작");
-      // this.getStoreList({
-      //   gugunCode: this.selectGuguncode,
-      //   AptCode: aptcode,
-      // });
       this.getCafeList(this.selectGuguncode);
       console.log("여기까지 상권정보 호출 끝");
 
+      http.get(`/map/aptinfo/${aptcode}`).then(({ data }) => {
+        this.getArea({
+          sidoName: data.sidoName,
+          gugunName: data.gugunName,
+          dongName: data.dong,
+        });
+      });
+
       this.$router.push({
         name: "HouseMap",
-        params: { aptcode: aptcode },
       });
     },
   },

@@ -63,7 +63,8 @@ export default {
     };
   },
   computed: {
-    ...mapState(["selectApart", "selectApartImgNum", "isLogin"]),
+    ...mapState("memberStore", ["isLogin"]),
+    ...mapState("houseStore", ["selectApart", "selectApartImgNum"]),
   },
   async created() {
     if (this.isLogin) {

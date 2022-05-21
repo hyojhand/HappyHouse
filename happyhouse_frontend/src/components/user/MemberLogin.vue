@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "MemberLogin",
@@ -57,9 +57,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState("memberStore", ["isLogin"]),
   },
   methods: {
+    ...mapActions("memberStore", ["goLogin"]),
     checkValue() {
       let msg = "";
       let err = true;
@@ -84,7 +85,7 @@ export default {
         userid: this.userid,
         userpwd: this.userpwd,
       };
-      await this.$store.dispatch("goLogin", user);
+      await this.goLogin(user);
       console.log(this.isLogin);
       if (this.isLogin) {
         this.$router.push({ name: "Home" });

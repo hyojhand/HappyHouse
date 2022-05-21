@@ -52,7 +52,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState("memberStore", ["isLogin"]),
   },
   async created() {
     if (this.isLogin) {

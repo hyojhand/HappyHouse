@@ -3,7 +3,7 @@
     class="mb-3"
     @mouseover="colorChange(true)"
     @mouseout="colorChange(false)"
-    @click="selectApt"
+    @click="selectApart"
     :class="{ 'mouse-over-bgcolor': isColor }"
   >
     <b-col cols="6" class="text-center align-self-center">
@@ -19,8 +19,9 @@
         <strong>{{ apt.apartmentName }} </strong>
       </div>
       <div>
-        <strong>주소</strong> : {{ apt.sidoName }} {{ apt.gugunName }}
-        {{ apt.dong }}
+        <strong>주소</strong> : {{ this.selectArea.sidoName }}
+        {{ this.selectArea.gugunName }}
+        {{ this.selectArea.dongName }}
       </div>
       <div><strong>건축년도</strong> : {{ apt.buildYear }} 년</div>
       <div><strong>거래가</strong> : {{ apt.recentPrice }} 만원</div>
@@ -30,6 +31,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
   name: "HouseListRow",
   props: {
@@ -41,10 +43,14 @@ export default {
       isColor: false,
     };
   },
+  computed: {
+    ...mapState("houseStore", ["selectArea"]),
+  },
   methods: {
-    selectApt() {
-      this.$store.dispatch("selectApt", this.apt);
-      this.$store.dispatch("selectApartImgNum", this.num);
+    ...mapActions("houseStore", ["selectApt", "selectApartImgNum"]),
+    selectApart() {
+      this.selectApt(this.apt);
+      this.selectApartImgNum(this.num);
     },
     colorChange(flag) {
       this.isColor = flag;

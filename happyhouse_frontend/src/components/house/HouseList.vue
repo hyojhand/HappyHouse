@@ -1,8 +1,9 @@
 <template>
   <div>
     <h2 class="m-4">
-      {{ this.sidoName }} {{ this.gugunName }} {{ this.dong }} 지역 아파트 최근
-      거래정보
+      {{ this.selectArea.sidoName }}
+      {{ this.selectArea.gugunName }}
+      {{ this.selectArea.dongName }} 지역 아파트 최근 거래정보
     </h2>
 
     <div>
@@ -55,7 +56,7 @@
 import HouseListRow from "@/components/house/HouseListRow.vue";
 import HouseDetail from "@/components/house/HouseDetail.vue";
 import http from "@/util/http-common";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import jwt_decode from "jwt-decode";
 
 export default {
@@ -69,33 +70,30 @@ export default {
       sortBy: "이름",
       sortDesc: false,
       apts: [],
-      aptCode: "",
-      sidoName: "",
-      gugunName: "",
-      dong: "",
+
       userInfo: {},
       type: "",
       flag: false,
     };
   },
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState("memberStore", ["isLogin"]),
+    ...mapState("houseStore", ["selectDong", "selectArea"]),
   },
   async created() {
-    if (!this.isLogin) {
-      alert("로그인된 사용자만 가능합니다!");
-      this.$router.push({ name: "Home" });
-    }
     if (this.isLogin) {
       const decode = jwt_decode(sessionStorage.getItem("access-token"));
       http.defaults.headers["access-token"] =
         sessionStorage.getItem("access-token");
       await http.get(`/member/info/${decode.userid}`).then(({ data }) => {
         this.userInfo = data.userInfo;
-        console.log(this.userInfo);
       });
     }
     if (this.$route.params.type == "bookmark") {
+      if (!this.isLogin) {
+        alert("로그인된 사용자만 가능합니다");
+        this.$router.push({ name: "Home" });
+      }
       this.type = "bookmark";
       console.log("bookmark");
       http
@@ -103,132 +101,115 @@ export default {
         .then(({ data }) => {
           console.log(data);
           this.apts = data;
-          this.aptCode = data[0].aptCode;
           if (data != null) {
-            this.$store.dispatch("selectApt", data[0]);
-            this.$store.dispatch("selectApartImgNum", "1");
+            this.selectApt(data[0]);
+            this.selectApartImgNum("1");
           }
         });
     } else {
-      this.sidoName = this.$route.params.sidoName;
-      this.gugunName = this.$route.params.gugunName;
-      this.dong = this.$route.params.dong;
-      this.aptCode = this.$route.params.aptcode;
-      http.get(`/map/aptdetail/${this.aptCode}`).then(({ data }) => {
-        console.log(data);
+      http.get(`/map/aptdetail/${this.selectDong}`).then(({ data }) => {
         this.apts = data;
         if (data != null) {
-          this.$store.dispatch("selectApt", data[0]);
-          this.$store.dispatch("selectApartImgNum", "1");
+          this.selectApt(data[0]);
+          this.selectApartImgNum("1");
         }
       });
     }
   },
   methods: {
+    ...mapActions("houseStore", ["selectApt", "selectApartImgNum"]),
     sortName() {
       if (this.sortBy === "이름" && this.sortDesc === false) {
         this.sortDesc = true;
-        http
-          .get(`/map/aptdetailDesc/${this.$route.params.aptcode}`)
-          .then(({ data }) => {
-            console.log(data);
-            this.apts = data;
-            if (data != null) {
-              this.$store.dispatch("selectApt", data[0]);
-              this.$store.dispatch("selectApartImgNum", "1");
-            }
-          });
+        http.get(`/map/aptdetailDesc/${this.selectDong}`).then(({ data }) => {
+          this.apts = data;
+          if (data != null) {
+            this.selectApt(data[0]);
+            this.selectApartImgNum("1");
+          }
+        });
       } else {
         this.sortBy = "이름";
         this.sortDesc = false;
-        http
-          .get(`/map/aptdetail/${this.$route.params.aptcode}`)
-          .then(({ data }) => {
-            console.log(data);
-            this.apts = data;
-            if (data != null) {
-              this.$store.dispatch("selectApt", data[0]);
-              this.$store.dispatch("selectApartImgNum", "1");
-            }
-          });
+        http.get(`/map/aptdetail/${this.selectDong}`).then(({ data }) => {
+          this.apts = data;
+          if (data != null) {
+            this.selectApt(data[0]);
+            this.selectApartImgNum("1");
+          }
+        });
       }
     },
     sortYear() {
       if (this.sortBy === "건축년도" && this.sortDesc === false) {
         this.sortDesc = true;
         http
-          .get(`/map/aptdetailDesc/year/${this.$route.params.aptcode}`)
+          .get(`/map/aptdetailDesc/year/${this.selectDong}`)
           .then(({ data }) => {
             this.apts = data;
             if (data != null) {
-              this.$store.dispatch("selectApt", data[0]);
-              this.$store.dispatch("selectApartImgNum", "1");
+              this.selectApt(data[0]);
+              this.selectApartImgNum("1");
             }
           });
       } else {
         this.sortBy = "건축년도";
         this.sortDesc = false;
-        http
-          .get(`/map/aptdetail/year/${this.$route.params.aptcode}`)
-          .then(({ data }) => {
-            this.apts = data;
-            if (data != null) {
-              this.$store.dispatch("selectApt", data[0]);
-              this.$store.dispatch("selectApartImgNum", "1");
-            }
-          });
+        http.get(`/map/aptdetail/year/${this.selectDong}`).then(({ data }) => {
+          this.apts = data;
+          if (data != null) {
+            this.selectApt(data[0]);
+            this.selectApartImgNum("1");
+          }
+        });
       }
     },
     sortPrice() {
       if (this.sortBy === "거래가" && this.sortDesc === false) {
         this.sortDesc = true;
         http
-          .get(`/map/aptdetailDesc/price/${this.$route.params.aptcode}`)
+          .get(`/map/aptdetailDesc/price/${this.selectDong}`)
           .then(({ data }) => {
             this.apts = data;
             if (data != null) {
-              this.$store.dispatch("selectApt", data[0]);
-              this.$store.dispatch("selectApartImgNum", "1");
+              this.selectApt(data[0]);
+              this.selectApartImgNum("1");
             }
           });
       } else {
         this.sortBy = "거래가";
         this.sortDesc = false;
-        http
-          .get(`/map/aptdetail/price/${this.$route.params.aptcode}`)
-          .then(({ data }) => {
-            this.apts = data;
-            if (data != null) {
-              this.$store.dispatch("selectApt", data[0]);
-              this.$store.dispatch("selectApartImgNum", "1");
-            }
-          });
+        http.get(`/map/aptdetail/price/${this.selectDong}`).then(({ data }) => {
+          this.apts = data;
+          if (data != null) {
+            this.selectApt(data[0]);
+            this.selectApartImgNum("1");
+          }
+        });
       }
     },
     sortArea() {
       if (this.sortBy === "평수" && this.sortDesc === false) {
         this.sortDesc = true;
         http
-          .get(`/map/aptdetailDesc/area/${this.$route.params.aptcode}`)
+          .get(`/map/aptdetailDesc/area/${this.selectDong}`)
           .then(({ data }) => {
             this.apts = data;
             if (data != null) {
-              this.$store.dispatch("selectApt", data[0]);
-              this.$store.dispatch("selectApartImgNum", "1");
+              this.selectApt(data[0]);
+              this.selectApartImgNum("1");
             }
           });
       } else {
         this.sortBy = "평수";
         this.sortDesc = false;
-        http
-          .get(`/map/aptdetail/area/${this.$route.params.aptcode}`)
-          .then(({ data }) => {
-            this.apts = data;
-            if (data != null) {
-              this.$store.dispatch("selectApt", data[0]);
-              this.$store.dispatch("selectApartImgNum", "1");
-            }
-          });
+        http.get(`/map/aptdetail/area/${this.selectDong}`).then(({ data }) => {
+          this.apts = data;
+          if (data != null) {
+            this.selectApt(data[0]);
+            this.selectApartImgNum("1");
+          }
+        });
       }
     },
     deleteBookmark(flag) {
@@ -236,12 +217,10 @@ export default {
         http
           .get(`/map/bookmark/list/${this.userInfo.userid}`)
           .then(({ data }) => {
-            console.log(data);
             this.apts = data;
-            this.aptCode = data[0].aptCode;
             if (data != null) {
-              this.$store.dispatch("selectApt", data[0]);
-              this.$store.dispatch("selectApartImgNum", "1");
+              this.selectApt(data[0]);
+              this.selectApartImgNum("1");
             }
           });
       }

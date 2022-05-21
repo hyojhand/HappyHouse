@@ -40,7 +40,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState("memberStore", ["isLogin"]),
   },
   created() {
     if (!this.isLogin) {

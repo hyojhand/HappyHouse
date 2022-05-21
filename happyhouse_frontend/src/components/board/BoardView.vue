@@ -99,7 +99,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState("memberStore", ["isLogin"]),
     content() {
       if (this.article.content)
         return this.article.content.split("\n").join("<br>");
