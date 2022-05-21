@@ -96,7 +96,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState("memberStore", ["isLogin"]),
   },
   methods: {
     onSubmit(event) {

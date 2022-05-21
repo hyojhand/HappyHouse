@@ -54,7 +54,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState("memberStore", ["isLogin"]),
   },
   created() {
     http.get(`/reply/${this.$route.params.no}`).then(({ data }) => {

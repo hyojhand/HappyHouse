@@ -71,7 +71,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["isLogin"]),
+    ...mapState("memberStore", ["isLogin"]),
     changeDateFormat() {
       return moment(new Date(this.regtime)).format("YY.MM.DD hh:mm:ss");
     },
