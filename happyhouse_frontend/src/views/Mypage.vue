@@ -9,12 +9,6 @@
           <a class="text-light" @click="moveMessage">쪽지함</a>
         </div>
         <div class="mt-5">
-          <a class="text-light" @click="moveMessageReceive">받은 쪽지</a>
-        </div>
-        <div class="mt-5">
-          <a class="text-light" @click="moveMessageSend">보낸 쪽지</a>
-        </div>
-        <div class="mt-5">
           <a class="text-light" @click="moveWriteBoard">내가 쓴 글</a>
         </div>
         <div class="mt-5">
@@ -45,21 +39,24 @@ export default {
   computed: {
     ...mapState("memberStore", ["isLogin"]),
   },
-  created() {
+  async created() {
     if (!this.isLogin) {
       alert("로그인된 사용자만 가능합니다!");
       this.$router.push({ name: "Home" });
     }
-
     if (this.isLogin) {
       const decode = jwt_decode(sessionStorage.getItem("access-token"));
       http.defaults.headers["access-token"] =
         sessionStorage.getItem("access-token");
-      http.get(`/member/info/${decode.userid}`).then(({ data }) => {
+      await http.get(`/member/info/${decode.userid}`).then(({ data }) => {
         this.userInfo = data.userInfo;
         console.log(this.userInfo);
       });
     }
+    this.$router.push({
+      name: "MypageMember",
+      params: { userInfo: this.userInfo },
+    });
   },
 
   methods: {
@@ -72,18 +69,6 @@ export default {
     moveMessage() {
       this.$router.push({
         name: "MypageMessage",
-        params: { userInfo: this.userInfo },
-      });
-    },
-    moveMessageReceive() {
-      this.$router.push({
-        name: "MypageMessageReceive",
-        params: { userInfo: this.userInfo },
-      });
-    },
-    moveMessageSend() {
-      this.$router.push({
-        name: "MypageMessageSend",
         params: { userInfo: this.userInfo },
       });
     },
@@ -111,8 +96,9 @@ export default {
 
 <style scoped>
 #mypage-container {
-  background: url("../assets/mypage.jpg") repeat-y;
+  background: url("../assets/mypage.jpg");
   background-size: cover;
+  background-attachment: fixed;
   width: 100%;
   min-height: 100vh;
 }

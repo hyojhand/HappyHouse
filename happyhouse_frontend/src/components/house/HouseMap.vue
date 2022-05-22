@@ -1,33 +1,38 @@
 <template>
-  <b-container>
-    <h3 class="map-title">
+  <div>
+    <h3 class="map-title" style="z-index: 80">
       <b-icon icon="house-fill"></b-icon> {{ this.selectArea.sidoName }}
       {{ this.selectArea.gugunName }}
       {{ this.selectArea.dongName }}
       아파트 목록입니다.
     </h3>
-
-    <b-row>
+    <b-row class="map-tool">
       <b-col>
         <b-form-group v-slot="{ ariaDescribedby }">
           <b-form-checkbox-group
+            style="color: black; font-weight: bold"
             @change="selectCategory"
             v-model="selected"
             :options="options"
             :aria-describedby="ariaDescribedby"
             switches
+            stacked
+            size="lg"
           ></b-form-checkbox-group>
         </b-form-group>
+        <p class="map-detail" role="button" @click="moveList()">
+          아파트 상세정보 <b-icon icon="cursor"></b-icon>
+        </p>
+        <p class="map-detail" role="button" @click="moveSearch()">
+          다시 검색 <b-icon icon="search"></b-icon>
+        </p>
       </b-col>
-
-      <b-col>
-        <span @click="moveList()">아파트 상세정보 확인</span>
-      </b-col>
+      <b-col> </b-col>
     </b-row>
 
     <div id="map"></div>
     <br />
-  </b-container>
+  </div>
 </template>
 
 <script>
@@ -266,6 +271,9 @@ export default {
     moveList() {
       this.$router.push({ name: "HouseList" });
     },
+    moveSearch() {
+      this.$router.push({ name: "HouseSearchBar" });
+    },
   },
 };
 </script>
@@ -273,10 +281,39 @@ export default {
 <style scoped>
 #map {
   width: 100%;
-  height: 700px;
+  /* height: 700px; */
+  height: 100vh;
+  z-index: 5;
 }
 .map-title {
+  position: absolute;
+  padding: 10px;
+  top: 20px;
+  color: black;
+  font-weight: bolder;
   display: inline-block;
-  margin: 30px 50px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-bottom: 3px solid black;
+  background-color: rgba(255, 255, 255, 0.5);
+  /* margin: 30px 50px; */
+}
+.map-detail {
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  width: 200px;
+  z-index: 80;
+}
+.map-tool {
+  position: absolute;
+  padding: 10px;
+  top: 10%;
+  left: 50px;
+  text-align: left;
+  z-index: 80;
+  width: 200px;
+  border: 5px outset;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 </style>

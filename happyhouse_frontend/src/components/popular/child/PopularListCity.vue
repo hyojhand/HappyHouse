@@ -1,10 +1,10 @@
 <template>
   <div class="mt-5">
     <div
-      class="text-center mb-5"
+      class="text-center"
       v-for="i in 3"
       :key="i"
-      style="color: white; font-size: 20px"
+      style="color: white; font-size: 20px; margin-bottom: 85px"
     >
       <h2>{{ cities[i - 1].address }}</h2>
     </div>

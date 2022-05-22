@@ -1,31 +1,25 @@
 <template>
   <div>
-    <h2 class="m-4" v-if="type == 'bookmark'">나의 북마크 아파트 정보</h2>
-    <h2 class="m-4" v-else>
+    <h2 class="p-4" v-if="type == 'bookmark'">나의 북마크 아파트 정보</h2>
+    <h2 class="p-4" v-else>
       {{ this.selectArea.sidoName }}
       {{ this.selectArea.gugunName }}
       {{ this.selectArea.dongName }} 지역 아파트 최근 거래정보
     </h2>
-
-    <div v-if="type != 'bookmark'">
-      <span class="mr-4"
-        >정렬 기준 : <b>{{ sortBy }}</b></span
-      >
-      <span
-        >정렬방향 : <b>{{ sortDesc ? "Descending" : "Ascending" }}</b></span
-      >
-    </div>
-    <b-container
-      v-if="this.apts && this.apts.length != 0"
-      class="bv-example-row mt-5"
-    >
-      <div v-if="type != 'bookmark'">
-        <b-nav tabs fill>
-          <b-nav-item @click="sortName">이름</b-nav-item>
-          <b-nav-item @click="sortYear">건축년도</b-nav-item>
-          <b-nav-item @click="sortPrice">거래가</b-nav-item>
-          <b-nav-item @click="sortArea">평수</b-nav-item>
-        </b-nav>
+    <b-container v-if="this.apts && this.apts.length != 0" class="mt-5">
+      <div v-if="type != 'bookmark'" class="text-right mb-5">
+        <span class="sort-order" role="button" @click="sortName"
+          >이름순<b-icon :icon="sortIconName"></b-icon
+        ></span>
+        <span class="sort-order" role="button" @click="sortYear"
+          >건축년도순<b-icon :icon="sortIconYear"></b-icon
+        ></span>
+        <span class="sort-order" role="button" @click="sortPrice"
+          >거래가순<b-icon :icon="sortIconPrice"></b-icon
+        ></span>
+        <span class="sort-order" role="button" @click="sortArea"
+          >평수순<b-icon :icon="sortIconArea"></b-icon
+        ></span>
       </div>
       <b-row>
         <b-col cols="6">
@@ -75,6 +69,10 @@ export default {
       userInfo: {},
       type: "",
       flag: false,
+      sortIconName: "",
+      sortIconYear: "",
+      sortIconPrice: "",
+      sortIconArea: "",
     };
   },
   computed: {
@@ -129,6 +127,8 @@ export default {
             this.selectApartImgNum("1");
           }
         });
+        this.sortIconName = "sort-alpha-up";
+        this.sortIconYear = this.sortIconPrice = this.sortIconArea = "";
       } else {
         this.sortBy = "이름";
         this.sortDesc = false;
@@ -139,6 +139,8 @@ export default {
             this.selectApartImgNum("1");
           }
         });
+        this.sortIconName = "sort-alpha-down";
+        this.sortIconYear = this.sortIconPrice = this.sortIconArea = "";
       }
     },
     sortYear() {
@@ -153,6 +155,8 @@ export default {
               this.selectApartImgNum("1");
             }
           });
+        this.sortIconYear = "sort-numeric-up";
+        this.sortIconName = this.sortIconPrice = this.sortIconArea = "";
       } else {
         this.sortBy = "건축년도";
         this.sortDesc = false;
@@ -163,6 +167,8 @@ export default {
             this.selectApartImgNum("1");
           }
         });
+        this.sortIconYear = "sort-numeric-down";
+        this.sortIconName = this.sortIconPrice = this.sortIconArea = "";
       }
     },
     sortPrice() {
@@ -177,6 +183,8 @@ export default {
               this.selectApartImgNum("1");
             }
           });
+        this.sortIconPrice = "sort-numeric-up";
+        this.sortIconName = this.sortIconYear = this.sortIconArea = "";
       } else {
         this.sortBy = "거래가";
         this.sortDesc = false;
@@ -187,6 +195,8 @@ export default {
             this.selectApartImgNum("1");
           }
         });
+        this.sortIconPrice = "sort-numeric-down";
+        this.sortIconName = this.sortIconYear = this.sortIconArea = "";
       }
     },
     sortArea() {
@@ -201,6 +211,8 @@ export default {
               this.selectApartImgNum("1");
             }
           });
+        this.sortIconArea = "sort-numeric-up";
+        this.sortIconName = this.sortIconYear = this.sortIconPrice = "";
       } else {
         this.sortBy = "평수";
         this.sortDesc = false;
@@ -211,6 +223,8 @@ export default {
             this.selectApartImgNum("1");
           }
         });
+        this.sortIconArea = "sort-numeric-down";
+        this.sortIconName = this.sortIconYear = this.sortIconPrice = "";
       }
     },
     deleteBookmark(flag) {
@@ -234,5 +248,8 @@ export default {
 #house_detail {
   position: sticky;
   top: 100px;
+}
+.sort-order {
+  margin-left: 15px;
 }
 </style>

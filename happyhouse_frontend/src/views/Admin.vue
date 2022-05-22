@@ -12,7 +12,7 @@
           <a class="text-light" @click="moveAdminBookmark">북마크 통계</a>
         </div>
       </div>
-      <b-col class="text-center align-self-center" style="margin-top: 100px">
+      <b-col class="text-center align-self-center" style="margin-top: 30px">
         <router-view></router-view>
       </b-col>
     </b-row>
@@ -55,8 +55,9 @@ export default {
 
 <style scoped>
 #admin-container {
-  background: url("../assets/admin.jpg") repeat-y;
+  background: url("../assets/admin.jpg");
   background-size: cover;
+  background-attachment: fixed;
   width: 100%;
   min-height: 100vh;
 }

@@ -1,12 +1,8 @@
 <template>
   <div id="house-background">
-    <b-container class="bv-example-row text-center house-view">
-      <b-row>
-        <b-col>
-          <router-view></router-view>
-        </b-col>
-      </b-row>
-    </b-container>
+    <div class="text-center house-view">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 <script>
@@ -16,8 +12,9 @@ export default {
 </script>
 <style scoped>
 #house-background {
-  background: url("../assets/house_background.jpg") repeat-y;
+  background: url("../assets/house_background.jpg");
   background-size: cover;
+  background-attachment: fixed;
   width: 100%;
   min-height: 100vh;
 }

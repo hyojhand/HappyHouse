@@ -70,6 +70,6 @@ export default {
   font-size: 20px;
 }
 .mouse-over-bgcolor {
-  background-color: lightblue;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 </style>

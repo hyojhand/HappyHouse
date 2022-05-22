@@ -34,12 +34,12 @@ const routes = [
     component: () => import("@/views/Member.vue"),
     children: [
       {
-        path: "singin",
+        path: "signin",
         name: "SignIn",
         component: () => import("@/components/user/MemberLogin.vue"),
       },
       {
-        path: "singup",
+        path: "signup",
         name: "SignUp",
         component: () => import("@/components/user/MemberJoin.vue"),
       },
@@ -49,7 +49,7 @@ const routes = [
     path: "/mypage",
     name: "Mypage",
     component: () => import("@/views/Mypage.vue"),
-    redirect: "/mypage/member",
+    // redirect: "/mypage/member",
     children: [
       {
         path: "member",
@@ -57,19 +57,9 @@ const routes = [
         component: () => import("@/components/mypage/MypageMember.vue"),
       },
       {
-        path: "receive",
-        name: "MypageMessageReceive",
-        component: () => import("@/components/mypage/MypageMessageReceive.vue"),
-      },
-      {
         path: "message",
         name: "MypageMessage",
         component: () => import("@/components/mypage/MypageMessage.vue"),
-      },
-      {
-        path: "send",
-        name: "MypageMessageSend",
-        component: () => import("@/components/mypage/MypageMessageSend.vue"),
       },
       {
         path: "board",
@@ -138,12 +128,12 @@ const routes = [
         component: () => import("@/components/house/HouseSearchBar.vue"),
       },
       {
-        path: "map/:aptcode",
+        path: "map",
         name: "HouseMap",
         component: () => import("@/components/house/HouseMap.vue"),
       },
       {
-        path: "list/:aptcode",
+        path: "list",
         name: "HouseList",
         component: () => import("@/components/house/HouseList.vue"),
       },

@@ -32,9 +32,12 @@ export default {
   },
   created() {
     http.get(`/board/list/${this.$props.type}`).then(({ data }) => {
-      // http.get(`/board`).then(({ data }) => {
       console.log(data);
-      this.articles = data;
+      if (this.$props.type == "recent") {
+        this.articles = data.slice(undefined, 7);
+      } else {
+        this.articles = data;
+      }
     });
   },
   props: {
