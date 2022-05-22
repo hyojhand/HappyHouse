@@ -9,6 +9,7 @@
 		select *
 		  from reply 
 		where articleno = #{articleno}
+		and isdeleted = 0
 		order by replyid desc
 	</select>
 
@@ -29,11 +30,11 @@
 	</update>
 
 	<!-- 댓글 삭제 -->
-	<delete id="deleteReply" parameterType="int">
-		delete 
-		  from reply 
+	<update id="deleteReply" parameterType="int">
+		update reply
+		  set isdeleted = 1 
 		where replyid = #{replyid}
-	</delete>
+	</update>
 
 	<select id="findArticleByReply" parameterType="int">
 		select articleno

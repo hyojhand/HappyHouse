@@ -7,7 +7,7 @@
     <b-td style="font-size: 13px; line-height: 30px">{{
       changeDateFormat
     }}</b-td>
-    <b-td v-if="isWriter">
+    <b-td v-if="isWriter || isadmin">
       <b-button
         variant="light"
         size="sm"
@@ -56,22 +56,21 @@ export default {
       ncontent: "",
     };
   },
-  created() {
+  async created() {
     if (this.isLogin) {
       const decode = jwt_decode(sessionStorage.getItem("access-token"));
       http.defaults.headers["access-token"] =
         sessionStorage.getItem("access-token");
-      http.get(`/member/info/${decode.userid}`).then(({ data }) => {
+      await http.get(`/member/info/${decode.userid}`).then(({ data }) => {
         this.userInfo = data.userInfo;
       });
     }
-
-    if (this.writer == this.userInfo.userid) {
+    if (this.$props.writer == this.userInfo.userid) {
       this.isWriter = true;
     }
   },
   computed: {
-    ...mapState("memberStore", ["isLogin"]),
+    ...mapState("memberStore", ["isLogin", "isadmin"]),
     changeDateFormat() {
       return moment(new Date(this.regtime)).format("YY.MM.DD hh:mm:ss");
     },
@@ -106,8 +105,7 @@ export default {
     },
     deleteReply(e) {
       let tr = e.target.parentElement.parentElement;
-      this.nreplyid = tr.childNodes[0].innerText;
-      http.delete(`/reply/${this.nreplyid}`).then(({ data }) => {
+      http.delete(`/reply/${this.$props.replyid}`).then(({ data }) => {
         let msg = "삭제가 완료되었습니다.";
         if (data === "fail") {
           msg = "삭제 처리시 문제가 발생했습니다.";

@@ -23,6 +23,12 @@
               <p>{{ message.content }}</p>
               <p class="text-right" style="font-size: 10px">
                 {{ message.regtime }}
+                <b-button
+                  variant="transparent"
+                  size="sm"
+                  @click="deleteMsg(message.messageid)"
+                  ><b-icon icon="trash" variant="light"></b-icon
+                ></b-button>
               </p>
             </div>
           </div>
@@ -85,6 +91,12 @@
               <p>{{ message.content }}</p>
               <p class="text-left" style="font-size: 10px">
                 {{ message.regtime }}
+                <b-button
+                  variant="transparent"
+                  size="sm"
+                  @click="deleteMsg(message.messageid)"
+                  ><b-icon icon="trash"></b-icon
+                ></b-button>
               </p>
             </div>
           </div>
@@ -146,6 +158,21 @@ export default {
           alert(msg);
         });
       this.$bvModal.hide(`modal-${no}`);
+      http.get(`/mypage/message/${this.userInfo.userid}`).then(({ data }) => {
+        this.messages = data;
+        console.log(data);
+      });
+    },
+    async deleteMsg(no) {
+      await http
+        .put(`/mypage/message`, { messageid: no, title: this.userInfo.userid })
+        .then(({ data }) => {
+          let msg = "쪽지 삭제시 문제가 발생했습니다.";
+          if (data == "success") {
+            msg = "쪽지가 삭제되었습니다.";
+          }
+          alert(msg);
+        });
       http.get(`/mypage/message/${this.userInfo.userid}`).then(({ data }) => {
         this.messages = data;
         console.log(data);

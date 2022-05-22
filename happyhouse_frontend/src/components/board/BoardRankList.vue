@@ -32,7 +32,7 @@ export default {
   },
   created() {
     http.get(`/board/list/${this.$props.type}`).then(({ data }) => {
-      console.log(data);
+      console.log(this.$props.type + " : " + data);
       if (this.$props.type == "recent") {
         this.articles = data.slice(undefined, 7);
       } else {

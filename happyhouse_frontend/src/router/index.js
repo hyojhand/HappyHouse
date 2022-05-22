@@ -26,6 +26,11 @@ const routes = [
         name: "AdminSearch",
         component: () => import("@/components/admin/AdminSearch.vue"),
       },
+      {
+        path: "bookmark",
+        name: "AdminBookmark",
+        component: () => import("@/components/admin/AdminBookmark.vue"),
+      },
     ],
   },
   {

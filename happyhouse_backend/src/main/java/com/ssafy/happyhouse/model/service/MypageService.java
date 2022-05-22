@@ -11,4 +11,5 @@ public interface MypageService {
 	public List<BoardDto> retrieveBoard(String userid);
 	public List<Reply> retrieveReply(String userid);
 	public List<BoardDto> retrieveLike(String userid);
+	public int deleteMessage(Message message);
 }

@@ -47,7 +47,7 @@ CREATE TABLE MESSAGE (
     title 		varchar(50) 	not null,
     content 	varchar(500) 	not null,
     regtime 	timestamp 		default current_timestamp,
-    isdeleted	int				default 0,
+    isdeleted	int				default 0,					# 0(default) 1(보낸 사람 삭제) 2(받은 사람 삭제) 3(둘 다 삭제)
     constraint fk_message_send foreign key (send) references USER(userid) on delete cascade,
     constraint fk_message_receive foreign key (receive) references USER(userid) on delete cascade
 );

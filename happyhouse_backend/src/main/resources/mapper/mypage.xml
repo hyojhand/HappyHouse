@@ -8,8 +8,9 @@
 	<select id="selectMessage" resultType="message">
 		select *
 		  from message 
-		 where send = #{userid} or receive = #{userid}
-		 order by messageid desc
+		where (send = #{userid} and (isdeleted = 0 or isdeleted = 2))
+		or (receive = #{userid} and (isdeleted = 0 or isdeleted = 1))
+		order by messageid desc
 	</select>
 	
 	<!-- 해당 유저의 작성 글 조회 -->
@@ -17,6 +18,7 @@
 		select *
 		  from board 
 		 where writer = #{userid}
+		 and isdeleted = 0
 		 order by articleno desc
 	</select>
 	
@@ -25,6 +27,7 @@
 		select *
 		  from reply 
 		 where writer = #{userid}
+		 and isdeleted = 0
 		 order by replyid desc
 	</select>
 	
@@ -36,6 +39,7 @@
 			(select articleno
 				from likey
 			where userid = #{userid})
+		and isdeleted = 0
 	</select>
 
 </mapper>

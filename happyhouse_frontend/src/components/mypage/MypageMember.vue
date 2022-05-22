@@ -37,7 +37,7 @@
               name="userpwd"
               v-model="userpwd"
               ref="userpwd"
-              placeholder="비밀번호입력..."
+              placeholder="비밀번호를 입력하세요"
             />
           </div>
           <div class="form-group text-left text-light">

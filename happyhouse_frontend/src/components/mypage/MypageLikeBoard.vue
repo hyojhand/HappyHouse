@@ -6,7 +6,7 @@
         <table class="text-light w-100">
           <tr style="font-weight: bold; font-size: 20px; line-height: 80px">
             <td>제목</td>
-            <td style="width: 600px">내용</td>
+            <td style="width: 300px">내용</td>
           </tr>
           <tr
             v-for="article in articles"
@@ -20,7 +20,7 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-                width: 200px;
+                width: 300px;
               "
             >
               {{ article.content }}

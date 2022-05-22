@@ -12,5 +12,24 @@
 			#{send}, #{receive}, #{title}, #{content}
 		)
 	</insert>
+	
+	<!-- 해당 쪽지를 회원이 보냈는지 확인 -->
+	<select id="selectSendMessage" parameterType="message" resultType="message">
+		select * from message
+		where messageid = #{messageid} and send = #{title}
+	</select>
+	
+	<!-- 해당 쪽지를 회원이 받았는지 확인 -->
+	<select id="selectReceiveMessage" parameterType="message" resultType="message">
+		select * from message
+		where messageid = #{messageid} and receive = #{title}
+	</select>
+	
+	<!-- 해당 쪽지 삭제 -->
+	<update id="deleteMessage" parameterType="message">
+		update message
+		  set isdeleted = #{isdeleted}
+		where messageid = #{messageid}
+	</update>
 
 </mapper>

@@ -47,7 +47,7 @@
           >
         </b-col>
         <b-col class="text-right">
-          <div v-if="isWriter">
+          <div v-if="isWriter || isadmin">
             <b-button
               variant="light"
               size="sm"
@@ -99,7 +99,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("memberStore", ["isLogin"]),
+    ...mapState("memberStore", ["isLogin", "isadmin"]),
     content() {
       if (this.article.content)
         return this.article.content.split("\n").join("<br>");
