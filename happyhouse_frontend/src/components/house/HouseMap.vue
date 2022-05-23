@@ -55,12 +55,8 @@ export default {
       map: null,
       apartMarkers: [], // 마커를 담을 배열입니다
       apartPositions: [],
-      // placeOverlay: "", // 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이
-      // contentNode: "", // 커스텀 오버레이의 컨텐츠 엘리먼트
-      // currCategory: "", // 현재 선택된 카테고리를 가지고 있을 변수
-
-      // infowindow: "", // 인포윈도우 객체
       categoryMarkers: [], // 선택한 카테고리 마커 담을 배열
+      customOverlay: [],
 
       selected: [], // Must be an array reference!
       options: [
@@ -109,10 +105,11 @@ export default {
       // 지도 생성
       this.map = new kakao.maps.Map(container, options);
 
+      console.log(this.map);
       await this.displayMarkers();
     },
     displayMarkers() {
-      var bounds = new kakao.maps.LatLngBounds();
+      // var bounds = new kakao.maps.LatLngBounds();
 
       // 1. 표시되있는 아파트 마커 map에서 삭제
       if (this.apartMarkers.length > 0) {
@@ -129,64 +126,77 @@ export default {
         this.categoryMarkers = [];
       }
 
+      // this.createApartMarker(this.apartPositions, this.apartMarkers);
       // 2. 아파트 마커의 개수만큼 아파트 마커 표시
-      for (var i = 0; i < this.apartPositions.length; i++) {
+      var bounds = new kakao.maps.LatLngBounds();
+      this.apartPositions.forEach((apart) => {
         // 2-1. 아파트 마커 이미지 세팅
         var imageSrc =
           "https://cdn-icons-png.flaticon.com/512/6984/6984891.png";
         var imageSize = new kakao.maps.Size(60, 60);
         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
-        // 2-2. 아파트 마커 포지션 좌표 세팅
-        var apartPosition = new kakao.maps.LatLng(
-          this.apartPositions[i].lat,
-          this.apartPositions[i].lng
-        );
-
         // 3. 아파트 마커 좌표, 이미지 세팅
         var marker = new kakao.maps.Marker({
-          map: this.map,
-          position: apartPosition,
+          position: new kakao.maps.LatLng(apart.lat, apart.lng),
           image: markerImage,
+          clickable: true,
         });
         this.apartMarkers.push(marker);
+        kakao.maps.event.addListener(marker, "click", () => {
+          this.setApartOverlay(apart);
+        });
         marker.setMap(this.map);
-
-        // // 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우
-        // var iwContent = '<div style="padding:5px;">Hello World!</div>';
-        // // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-
-        // // 인포윈도우를 생성
-        // var infowindow = new kakao.maps.InfoWindow({
-        //   content: iwContent,
-        // });
-
-        // // 마커에 마우스오버 이벤트 등록 후, 마커위에 인포윈도우 표시
-        // kakao.maps.event.addListener(marker, "mouseover", function () {
-        //   infowindow.open(this.map, marker);
-        // });
-
-        // // 마커에 마우스아웃 이벤트 등록 후, 인포윈도우 제거
-        // kakao.maps.event.addListener(marker, "mouseout", function () {
-        //   infowindow.close();
-        // });
-
         // 4. 범위 재설정을 위해 LatLngBounds 객체에 좌표를 추가해서
-        bounds.extend(apartPosition);
-      }
-
+        bounds.extend(new kakao.maps.LatLng(apart.lat, apart.lng));
+      });
       // 5. 검색된 위치들 기준으로 지도 범위 재설정
       this.map.setBounds(bounds);
     },
-    addMarker() {},
+    // createApartMarker(aparts, markers) {
+    //   var bounds = new kakao.maps.LatLngBounds();
+    //   aparts.forEach((apart) => {
+    //     var imageSrc =
+    //       "https://cdn-icons-png.flaticon.com/512/6984/6984891.png";
+    //     var imageSize = new kakao.maps.Size(60, 60);
+    //     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+    //     // 3. 아파트 마커 좌표, 이미지 세팅
+    //     var marker = new kakao.maps.Marker({
+    //       position: new kakao.maps.LatLng(apart.lat, apart.lng),
+    //       image: markerImage,
+    //       clickable: true,
+    //     });
+    //     markers.push(marker);
+    //     kakao.maps.event.addListener(marker, "click", () => {
+    //       console.log(apart);
+    //       this.setApartOverlay(apart);
+    //     });
+    //     marker.setMap(this.map);
+    //     bounds.extend(new kakao.maps.LatLng(apart.lat, apart.lng));
+    //   });
+    //   this.map.setBounds(bounds);
+    // },
+    setApartOverlay(apart) {
+      var content =
+        `<div style="padding:5px;font-size:12px; color:black;">` +
+        apart.apartmentName +
+        `</div>`;
+
+      this.customOverlay.push(
+        new kakao.maps.CustomOverlay({
+          map: this.map,
+          position: new kakao.maps.LatLng(apart.lat, apart.lng),
+          content: content,
+          xAnchor: 0.3,
+          yAnchor: 0.91,
+        })
+      );
+    },
     // 카테고리 키워드 검색 후 마커찍는 메서드
     placesSearchCB(data, status) {
       if (status === kakao.maps.services.Status.OK) {
-        // // 인포윈도우 객체 생성
-        // var categoryInfowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-
-        for (var i = 0; i < data.length; i++) {
-          var place = data[i];
+        data.forEach((place) => {
           var imageSrc;
           var categoryCode = place.category_group_code;
           if (categoryCode === "CE7") {
@@ -223,26 +233,57 @@ export default {
           var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
           var categoryMarker = new kakao.maps.Marker({
-            map: this.map,
             position: new kakao.maps.LatLng(place.y, place.x),
             image: markerImage,
+            clickable: true,
           });
 
-          // // // 마커에 클릭이벤트를 등록합니다
-          // kakao.maps.event.addListener(categoryMarker, "click", function () {
-          //   // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-          //   categoryInfowindow.setContent(
-          //     '<div style="padding:5px;font-size:12px;">' +
-          //       place.place_name +
-          //       "</div>"
-          //   );
-          //   categoryInfowindow.open(this.map, categoryMarker);
-          // });
-
-          categoryMarker.setMap(this.map);
           this.categoryMarkers.push(categoryMarker);
-        }
+
+          kakao.maps.event.addListener(categoryMarker, "click", () => {
+            this.setOverlay(place);
+            // this.closeOverlay();
+          });
+          categoryMarker.setMap(this.map);
+        });
       }
+    },
+    closeOverlay() {
+      this.customOverlay.forEach((item) => {
+        item.setMap(null);
+      });
+    },
+    setOverlay(place) {
+      // var content =
+      //   `<div style="padding:5px;font-size:12px; color:black;">` +
+      //   place.place_name +
+      //   `</div>`;
+      var content =
+        `<div class="mapwrap">` +
+        `    <div class="mapinfo">` +
+        `        <div class="title">` +
+        place.place_name +
+        `        </div>` +
+        `        <div class="body">` +
+        `            <div class="desc">` +
+        `                <div class="ellipsis">주소 : ` +
+        place.place_name +
+        `</div>` +
+        `                <div class="ellipsis">검색</div>` +
+        `            </div>` +
+        `        </div>` +
+        `    </div>` +
+        `</div>`;
+
+      this.customOverlay.push(
+        new kakao.maps.CustomOverlay({
+          map: this.map,
+          position: new kakao.maps.LatLng(place.y, place.x),
+          content: content,
+          xAnchor: 0.3,
+          yAnchor: 0.91,
+        })
+      );
     },
     selectCategory() {
       if (this.categoryMarkers.length > 0) {
@@ -316,8 +357,6 @@ export default {
           });
         }
       }
-
-      // console.log(this.categoryMarkers);
     },
     changeTraffic() {
       if (this.trafficStatus) {
@@ -326,7 +365,6 @@ export default {
         this.map.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
       }
     },
-
     moveList() {
       this.$router.push({ name: "HouseList" });
     },
@@ -374,5 +412,103 @@ export default {
   width: 200px;
   border: 5px outset;
   background-color: rgba(255, 255, 255, 0.5);
+}
+.mapwrap {
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  width: 288px;
+  height: 132px;
+  margin-left: -144px;
+  overflow: hidden;
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+.mapwrap * {
+  padding: 0;
+  margin: 0;
+}
+.mapwrap .mapinfo {
+  /* width: 286px;
+  height: 120px; */
+  border-radius: 5px;
+  border-bottom: 2px solid #ccc;
+  border-right: 1px solid #ccc;
+  overflow: hidden;
+  background: #fff;
+}
+.mapwrap .mapinfo:nth-child(1) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+}
+.mapinfo .title {
+  font-size: 15px;
+  text-align: center;
+  margin: 0;
+  line-height: 2rem;
+  padding-top: 3px;
+  font-family: "Gothic", "Arial Narrow", Arial, sans-serif;
+}
+.mapinfo .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #888;
+  width: 17px;
+  height: 17px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png");
+}
+.mapinfo .close:hover {
+  cursor: pointer;
+}
+.mapinfo .body {
+  position: relative;
+  overflow: hidden;
+  margin: 0 10px;
+}
+.mapinfo .desc {
+  text-align: center;
+  position: relative;
+  margin: 13px 0 0 100px;
+  height: 75px;
+}
+.desc .ellipsis {
+  font-size: 10px!;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.desc .jibun {
+  font-size: 11px;
+  color: #888;
+  margin-top: -2px;
+}
+.mapinfo .img {
+  position: absolute;
+  margin: 0 10px;
+  top: 6px;
+  left: 5px;
+  width: 73px;
+  height: 71px;
+  color: #888;
+  overflow: hidden;
+  text-align: center;
+}
+.mapinfo:after {
+  content: "";
+  position: absolute;
+  margin-left: -12px;
+  left: 50%;
+  bottom: 0;
+  width: 22px;
+  height: 12px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+}
+.mapinfo .link {
+  color: #5085bb;
+}
+.map-div {
+  display: none;
 }
 </style>
