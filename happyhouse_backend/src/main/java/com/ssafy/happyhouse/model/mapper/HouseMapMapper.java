@@ -23,19 +23,13 @@ public interface HouseMapMapper {
 	List<HouseInfoDto> getAptInDong(String dong) throws SQLException;
 	List<HouseDetail> getAptDetail(String aptcode) throws SQLException;
 	List<HouseDetail> getAptDetailDesc(String aptcode) throws SQLException;
-	
 	List<HouseDetail> getAptDetailYearSort(String aptcode) throws SQLException;
 	List<HouseDetail> getAptDetailYearSortDesc(String aptcode) throws SQLException;
-	
 	List<HouseDetail> getAptDetailPriceSort(String aptcode) throws SQLException;
 	List<HouseDetail> getAptDetailPriceSortDesc(String aptcode) throws SQLException;
-	
 	List<HouseDetail> getAptDetailAreaSort(String aptcode) throws SQLException;
 	List<HouseDetail> getAptDetailAreaSortDesc(String aptcode) throws SQLException;
-	
-	
 	List<HouseInfoDto> getAptWord(String word) throws SQLException;
-	
 	int insertBookmark(Bookmark bookmark) throws SQLException;
 	int deleteBookmark(Bookmark bookmark) throws SQLException;
 	List<Bookmark> selectBookmark(Bookmark bookmark) throws SQLException;

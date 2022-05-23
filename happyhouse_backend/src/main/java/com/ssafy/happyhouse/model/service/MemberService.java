@@ -1,12 +1,10 @@
 package com.ssafy.happyhouse.model.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.ssafy.happyhouse.model.Member;
 
 public interface MemberService {
-
 	
 	public boolean registerMember(Member member) throws Exception;
 	Member login(Member member) throws Exception;
@@ -16,6 +14,5 @@ public interface MemberService {
 	public boolean deleteMember(String userId) throws Exception;
 	public List<Member> listMember() throws Exception;
 	public List<Member> searchMember(String keyword) throws Exception;
-	
 	
 }

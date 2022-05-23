@@ -1,8 +1,8 @@
 <template>
   <div id="login-container">
-    <div style="padding-top: 100px">
+    <div class="login-container">
       <h1 class="text-light p-5">로그인</h1>
-      <b-form class="text-left mt-5" style="width: 300px; margin: auto">
+      <b-form class="text-left mt-5 login-form">
         <b-form-group label="아이디 :" label-for="userid" class="text-light">
           <b-form-input
             id="userid"
@@ -104,5 +104,12 @@ export default {
   background-size: cover;
   width: 100%;
   min-height: 100vh;
+}
+.login-container {
+  padding-top: 100px;
+}
+.login-form {
+  width: 300px;
+  margin: auto;
 }
 </style>

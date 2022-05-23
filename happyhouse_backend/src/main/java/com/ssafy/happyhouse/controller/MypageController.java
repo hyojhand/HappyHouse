@@ -64,7 +64,7 @@ public class MypageController {
     @ApiOperation(value = "해당 메시지를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
     @PutMapping("/message")
     public ResponseEntity<String> deleteMessage(@RequestBody Message message) throws Exception {
-    	log.debug("retrieveReply - 호출");
+    	log.debug("deleteMessage - 호출");
     	if (mypageService.deleteMessage(message) == 1) {
     		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     	}

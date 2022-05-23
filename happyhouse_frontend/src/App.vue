@@ -19,6 +19,7 @@ export default {
 <style>
 body {
   height: 100vh;
+  overflow-x: hidden;
 }
 
 a:hover {

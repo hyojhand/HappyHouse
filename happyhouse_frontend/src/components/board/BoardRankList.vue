@@ -1,5 +1,5 @@
 <template>
-  <b-container class="bv-example-row mt-3">
+  <b-container class="mt-3">
     <b-row>
       <b-col v-if="articles.length">
         <b-table-simple hover responsive>
@@ -46,7 +46,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 .tdClass {
   width: 50px;
   text-align: center;

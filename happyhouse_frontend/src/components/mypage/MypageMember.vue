@@ -1,6 +1,6 @@
 <template>
-  <b-container class="bv-example-row mt-3">
-    <div class="container text-center mt-3">
+  <b-container class="mt-3">
+    <div class="text-center mt-3">
       <div class="col-lg-8 mx-auto">
         <h2 class="p-3 mb-3 text-light">마이 페이지</h2>
         <div>

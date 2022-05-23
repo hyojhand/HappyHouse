@@ -36,6 +36,7 @@
 		where replyid = #{replyid}
 	</update>
 
+	<!-- 댓글을 통해 글 조회 -->
 	<select id="findArticleByReply" parameterType="int">
 		select articleno
 		  from reply

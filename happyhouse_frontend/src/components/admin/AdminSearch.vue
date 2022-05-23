@@ -4,7 +4,7 @@
       <div class="col-lg-8 mx-auto">
         <h2 class="p-3 mb-3 text-light">검색 통계</h2>
         <table class="text-light w-100">
-          <tr style="font-weight: bold; font-size: 20px; line-height: 80px">
+          <tr class="admin-table-head">
             <td>순위</td>
             <td>법정동코드</td>
             <td>주소</td>
@@ -13,7 +13,7 @@
           <tr
             v-for="(code, index) in codes"
             :key="index"
-            style="line-height: 50px"
+            class="admin-table-body"
           >
             <td>{{ index + 1 }}</td>
             <td>{{ code.dongCode }}</td>

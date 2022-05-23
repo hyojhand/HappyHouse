@@ -1,12 +1,12 @@
 <template>
-  <b-container class="bv-example-row mt-3">
-    <div class="container text-center mt-3">
+  <b-container class="mt-3">
+    <div class="text-center mt-3">
       <div class="col-lg-8 mx-auto">
         <h2 class="p-3 mb-3 text-light">내가 좋아요한 글</h2>
         <table class="text-light w-100">
-          <tr style="font-weight: bold; font-size: 20px; line-height: 80px">
+          <tr class="mypage-table-head">
             <td>제목</td>
-            <td style="width: 300px">내용</td>
+            <td class="w-300">내용</td>
           </tr>
           <tr
             v-for="article in articles"
@@ -14,15 +14,7 @@
             style="line-height: 50px"
           >
             <td>{{ article.title }}</td>
-            <td
-              style="
-                display: block;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                width: 300px;
-              "
-            >
+            <td class="mypage-table-content w-300">
               {{ article.content }}
             </td>
             <td>
@@ -87,5 +79,19 @@ export default {
 <style scoped>
 td {
   padding: 10px;
+}
+.mypage-table-head {
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 80px;
+}
+.w-300 {
+  width: 300px;
+}
+.mypage-table-content {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>

@@ -9,6 +9,7 @@ import com.ssafy.happyhouse.model.Likey;
 
 @Mapper
 public interface BoardMapper {
+	
  	public List<BoardDto> selectBoardRecent();
 	public List<BoardDto> selectBoardLike();
 	public List<BoardDto> selectBoardReply();
@@ -23,4 +24,5 @@ public interface BoardMapper {
 	public int addLikey(int articleno);
 	public int deleteLikey(Likey likey);
 	public int subLikey(int articleno);
+	
 }

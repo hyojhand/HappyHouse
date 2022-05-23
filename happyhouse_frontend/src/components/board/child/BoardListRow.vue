@@ -1,21 +1,19 @@
 <template>
   <b-tr>
-    <b-td style="width: 50%; line-height: 40px">
+    <b-td class="board-table-head">
       <router-link
         :to="{
           name: 'BoardView',
           params: { no: articleno },
         }"
-        style="font-weight: bold; font-size: 18px; color: black"
+        class="board-title"
         >{{ title }}</router-link
       >
     </b-td>
-    <b-td style="width: 25%; line-height: 40px; font-size: 13px">
+    <b-td class="board-table-body">
       {{ writer }}
     </b-td>
-    <b-td style="width: 25%; line-height: 40px; font-size: 13px">{{
-      changeDateFormat
-    }}</b-td>
+    <b-td class="board-table-body">{{ changeDateFormat }}</b-td>
   </b-tr>
 </template>
 
@@ -39,4 +37,19 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.board-table-head {
+  width: 50%;
+  line-height: 40px;
+}
+.board-title {
+  font-weight: bold;
+  font-size: 18px;
+  color: black;
+}
+.board-table-body {
+  width: 25%;
+  line-height: 40px;
+  font-size: 13px;
+}
+</style>

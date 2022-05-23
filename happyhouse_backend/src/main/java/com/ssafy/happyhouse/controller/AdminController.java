@@ -26,36 +26,33 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AdminController {
 
-	private static final String SUCCESS = "success";
-	private static final String FAIL = "fail";
-
 	@Autowired
 	private MemberService memberService;
 	@Autowired
 	private HouseMapService houseService;
 
-    @ApiOperation(value = "해당 메시지 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+    @ApiOperation(value = "모든 회원 정보를 반환한다.", response = List.class)
 	@GetMapping("/member")
 	public ResponseEntity<List<Member>> listMember() throws Exception {
 		log.debug("listMember - 호출");
 		return new ResponseEntity<List<Member>>(memberService.listMember(), HttpStatus.OK);
 	}
     
-    @ApiOperation(value = "해당 메시지 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+    @ApiOperation(value = "해당 키워드를 만족하는 회원 정보를 반환한다.", response = List.class)
 	@GetMapping("/member/search/{keyword}")
 	public ResponseEntity<List<Member>> searchMember(@PathVariable String keyword) throws Exception {
 		log.debug("searchMember - 호출");
 		return new ResponseEntity<List<Member>>(memberService.searchMember(keyword), HttpStatus.OK);
 	}
     
-    @ApiOperation(value = "해당 메시지 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+    @ApiOperation(value = "검색 횟수가 가장 많은 상위 10개의 지역 정보를 반환한다.", response = List.class)
     @GetMapping("/search")
     public ResponseEntity<List<AptSearchCnt>> searchApt() throws Exception {
     	log.debug("searchApt - 호출");
     	return new ResponseEntity<List<AptSearchCnt>>(houseService.searchApt(), HttpStatus.OK);
     }
     
-    @ApiOperation(value = "해당 메시지 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+    @ApiOperation(value = "북마크 횟수가 가장 많은 상위 10개의 아파트 정보를 반환한다.", response = List.class)
     @GetMapping("/bookmark")
     public ResponseEntity<List<HouseInfoDto>> searchBookmark() throws Exception {
     	log.debug("searchBookmark - 호출");

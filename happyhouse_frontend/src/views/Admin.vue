@@ -53,12 +53,20 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #admin-container {
   background: url("../assets/admin.jpg");
   background-size: cover;
   background-attachment: fixed;
   width: 100%;
   min-height: 100vh;
+}
+.admin-table-head {
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 80px;
+}
+.admin-table-body {
+  line-height: 50px;
 }
 </style>

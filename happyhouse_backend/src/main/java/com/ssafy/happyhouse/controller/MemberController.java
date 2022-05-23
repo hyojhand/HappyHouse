@@ -41,7 +41,7 @@ public class MemberController {
 	@Autowired
 	private JwtServiceImpl jwtService;
 	
-	
+	@ApiOperation(value = "유저 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 또는 '아이디가 중복입니다.' 문자열을 반환한다.", response = String.class)
 	@PostMapping
 	public ResponseEntity<String> register(@RequestBody Member member) throws Exception {
 		log.debug("회원가입요청 member info : {}", member);
@@ -55,6 +55,7 @@ public class MemberController {
 			}
 	}
 	
+	@ApiOperation(value = "유저 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping
 	public ResponseEntity<String> update(@RequestBody Member member) throws Exception {
 		log.debug("업데이트요청 member info : {}", member);
@@ -64,6 +65,7 @@ public class MemberController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "유저 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("{userid}")
 	public ResponseEntity<String> delete(@PathVariable("userid") String userid ) throws Exception {
 		log.debug("삭제요청 member id : ", userid);
@@ -73,8 +75,7 @@ public class MemberController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
-	
-	@ApiOperation(value = "로그인", notes = "Access-token과 로그인 결과 메세지를 반환한다.", response = Map.class)
+	@ApiOperation(value = "해당 유저 계정을 로그인한다.", notes = "Access-token과 로그인 결과 메세지를 반환한다.", response = Map.class)
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(
 			@RequestBody @ApiParam(value = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) Member member) {

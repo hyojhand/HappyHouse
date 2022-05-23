@@ -20,9 +20,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer{
 	
 	@Autowired
 	private ConfirmInterceptor confirm;
-	
-////	private final List<String> patterns = Arrays.asList("/happyhouse/*", "/admin/*", "/user/list");
-//	private final List<String> patterns = Arrays.asList("/happyhouse/*", "/user/list");
 	private final List<String> patterns = Arrays.asList("/happyhouse/*");
 
 	@Override

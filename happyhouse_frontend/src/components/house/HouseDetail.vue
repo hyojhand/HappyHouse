@@ -1,5 +1,5 @@
 <template>
-  <b-container class="bv-example-row">
+  <b-container>
     <b-row class="mt-3 mb-3">
       <b-col
         ><h3>

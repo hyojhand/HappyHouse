@@ -12,6 +12,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,11 +29,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class NewsController {
 	
+	@Value("${news-clientId}")
+	private String newsClientId;	
+	@Value("${news-clientSecret}")
+	private String newsClientSecret;
+	
     @ApiOperation(value = "부동산 관련 최신 뉴스를 반환한다.", response = String.class)
 	@GetMapping   
     public ResponseEntity<?> retrieveNews() {
-        String clientId = "Jj7tXqgiA14kcgdq9Dyb";
-        String clientSecret = "o_ceOWHwWZ";
         String text = null;
         try {
             text = URLEncoder.encode("부동산", "UTF-8");
@@ -41,8 +45,8 @@ public class NewsController {
         }
         String apiURL = "https://openapi.naver.com/v1/search/news?query=" + text;
         Map<String, String> requestHeaders = new HashMap<>();
-        requestHeaders.put("X-Naver-Client-Id", clientId);
-        requestHeaders.put("X-Naver-Client-Secret", clientSecret);
+        requestHeaders.put("X-Naver-Client-Id", newsClientId);
+        requestHeaders.put("X-Naver-Client-Secret", newsClientSecret);
         String responseBody = get(apiURL,requestHeaders);
         log.debug("retrieveNews - 호출");
         return new ResponseEntity<String>(responseBody, HttpStatus.OK);

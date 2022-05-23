@@ -6,22 +6,13 @@
         <div v-for="message in messages" :key="message.messageid">
           <div v-if="message.send == userInfo.userid" class="text-light">
             <p class="mr-5">To. {{ message.receive }}</p>
-            <div
-              style="
-                background-color: rgb(4, 125, 255);
-                border-radius: 25px;
-                margin-bottom: 20px;
-                margin-left: 250px;
-                width: 300px;
-                padding: 10px 20px 1px;
-              "
-            >
+            <div class="mypage-message-receive-template">
               <p>
                 <b>{{ message.title }}</b>
               </p>
               <hr />
               <p>{{ message.content }}</p>
-              <p class="text-right" style="font-size: 10px">
+              <p class="text-right font-10">
                 {{ message.regtime }}
                 <b-button
                   variant="transparent"
@@ -75,21 +66,13 @@
                 >
               </b-modal>
             </p>
-            <div
-              style="
-                background-color: silver;
-                border-radius: 25px;
-                margin-bottom: 20px;
-                width: 300px;
-                padding: 10px 20px 1px;
-              "
-            >
+            <div class="mypage-message-send-template">
               <p>
                 <b>{{ message.title }}</b>
               </p>
               <hr />
               <p>{{ message.content }}</p>
-              <p class="text-left" style="font-size: 10px">
+              <p class="text-left font-10">
                 {{ message.regtime }}
                 <b-button
                   variant="transparent"
@@ -182,4 +165,23 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.mypage-message-receive-template {
+  background-color: rgb(4, 125, 255);
+  border-radius: 25px;
+  margin-bottom: 20px;
+  margin-left: 250px;
+  width: 300px;
+  padding: 10px 20px 1px;
+}
+.mypage-message-send-template {
+  background-color: silver;
+  border-radius: 25px;
+  margin-bottom: 20px;
+  width: 300px;
+  padding: 10px 20px 1px;
+}
+.font-10 {
+  font-size: 10px;
+}
+</style>

@@ -1,8 +1,8 @@
 <template>
-  <b-container class="bv-example-row mt-5">
+  <b-container class="mt-5">
     <b-row class="mb-1">
       <b-col cols="2"></b-col>
-      <b-col style="text-align: left" cols="7">
+      <b-col class="text-left" cols="7">
         <b-form>
           <b-form-input
             id="reply-content"
@@ -14,7 +14,7 @@
         </b-form>
       </b-col>
       <b-col cols="1">
-        <b-button variant="secondary" @click="writeReply()" style="width: 100%"
+        <b-button variant="secondary" @click="writeReply()" class="w-100"
           ><b-icon icon="vector-pen"></b-icon
         ></b-button>
       </b-col>

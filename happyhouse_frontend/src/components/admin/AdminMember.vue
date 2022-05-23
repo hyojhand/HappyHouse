@@ -1,31 +1,26 @@
 <template>
-  <b-container class="bv-example-row mt-3">
+  <b-container class="mt-3">
     <div class="container text-center mt-3">
       <div class="col-lg-8 mx-auto">
         <h2 class="p-3 mb-3 text-light">회원 관리</h2>
-        <b-row style="position: absolute; right: 0">
+        <b-row class="search-row">
           <b-form-input
             type="text"
-            style="width: 300px"
-            class="mr-3"
+            class="mr-3 w-300"
             v-model="keyword"
             placeholder="검색어를 입력하세요"
             @keyup.enter="search"
           ></b-form-input>
           <b-button @click="search"><b-icon icon="search"></b-icon></b-button>
         </b-row>
-        <table class="text-light w-100" style="margin-top: 100px">
-          <tr style="font-weight: bold; font-size: 20px; line-height: 80px">
+        <table class="text-light w-100 mt-100">
+          <tr class="admin-table-head">
             <td>회원 아이디</td>
             <td>회원 이름</td>
             <td>회원 이메일</td>
             <td>가입일</td>
           </tr>
-          <tr
-            v-for="user in users"
-            :key="user.userid"
-            style="line-height: 50px"
-          >
+          <tr v-for="user in users" :key="user.userid" class="admin-table-body">
             <td>{{ user.userid }}</td>
             <td>{{ user.username }}</td>
             <td>{{ user.email }}</td>
@@ -105,4 +100,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.search-row {
+  position: absolute;
+  right: 0;
+}
+.w-300 {
+  width: 300px;
+}
+.mt-100 {
+  margin-top: 100px;
+}
+</style>

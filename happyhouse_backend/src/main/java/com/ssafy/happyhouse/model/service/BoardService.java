@@ -6,6 +6,7 @@ import com.ssafy.happyhouse.model.BoardDto;
 import com.ssafy.happyhouse.model.Likey;
 
 public interface BoardService {
+	
 	public List<BoardDto> retrieveBoard(String type);
 	public List<BoardDto> retrieveKeywordBoard(String keyword);
 	public List<BoardDto> retrieveWriterBoard(String writer);
@@ -16,4 +17,5 @@ public interface BoardService {
 	public boolean isLike(Likey likey);
 	public boolean like(Likey likey);
 	public boolean dislike(Likey likey);
+	
 }

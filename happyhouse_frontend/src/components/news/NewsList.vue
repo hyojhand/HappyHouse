@@ -7,7 +7,7 @@
           <h6 v-html="news[i - 1].title"></h6>
           <b-card-text
             v-html="news[i - 1].description"
-            style="font-size: 10px"
+            class="font-10"
           ></b-card-text>
           <a :href="news[i - 1].link">See More...</a>
         </b-card>
@@ -19,7 +19,7 @@
           <h6 v-html="news[i + 2].title"></h6>
           <b-card-text
             v-html="news[i + 2].description"
-            style="font-size: 10px"
+            class="font-10"
           ></b-card-text>
           <a :href="news[i + 2].link">See More...</a>
         </b-card>
@@ -54,3 +54,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.font-10 {
+  font-size: 10px;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <div id="join-container">
-    <div style="margin: auto; width: 600px">
-      <div style="padding: 100px">
+    <div class="join-container">
+      <div class="p-100">
         <h2 class="text-light p-5">회원가입</h2>
         <div class="form-group text-left">
           <label for="username" class="text-light">이름</label>
@@ -128,11 +128,18 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 #join-container {
   background: url("../../assets/join.jpg") repeat-y;
   background-size: cover;
   width: 100%;
   min-height: 100vh;
+}
+.join-container {
+  margin: auto;
+  width: 600px;
+}
+.p-100 {
+  padding: 100px;
 }
 </style>

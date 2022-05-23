@@ -1,17 +1,7 @@
 <template>
   <div style="position: absolute; z-index: 99; right: 0">
-    <b-button
-      v-b-toggle.my-sidebar-right
-      class="mt-3"
-      style="
-        background-color: transparent;
-        border: transparent;
-        box-shadow: none;
-      "
-      ><b-icon
-        icon="three-dots-vertical"
-        style="width: 30px; height: 30px; color: ivory"
-      ></b-icon
+    <b-button v-b-toggle.my-sidebar-right class="mt-3" id="three-dots-btn"
+      ><b-icon icon="three-dots-vertical" class="three-dots-icon"></b-icon
     ></b-button>
     <b-sidebar id="my-sidebar-right" right shadow>
       <h5 v-if="isLogin" style="float: right; margin-right: 20px">
@@ -122,4 +112,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#three-dots-btn {
+  background-color: transparent;
+  border: transparent;
+  box-shadow: none;
+}
+.three-dots-icon {
+  width: 30px;
+  height: 30px;
+  color: ivory;
+}
+</style>

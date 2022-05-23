@@ -1,7 +1,7 @@
 <template>
   <b-container class="mt-5">
     <b-row class="mb-1">
-      <b-col style="text-align: left">
+      <b-col class="text-left">
         <b-form @submit="onSubmit" @reset="onReset">
           <b-form-group id="subject-group" label="제목 :" label-for="title">
             <b-form-input

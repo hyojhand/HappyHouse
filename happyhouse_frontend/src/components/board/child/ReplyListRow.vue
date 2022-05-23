@@ -3,10 +3,8 @@
     <b-td>
       <writer-menu :writer="writer" :no="replyid"></writer-menu>
     </b-td>
-    <b-td style="width: 60%; line-height: 30px">{{ content }}</b-td>
-    <b-td style="font-size: 13px; line-height: 30px">{{
-      changeDateFormat
-    }}</b-td>
+    <b-td class="reply-table-content">{{ content }}</b-td>
+    <b-td class="reply-table-date">{{ changeDateFormat }}</b-td>
     <b-td v-if="isWriter || isadmin">
       <b-button
         variant="light"
@@ -119,4 +117,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.reply-table-content {
+  width: 60%;
+  line-height: 30px;
+}
+.reply-table-date {
+  font-size: 13px;
+  line-height: 30px;
+}
+</style>

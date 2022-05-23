@@ -24,9 +24,9 @@ import com.ssafy.happyhouse.model.service.HouseMapService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
+@CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
 @RequestMapping("/map")
-@CrossOrigin("*")
 @Slf4j
 public class HouseMapController {
 
@@ -36,25 +36,28 @@ public class HouseMapController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 	
+	@ApiOperation(value = "모든 시/도 정보를 반환한다.", response = List.class)
 	@GetMapping("/sido")
 	public ResponseEntity<List<SidoGugunCodeDto>> sido() throws Exception {
 		log.debug("sido : {}", HouseMapService.getSido());
 		return new ResponseEntity<List<SidoGugunCodeDto>>(HouseMapService.getSido(), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "해당 시/도에 있는 모든 구/군 정보를 반환한다.", response = List.class)
 	@GetMapping("/gugun/{sido}")
 	public ResponseEntity<List<SidoGugunCodeDto>> gugun(@PathVariable String sido) throws Exception {
 		log.debug("gugun : {}", HouseMapService.getGugunInSido(sido));
 		return new ResponseEntity<List<SidoGugunCodeDto>>(HouseMapService.getGugunInSido(sido), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "해당 구/군에 있는 모든 동 정보를 반환한다.", response = List.class)
 	@GetMapping("/dong/{gugun}")
 	public ResponseEntity<List<HouseInfoDto>> dong(@PathVariable String gugun) throws Exception {
 		log.debug("dong : {}", HouseMapService.getDongInGugun(gugun));
 		return new ResponseEntity<List<HouseInfoDto>>(HouseMapService.getDongInGugun(gugun), HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "검색한 아파트의 정보를 반환한다. ", response = HouseInfoDto.class)
+	@ApiOperation(value = "특정 아파트의 정보를 반환한다. ", response = HouseInfoDto.class)
 	@GetMapping("/aptinfo/{aptcode}")
 	public ResponseEntity<HouseInfoDto> aptinfo(@PathVariable String aptcode) throws Exception {
 		log.debug("aptinfo : {}", HouseMapService.getAptInfo(aptcode));
@@ -69,6 +72,7 @@ public class HouseMapController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "해당 동의 모든 아파트를 반환한다.", response = List.class)
 	@GetMapping("/apt/{aptcode}")
 	public ResponseEntity<List<HouseInfoDto>> apt(@PathVariable String aptcode) throws Exception {
 		log.debug("apt : {}", HouseMapService.getAptInDong(aptcode));
@@ -131,17 +135,20 @@ public class HouseMapController {
 		return new ResponseEntity<List<HouseDetail>>(HouseMapService.getAptDetailAreaSortDesc(aptcode), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "검색어를 만족하는 모든 아파트 정보를 반환한다.", response = List.class)
 	@GetMapping("/word")
 	public ResponseEntity<List<HouseInfoDto>> word(@RequestParam("word") String word) throws Exception {
-//		System.out.println("word 실행");
+		log.debug("word - 호출");
 		return new ResponseEntity<List<HouseInfoDto>>(HouseMapService.getAptWord(word), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "해당 유저가 특정 아파트를 북마크했는지 여부를 반환한다.", response = Boolean.class)
 	@GetMapping("/bookmark")
 	public ResponseEntity<Boolean> isBookmark(@RequestParam String userid, @RequestParam long aptCode) throws Exception {
 		return new ResponseEntity<Boolean>(HouseMapService.isBookmark(new Bookmark(userid, aptCode)), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "해당 유저가 북마크한 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/bookmark")
 	public ResponseEntity<String> addBookmark(@RequestBody Bookmark bookmark) throws Exception {
 		if (HouseMapService.bookmark(bookmark) == 1) {
@@ -150,6 +157,7 @@ public class HouseMapController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "해당 유저의 특정 북마크를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/bookmark")
 	public ResponseEntity<String> subBookmark(@RequestParam String userid, @RequestParam long aptCode) throws Exception {
 		if (HouseMapService.subBookmark(new Bookmark(userid, aptCode)) == 1) {
@@ -158,6 +166,7 @@ public class HouseMapController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "해당 유저가 북마크한 모든 아파트 정보를 반환한다.", response = List.class)
 	@GetMapping("/bookmark/list/{userid}")
 	public ResponseEntity<List<HouseDetail>> retrieveBookmark(@PathVariable String userid) throws Exception {
 		return new ResponseEntity<List<HouseDetail>>(HouseMapService.retrieveBookmark(userid), HttpStatus.OK);

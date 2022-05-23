@@ -1,17 +1,9 @@
 <template>
   <div>
-    <h1
-      style="
-        position: absolute;
-        top: 120px;
-        left: 50%;
-        transform: translate(-50%, 0);
-        color: white;
-      "
-    >
+    <h1 class="board-title">
       {{ article.title }}
     </h1>
-    <b-container class="bv-example-row mt-3">
+    <b-container class="mt-3">
       <b-row class="mb-1">
         <b-col>
           <b-card
@@ -204,4 +196,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.board-title {
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  color: white;
+}
+</style>

@@ -4,7 +4,7 @@
       <div class="col-lg-8 mx-auto">
         <h2 class="p-3 mb-3 text-light">내가 쓴 글</h2>
         <table class="text-light w-100">
-          <tr style="font-weight: bold; font-size: 20px; line-height: 80px">
+          <tr style="mypage-table-head">
             <td>제목</td>
             <td>내용</td>
             <td>좋아요</td>
@@ -13,18 +13,10 @@
           <tr
             v-for="article in articles"
             :key="article.articleno"
-            style="line-height: 50px"
+            class="l-height-50"
           >
             <td>{{ article.title }}</td>
-            <td
-              style="
-                display: block;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                width: 200px;
-              "
-            >
+            <td class="mypage-board-content">
               {{ article.content }}
             </td>
             <td><b-icon icon="heart"></b-icon> {{ article.likey }}</td>
@@ -91,5 +83,20 @@ export default {
 <style scoped>
 td {
   padding: 10px;
+}
+.mypage-table-head {
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 80px;
+}
+.l-height-50 {
+  line-height: 50px;
+}
+.mypage-board-content {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 200px;
 }
 </style>

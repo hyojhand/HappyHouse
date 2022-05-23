@@ -1,11 +1,6 @@
 <template>
   <div class="mt-5">
-    <div
-      class="text-center mb-5"
-      v-for="i in 3"
-      :key="i"
-      style="color: white; font-size: 20px"
-    >
+    <div class="text-center mb-5 pop-content" v-for="i in 3" :key="i">
       <h2>{{ apts[i - 1].apartmentName }}</h2>
       <span
         >{{ apts[i - 1].sidoName }} {{ apts[i - 1].gugunName }}
@@ -30,4 +25,9 @@ export default {
   },
 };
 </script>
-<style></style>
+<style scoped>
+.pop-content {
+  color: white;
+  font-size: 20px;
+}
+</style>

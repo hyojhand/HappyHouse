@@ -20,18 +20,13 @@ public interface HouseMapService {
 	List<HouseInfoDto> getAptInDong(String dong) throws Exception;
 	List<HouseDetail> getAptDetail(String aptcode) throws SQLException;
 	List<HouseDetail> getAptDetailDesc(String aptcode) throws SQLException;
-	
 	List<HouseDetail> getAptDetailYearSort(String aptcode) throws SQLException;
 	List<HouseDetail> getAptDetailYearSortDesc(String aptcode) throws SQLException;
-	
 	List<HouseDetail> getAptDetailPriceSort(String aptcode) throws SQLException;
 	List<HouseDetail> getAptDetailPriceSortDesc(String aptcode) throws SQLException;
-	
 	List<HouseDetail> getAptDetailAreaSort(String aptcode) throws SQLException;
 	List<HouseDetail> getAptDetailAreaSortDesc(String aptcode) throws SQLException;
-	
 	List<HouseInfoDto> getAptWord(String word) throws Exception;
-	
 	int bookmark(Bookmark bookmark) throws Exception;
 	int subBookmark(Bookmark bookmark) throws Exception;
 	boolean isBookmark(Bookmark bookmark) throws Exception;

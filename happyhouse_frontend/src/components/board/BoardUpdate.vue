@@ -1,16 +1,6 @@
 <template>
   <div>
-    <h1
-      style="
-        position: absolute;
-        top: 120px;
-        left: 50%;
-        z-index: 10;
-        color: white;
-      "
-    >
-      글수정
-    </h1>
+    <h1 class="board-common-head">글수정</h1>
     <board-write-form type="modify" />
   </div>
 </template>
@@ -26,4 +16,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.board-common-head {
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  z-index: 10;
+  color: white;
+}
+</style>

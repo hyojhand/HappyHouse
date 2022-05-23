@@ -1,26 +1,13 @@
 <template>
-  <b-container class="bv-example-row mt-3">
-    <h2
-      style="
-        position: absolute;
-        top: 120px;
-        left: 50%;
-        transform: translate(-50%, 0);
-        color: white;
-      "
-    >
-      게시판
-    </h2>
+  <b-container class="mt-3">
+    <h2 class="board-head">게시판</h2>
     <b-form-input
-      style="position: absolute; top: 230px; right: 250px; width: 300px"
+      class="search-content"
       v-model="keyword"
       placeholder="검색어를 입력하세요"
       @keyup.enter="search"
     ></b-form-input>
-    <b-button
-      style="position: absolute; top: 230px; right: 200px"
-      class="btn-light"
-      @click="search"
+    <b-button class="btn-light search-icon" @click="search"
       ><b-icon icon="search"></b-icon
     ></b-button>
     <b-row class="mb-5 mr-3">
@@ -93,7 +80,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 .tdClass {
   width: 50px;
   text-align: center;
@@ -101,5 +88,23 @@ export default {
 .tdSubject {
   width: 300px;
   text-align: left;
+}
+.board-head {
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  color: white;
+}
+.search-content {
+  position: absolute;
+  top: 230px;
+  right: 250px;
+  width: 300px;
+}
+.search-icon {
+  position: absolute;
+  top: 230px;
+  right: 200px;
 }
 </style>

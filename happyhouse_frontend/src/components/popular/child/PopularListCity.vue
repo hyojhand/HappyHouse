@@ -1,11 +1,6 @@
 <template>
   <div class="mt-5">
-    <div
-      class="text-center"
-      v-for="i in 3"
-      :key="i"
-      style="color: white; font-size: 20px; margin-bottom: 85px"
-    >
+    <div class="text-center pop-content" v-for="i in 3" :key="i">
       <h2>{{ cities[i - 1].address }}</h2>
     </div>
   </div>
@@ -25,4 +20,10 @@ export default {
   },
 };
 </script>
-<style></style>
+<style scoped>
+.pop-content {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 85px;
+}
+</style>

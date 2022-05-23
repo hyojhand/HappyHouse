@@ -1,7 +1,6 @@
 package com.ssafy.happyhouse.model.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,9 +58,5 @@ public class MemberServiceImpl implements MemberService {
 	public List<Member> searchMember(String keyword) throws Exception {
 		return memberMapper.searchMember(keyword);
 	}
-
 	
-	
-	 
-
 }
