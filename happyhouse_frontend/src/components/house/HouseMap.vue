@@ -10,7 +10,7 @@
       <b-col>
         <b-form-group v-slot="{ ariaDescribedby }">
           <b-form-checkbox-group
-            style="color: black; font-weight: bold"
+            style="font-weight: bold"
             @change="selectCategory()"
             v-model="selected"
             :options="options"
@@ -21,12 +21,20 @@
           ></b-form-checkbox-group>
         </b-form-group>
         <b-form-checkbox
-          style="color: black; font-weight: bold"
+          style="font-weight: bold"
           @change="changeTraffic()"
           v-model="trafficStatus"
           size="lg"
         >
           교통상황 보기
+        </b-form-checkbox>
+        <b-form-checkbox
+          style="font-weight: bold"
+          @change="changeBicycle()"
+          v-model="bicycleStatus"
+          size="lg"
+        >
+          자전거 도로
         </b-form-checkbox>
 
         <p class="map-detail" role="button" @click="moveList()">
@@ -70,6 +78,7 @@ export default {
         { text: "문화,관광", value: "culture" },
       ],
       trafficStatus: "", // 교통상태 확인
+      bicycleStatus: "", // 자전거 도로 확인
     };
   },
   computed: {
@@ -105,7 +114,6 @@ export default {
       // 지도 생성
       this.map = new kakao.maps.Map(container, options);
 
-      console.log(this.map);
       await this.displayMarkers();
     },
     displayMarkers() {
@@ -144,6 +152,7 @@ export default {
         });
         this.apartMarkers.push(marker);
         kakao.maps.event.addListener(marker, "click", () => {
+          this.closeOverlay();
           this.setApartOverlay(apart);
         });
         marker.setMap(this.map);
@@ -152,35 +161,34 @@ export default {
       });
       // 5. 검색된 위치들 기준으로 지도 범위 재설정
       this.map.setBounds(bounds);
+      // kakao.maps.event.addListener(this.map, "idle", this.selectCategory());
     },
-    // createApartMarker(aparts, markers) {
-    //   var bounds = new kakao.maps.LatLngBounds();
-    //   aparts.forEach((apart) => {
-    //     var imageSrc =
-    //       "https://cdn-icons-png.flaticon.com/512/6984/6984891.png";
-    //     var imageSize = new kakao.maps.Size(60, 60);
-    //     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-    //     // 3. 아파트 마커 좌표, 이미지 세팅
-    //     var marker = new kakao.maps.Marker({
-    //       position: new kakao.maps.LatLng(apart.lat, apart.lng),
-    //       image: markerImage,
-    //       clickable: true,
-    //     });
-    //     markers.push(marker);
-    //     kakao.maps.event.addListener(marker, "click", () => {
-    //       console.log(apart);
-    //       this.setApartOverlay(apart);
-    //     });
-    //     marker.setMap(this.map);
-    //     bounds.extend(new kakao.maps.LatLng(apart.lat, apart.lng));
-    //   });
-    //   this.map.setBounds(bounds);
-    // },
     setApartOverlay(apart) {
+      // var content =
+      //   `<div style="padding:5px;font-size:12px; color:black;">` +
+      //   apart.apartmentName +
+      //   `</div>`;
       var content =
-        `<div style="padding:5px;font-size:12px; color:black;">` +
+        `<div class="mapwrap">` +
+        `    <div class="mapinfo">` +
+        `        <div class="title">` +
         apart.apartmentName +
+        '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+        `        </div>` +
+        `        <div class="body">` +
+        `            <div class="desc">` +
+        `                <div class="ellipsis">주소 : ` +
+        apart.sidoName +
+        apart.gugunName +
+        apart.dong +
+        `</div>` +
+        `                <div class="ellipsis">최근 거래가 : ` +
+        apart.recentPrice +
+        `</div>` +
+        `                <div class="ellipsis">검색</div>` +
+        `            </div>` +
+        `        </div>` +
+        `    </div>` +
         `</div>`;
 
       this.customOverlay.push(
@@ -241,8 +249,8 @@ export default {
           this.categoryMarkers.push(categoryMarker);
 
           kakao.maps.event.addListener(categoryMarker, "click", () => {
+            this.closeOverlay();
             this.setOverlay(place);
-            // this.closeOverlay();
           });
           categoryMarker.setMap(this.map);
         });
@@ -254,25 +262,9 @@ export default {
       });
     },
     setOverlay(place) {
-      // var content =
-      //   `<div style="padding:5px;font-size:12px; color:black;">` +
-      //   place.place_name +
-      //   `</div>`;
       var content =
-        `<div class="mapwrap">` +
-        `    <div class="mapinfo">` +
-        `        <div class="title">` +
+        `<div style="padding:5px;font-size:12px;">` +
         place.place_name +
-        `        </div>` +
-        `        <div class="body">` +
-        `            <div class="desc">` +
-        `                <div class="ellipsis">주소 : ` +
-        place.place_name +
-        `</div>` +
-        `                <div class="ellipsis">검색</div>` +
-        `            </div>` +
-        `        </div>` +
-        `    </div>` +
         `</div>`;
 
       this.customOverlay.push(
@@ -365,6 +357,13 @@ export default {
         this.map.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
       }
     },
+    changeBicycle() {
+      if (this.bicycleStatus) {
+        this.map.addOverlayMapTypeId(kakao.maps.MapTypeId.BICYCLE);
+      } else {
+        this.map.removeOverlayMapTypeId(kakao.maps.MapTypeId.BICYCLE);
+      }
+    },
     moveList() {
       this.$router.push({ name: "HouseList" });
     },
@@ -396,11 +395,10 @@ export default {
   /* margin: 30px 50px; */
 }
 .map-detail {
-  color: black;
   font-weight: bold;
   font-size: 18px;
   width: 200px;
-  z-index: 80;
+  /* z-index: 80; */
 }
 .map-tool {
   position: absolute;
@@ -413,8 +411,9 @@ export default {
   border: 5px outset;
   background-color: rgba(255, 255, 255, 0.5);
 }
+
 .mapwrap {
-  position: absolute;
+  /* position: absolute; */
   left: 0;
   bottom: 40px;
   width: 288px;
@@ -422,7 +421,6 @@ export default {
   margin-left: -144px;
   overflow: hidden;
   font-size: 12px;
-
   line-height: 1.5;
 }
 .mapwrap * {
@@ -479,7 +477,7 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.desc .jibun {
+/* .desc .jibun {
   font-size: 11px;
   color: #888;
   margin-top: -2px;
@@ -494,7 +492,7 @@ export default {
   color: #888;
   overflow: hidden;
   text-align: center;
-}
+} */
 .mapinfo:after {
   content: "";
   position: absolute;

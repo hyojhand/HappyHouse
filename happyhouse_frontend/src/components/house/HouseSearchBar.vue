@@ -2,7 +2,9 @@
   <b-container>
     <div class="form-group form-inline justify-content-center">
       <div class="form-horizontal" style="margin-top: 200px">
-        <h1 style="margin-bottom: 100px">Find Your Happy House</h1>
+        <h1 style="margin-bottom: 100px; color: white">
+          Find Your Happy House
+        </h1>
         <div class="form-inline">
           <select
             class="form-control mr-3"

@@ -18,8 +18,4 @@ export default {
   width: 100%;
   min-height: 100vh;
 }
-.house-view {
-  opacity: 1;
-  color: white;
-}
 </style>
