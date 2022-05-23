@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <h2 class="p-4" v-if="type == 'bookmark'">나의 북마크 아파트 정보</h2>
-    <h2 class="p-4" v-else>
+  <div class="list-bg">
+    <h2 class="p-4 mt-5" v-if="type == 'bookmark'">나의 북마크</h2>
+    <h2 class="p-4 mt-5" v-else>
       {{ this.selectArea.sidoName }}
       {{ this.selectArea.gugunName }}
-      {{ this.selectArea.dongName }} 지역 아파트 최근 거래정보
+      {{ this.selectArea.dongName }} 지역 아파트 정보
     </h2>
     <b-container v-if="this.apts && this.apts.length != 0" class="mt-5">
       <div v-if="type != 'bookmark'" class="text-right mb-5">
@@ -251,5 +251,8 @@ export default {
 }
 .sort-order {
   margin-left: 15px;
+}
+.list-bg {
+  background: white;
 }
 </style>

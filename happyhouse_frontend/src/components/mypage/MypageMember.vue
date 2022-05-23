@@ -1,7 +1,7 @@
 <template>
   <b-container class="mt-3">
     <div class="text-center mt-3">
-      <div class="col-lg-8 mx-auto">
+      <div class="col-lg-6 mx-auto">
         <h2 class="p-3 mb-3 text-light">마이 페이지</h2>
         <div>
           <div class="form-group text-left text-light">

@@ -4,13 +4,21 @@
       <b-col
         ><h3>
           {{ selectApart.apartmentName }}
-          &nbsp;&nbsp;<b-icon
+          <img
             v-if="isBookmark"
-            icon="bookmark-heart"
-            variant="info"
+            role="button"
+            width="30"
+            height="30"
+            src="@/assets/bookmarked.png"
             @click="nobookmark"
-          ></b-icon
-          ><b-icon v-else icon="bookmark-heart" @click="bookmark"></b-icon>
+          /><img
+            v-else
+            role="button"
+            width="30"
+            height="30"
+            src="@/assets/bookmark.png"
+            @click="bookmark"
+          />
         </h3>
       </b-col>
     </b-row>
@@ -27,21 +35,21 @@
       <b-col> <strong>일련번호</strong> : {{ selectApart.aptCode }} </b-col>
     </b-row>
     <b-row class="mb-2">
-      <b-col> <strong>건축년도</strong> : {{ selectApart.buildYear }} </b-col>
+      <b-col> <strong>건축년도</strong> : {{ selectApart.buildYear }}년 </b-col>
     </b-row>
     <b-row class="mb-2">
       <b-col>
-        <strong>최근 거래일</strong> : {{ selectApart.recentYear }} 년
-        {{ selectApart.recentMonth }} 월 {{ selectApart.recentDay }} 일
+        <strong>최근 거래일</strong> : {{ selectApart.recentYear }}년
+        {{ selectApart.recentMonth }}월 {{ selectApart.recentDay }}일
       </b-col>
     </b-row>
     <b-row class="mb-2">
       <b-col>
-        <strong>최근 거래가</strong> : {{ selectApart.recentPrice }} 만원
+        <strong>최근 거래가</strong> : {{ selectApart.recentPrice }}만원
       </b-col>
     </b-row>
     <b-row class="mb-2">
-      <b-col> <strong>평수</strong> : {{ selectApart.area }} 평 </b-col>
+      <b-col> <strong>평수</strong> : {{ selectApart.area }}평 </b-col>
     </b-row>
     <b-row class="mb-2">
       <b-col> <strong>층수</strong> : {{ selectApart.floor }} 층 </b-col>

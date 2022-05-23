@@ -41,6 +41,9 @@ export default {
 .board-table-head {
   width: 50%;
   line-height: 40px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .board-title {
   font-weight: bold;

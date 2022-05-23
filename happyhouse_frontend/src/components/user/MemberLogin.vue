@@ -24,6 +24,9 @@
             @keyup.enter="checkValue"
           ></b-form-input>
         </b-form-group>
+        <b-form-checkbox v-model="remember" value="remember" class="text-light"
+          >아이디 기억하기</b-form-checkbox
+        >
         <b-button
           type="button"
           variant="secondary"
@@ -51,12 +54,16 @@ export default {
   name: "MemberLogin",
   data() {
     return {
-      userid: "",
+      userid: this.$cookies.get("userid"),
       userpwd: "",
+      remember: this.$cookies.get("remember"),
     };
   },
   computed: {
     ...mapState("memberStore", ["isLogin"]),
+  },
+  create() {
+    // this.userid = this.$cookies.get("userid");
   },
   methods: {
     ...mapActions("memberStore", ["goLogin"]),
@@ -86,6 +93,16 @@ export default {
       };
       await this.goLogin(user);
       console.log(this.isLogin);
+      console.log(this.remember);
+      if (this.remember) {
+        if (!this.$cookies.get("userid")) {
+          this.$cookies.set("userid", this.userid);
+          this.$cookies.set("remember", "remember");
+        }
+      } else {
+        this.$cookies.remove("userid");
+        this.$cookies.remove("remember");
+      }
       if (this.isLogin) {
         this.$router.push({ name: "Home" });
         this.$router.go(this.$router.currentRoute);

@@ -119,7 +119,7 @@ export default {
 
 <style scoped>
 .reply-table-content {
-  width: 60%;
+  width: 50%;
   line-height: 30px;
 }
 .reply-table-date {

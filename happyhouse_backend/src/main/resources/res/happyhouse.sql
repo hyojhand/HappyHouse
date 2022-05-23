@@ -1,4 +1,18 @@
--- isdeleted는 실제로 디비에서 데이터를 삭제하지 않고 사용자에게만 보여주지 않기 위함 (데이터 백업용, 0이면 존재 1이면 삭제)
+CREATE TABLE USER (
+	userid 		varchar(20) 	primary key,
+    username 	varchar(20) 	not null,
+    userpwd 	varchar(64) 	not null,
+    email 		varchar(30) 	not null,
+    joindate 	timestamp 		default current_timestamp,
+    isadmin		int				default 0
+);
+
+# 일반 유저 계정
+INSERT INTO USER(userid, username, userpwd, email, isadmin) VALUES ('ssafy', '김싸피', SHA2('1234', 256), 'ssafy@ssafy.com', 0);
+INSERT INTO USER(userid, username, userpwd, email, isadmin) VALUES ('son', '손싸피', SHA2('1234', 256), 'son@ssafy.com', 0);
+INSERT INTO USER(userid, username, userpwd, email, isadmin) VALUES ('choi', '최싸피', SHA2('1234', 256), 'choi@ssafy.com', 0);
+# 관리자 계정
+INSERT INTO USER(userid, username, userpwd, email, isadmin) VALUES ('admin', '관리자', SHA2('1234', 256), 'admin@ssafy.com', 1);
 
 CREATE TABLE BOARD (
 	articleno 	int 			primary key 	auto_increment,
@@ -11,16 +25,13 @@ CREATE TABLE BOARD (
     constraint fk_board_writer foreign key (writer) references USER(userid) on delete cascade
 );
 
-ALTER TABLE user MODIFY COLUMN userpwd varchar(64) NOT NULL;
-
-CREATE TABLE USER (
-	userid 		varchar(20) 	primary key,
-    username 	varchar(20) 	not null,
-    userpwd 	varchar(64) 	not null,
-    email 		varchar(30) 	not null,
-    joindate 	timestamp 		default current_timestamp,
-    isadmin		int				default 0
-);
+INSERT INTO BOARD(writer, title, content) VALUES ('ssafy', '[추천 질문] 송정동 오피스텔 추천해주세요', '이번에 자취를 하게 되었는데 부산 송정동 쪽으로 하게 될 것 같습니다. 혹시 괜찮은 오피스텔 매물이 있을까요?');
+INSERT INTO BOARD(writer, title, content) VALUES ('son', '[한달 후기] 명지 ㅇㅇ아파트', '4월 말에 명지로 이사가서 한 달째 잘 살고 있습니다. 근처에 편의시설 모두 갖추어져 있고 주변 바다도 한눈에 보여서 좋아요.');
+INSERT INTO BOARD(writer, title, content) VALUES ('choi', '[꿀팁 공유] 전세 사기 당하지 않는 방법', '20대 분들은 가능한 부모님과 같은 가까운 어른들을 모시고 부동산에 가도록 하세요. 어려보이면 은근 안 좋은 매물을 비싸게 보여주더라고요.');
+INSERT INTO BOARD(writer, title, content) VALUES ('ssafy', '[질문] 전세인데 어디까지 가능한가요?', '벽에 못질하면 잡혀가나요?');
+INSERT INTO BOARD(writer, title, content) VALUES ('son', '[꿀팁 공유] 층간소음 대처', '꼭대기층에 살면 됩니다.');
+INSERT INTO BOARD(writer, title, content) VALUES ('choi', '[추천 질문] 학군 좋은 지역', '부산에 학군 괜찮은 지역 어디있나요? 아이가 곧 학교에 들어갈 나이가 되는데 신경이 쓰이네요.');
+INSERT INTO BOARD(writer, title, content) VALUES ('ssafy', '[한달 후기] 고시원 생활기', '절박하신 분 아니면 살기 힘듭니다. 좋은 말 할 때 원룸이라도 가세요.');
 
 CREATE TABLE REPLY (
 	replyid 	int 			primary key 	auto_increment,

@@ -34,4 +34,8 @@ a.router-link-exact-active {
 ul {
   list-style: none;
 }
+
+.b-table.table-hover {
+  table-layout: fixed;
+}
 </style>

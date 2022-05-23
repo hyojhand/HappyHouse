@@ -1,7 +1,7 @@
 <template>
-  <b-container class="bv-example-row mt-3">
-    <div class="container text-center mt-3">
-      <div class="col-lg-8 mx-auto">
+  <b-container class="mt-3">
+    <div class="text-center mt-3">
+      <div class="col-lg-11 mx-auto">
         <h2 class="p-3 mb-3 text-light">내가 쓴 글</h2>
         <table class="text-light w-100">
           <tr style="mypage-table-head">

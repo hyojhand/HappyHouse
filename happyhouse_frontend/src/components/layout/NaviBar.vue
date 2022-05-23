@@ -121,6 +121,6 @@ export default {
 .three-dots-icon {
   width: 30px;
   height: 30px;
-  color: ivory;
+  color: pink;
 }
 </style>

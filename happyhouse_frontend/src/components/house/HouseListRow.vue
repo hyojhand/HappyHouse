@@ -18,14 +18,10 @@
       <div class="AptName">
         <strong>{{ apt.apartmentName }} </strong>
       </div>
-      <div>
-        <strong>주소</strong> : {{ this.selectArea.sidoName }}
-        {{ this.selectArea.gugunName }}
-        {{ this.selectArea.dongName }}
-      </div>
-      <div><strong>건축년도</strong> : {{ apt.buildYear }} 년</div>
-      <div><strong>거래가</strong> : {{ apt.recentPrice }} 만원</div>
-      <div><strong>평수</strong> : {{ apt.area }} 평</div>
+      <hr />
+      <div>{{ apt.buildYear }}년 건축</div>
+      <div>{{ apt.recentPrice }}만원</div>
+      <div>{{ apt.area }}평</div>
     </b-col>
   </b-row>
 </template>
@@ -70,6 +66,6 @@ export default {
   font-size: 20px;
 }
 .mouse-over-bgcolor {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 </style>

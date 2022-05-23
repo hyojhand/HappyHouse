@@ -12,4 +12,12 @@ export default {
   name: "Board",
 };
 </script>
-<style scoped></style>
+<style>
+.board-common-head {
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  z-index: 10;
+  color: white;
+}
+</style>

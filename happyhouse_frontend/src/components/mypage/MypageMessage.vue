@@ -1,11 +1,11 @@
 <template>
   <b-container class="bv-example-row">
     <div class="container">
-      <div class="col-lg-8 mx-auto">
+      <div class="col-lg-11 mx-auto">
         <h2 class="p-3 mb-3 text-light">쪽지함</h2>
         <div v-for="message in messages" :key="message.messageid">
           <div v-if="message.send == userInfo.userid" class="text-light">
-            <p class="mr-5">To. {{ message.receive }}</p>
+            <p class="ml-30">To. {{ message.receive }}</p>
             <div class="mypage-message-receive-template">
               <p>
                 <b>{{ message.title }}</b>
@@ -170,7 +170,7 @@ export default {
   background-color: rgb(4, 125, 255);
   border-radius: 25px;
   margin-bottom: 20px;
-  margin-left: 250px;
+  margin-left: 60%;
   width: 300px;
   padding: 10px 20px 1px;
 }
@@ -183,5 +183,8 @@ export default {
 }
 .font-10 {
   font-size: 10px;
+}
+.ml-30 {
+  margin-left: 30%;
 }
 </style>
