@@ -236,6 +236,7 @@ export default {
     },
     // 카테고리 키워드 검색 후 마커찍는 메서드
     placesSearchCB(data, status) {
+      console.log(data);
       if (status === kakao.maps.services.Status.OK) {
         data.forEach((place) => {
           var imageSrc;
@@ -295,10 +296,12 @@ export default {
       });
     },
     setOverlay(place) {
-      var content =
-        `<div style="padding:5px;font-size:12px;">` +
-        place.place_name +
-        `</div>`;
+      // var content =
+      //   `<div style="padding:5px;font-size:12px;">` +
+      //   place.place_name +
+      //   `</div>`;
+
+      var content = `<div style="padding:5px;font-size:12px;>하이요</div>`;
 
       this.customOverlay.push(
         new kakao.maps.CustomOverlay({
@@ -310,6 +313,7 @@ export default {
         })
       );
     },
+    // 카데고리 마커 찍는 메서드
     selectCategory() {
       if (this.categoryMarkers.length > 0) {
         this.categoryMarkers.forEach((item) => {
@@ -424,7 +428,7 @@ export default {
       this.rv = new kakao.maps.Roadview(this.rvContainer); //로드뷰 객체
       this.rvClient = new kakao.maps.RoadviewClient(); //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
       var markImage = new kakao.maps.MarkerImage(
-        "https://cdn-icons.flaticon.com/png/512/3156/premium/3156200.png?token=exp=1653373585~hmac=8ea179af4200a3d8452767c854b9c56e",
+        "https://cdn-icons-png.flaticon.com/512/7509/7509327.png",
         new kakao.maps.Size(75, 75)
       );
       this.rvMarker = new kakao.maps.Marker({
