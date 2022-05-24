@@ -61,7 +61,7 @@
 	</select>
 	
 	<select id="getAptDetail" parameterType="string" resultType="houseDetail">
-		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname
+		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname, h.lat, h.lng
 			from houseinfo h, sidocode si, guguncode gu
 			where left(h.dongcode, 2) = left(si.sidocode, 2) and
 			left(h.dongcode, 5) = left(gu.guguncode, 5) and
@@ -73,7 +73,7 @@
 	</select>
 	
 	<select id="getAptDetailDesc" parameterType="string" resultType="houseDetail">
-		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname
+		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname, h.lat, h.lng
 			from houseinfo h, sidocode si, guguncode gu
 			where left(h.dongcode, 2) = left(si.sidocode, 2) and
 			left(h.dongcode, 5) = left(gu.guguncode, 5) and
@@ -85,7 +85,7 @@
 	</select>
 	
 	<select id="getAptDetailYearSort" parameterType="string" resultType="houseDetail">
-		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname
+		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname, h.lat, h.lng
 			from houseinfo h, sidocode si, guguncode gu
 			where left(h.dongcode, 2) = left(si.sidocode, 2) and
 			left(h.dongcode, 5) = left(gu.guguncode, 5) and
@@ -97,7 +97,7 @@
 	</select>
 	
 	<select id="getAptDetailYearSortDesc" parameterType="string" resultType="houseDetail">
-		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname
+		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname, h.lat, h.lng
 			from houseinfo h, sidocode si, guguncode gu
 			where left(h.dongcode, 2) = left(si.sidocode, 2) and
 			left(h.dongcode, 5) = left(gu.guguncode, 5) and
@@ -109,7 +109,7 @@
 	</select>
 	
 	<select id="getAptDetailPriceSort" parameterType="string" resultType="houseDetail">
-		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname
+		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname, h.lat, h.lng
 			from houseinfo h, sidocode si, guguncode gu
 			where left(h.dongcode, 2) = left(si.sidocode, 2) and
 			left(h.dongcode, 5) = left(gu.guguncode, 5) and
@@ -121,7 +121,7 @@
 	</select>
 	
 	<select id="getAptDetailPriceSortDesc" parameterType="string" resultType="houseDetail">
-		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname
+		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname, h.lat, h.lng
 			from houseinfo h, sidocode si, guguncode gu
 			where left(h.dongcode, 2) = left(si.sidocode, 2) and
 			left(h.dongcode, 5) = left(gu.guguncode, 5) and
@@ -133,7 +133,7 @@
 	</select>
 	
 	<select id="getAptDetailAreaSort" parameterType="string" resultType="houseDetail">
-		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname
+		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname, h.lat, h.lng
 			from houseinfo h, sidocode si, guguncode gu
 			where left(h.dongcode, 2) = left(si.sidocode, 2) and
 			left(h.dongcode, 5) = left(gu.guguncode, 5) and
@@ -145,7 +145,7 @@
 	</select>
 	
 	<select id="getAptDetailAreaSortDesc" parameterType="string" resultType="houseDetail">
-		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname
+		select * from (select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, si.sidoname, gu.gugunname, h.lat, h.lng
 			from houseinfo h, sidocode si, guguncode gu
 			where left(h.dongcode, 2) = left(si.sidocode, 2) and
 			left(h.dongcode, 5) = left(gu.guguncode, 5) and
@@ -154,18 +154,6 @@
 		    from housedeal d, houseinfo h where d.aptCode = h.aptCode and no = (select max(no) from housedeal hd where hd.aptCode = h.aptCode)) b
 		where a.aptCode = b.aptCode
 		order by CAST(b.area AS DECIMAL(20, 2)) desc
-	</select>
-	
-	<select id="getAptWord" parameterType="string" resultType="houseInfoDto">
-		select h.aptCode, h.apartmentName, h.buildyear, h.dongCode, h.dong, h.jibun, h.lat, h.lng, si.sidoname, gu.gugunname,
-				(select dealAmount from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentPrice
-		from houseinfo h
-		left join sidocode si
-		on left(h.dongcode,2) = left(si.sidocode,2)
-		left join guguncode gu
-		on left(h.dongcode,5) = left(gu.guguncode,5)
-		where apartmentName like concat('%', #{apartmentName}, '%')
-		order by apartmentName
 	</select>
 	
 	<insert id="insertBookmark" parameterType="bookmark">

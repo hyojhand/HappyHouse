@@ -19,5 +19,8 @@ public class HouseDetail {
 	private int area;
 	private int floor;
 	
+	private String lat;
+	private String lng;
+	
 
 }

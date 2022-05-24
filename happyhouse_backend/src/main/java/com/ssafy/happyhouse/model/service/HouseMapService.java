@@ -26,7 +26,6 @@ public interface HouseMapService {
 	List<HouseDetail> getAptDetailPriceSortDesc(String aptcode) throws SQLException;
 	List<HouseDetail> getAptDetailAreaSort(String aptcode) throws SQLException;
 	List<HouseDetail> getAptDetailAreaSortDesc(String aptcode) throws SQLException;
-	List<HouseInfoDto> getAptWord(String word) throws Exception;
 	int bookmark(Bookmark bookmark) throws Exception;
 	int subBookmark(Bookmark bookmark) throws Exception;
 	boolean isBookmark(Bookmark bookmark) throws Exception;

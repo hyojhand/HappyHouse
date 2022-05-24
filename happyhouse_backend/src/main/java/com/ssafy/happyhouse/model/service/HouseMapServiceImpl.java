@@ -94,10 +94,6 @@ public class HouseMapServiceImpl implements HouseMapService {
 		return houseMapMapper.getAptDetailAreaSortDesc(aptcode);
 	}
 	
-	@Override
-	public List<HouseInfoDto> getAptWord(String word) throws Exception {
-		return houseMapMapper.getAptWord(word);
-	}
 
 	@Override
 	public int bookmark(Bookmark bookmark) throws Exception {

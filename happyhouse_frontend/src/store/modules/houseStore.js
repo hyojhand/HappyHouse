@@ -15,6 +15,11 @@ const houseStore = {
 
     selectAptCode: "",
     selectApart: {},
+    cafeCount: 0,
+    conbiCount: 0,
+    hospitalCount: 0,
+    educationCount: 0,
+    cultureCount: 0,
   },
   getters: {},
 
@@ -41,6 +46,21 @@ const houseStore = {
     selectApartImgNum({ commit }, num) {
       commit("SELECT_APART_IMG_NUM", num);
     },
+    getCafe({ commit }, count) {
+      commit("GET_CAFE", count);
+    },
+    getConbi({ commit }, count) {
+      commit("GET_CONBI", count);
+    },
+    getHospital({ commit }, count) {
+      commit("GET_HOSPITAL", count);
+    },
+    getEducation({ commit }, count) {
+      commit("GET_EDUCATION", count);
+    },
+    getCulture({ commit }, count) {
+      commit("GET_CULTURE", count);
+    },
   },
   mutations: {
     GET_SIDO: (state, sidoname) => {
@@ -60,6 +80,21 @@ const houseStore = {
     },
     SELECT_APART_IMG_NUM: (state, num) => {
       state.selectApartImgNum = num;
+    },
+    GET_CAFE: (state, count) => {
+      state.cafeCount = count;
+    },
+    GET_CONBI: (state, count) => {
+      state.conbiCount = count;
+    },
+    GET_HOSPITAL: (state, count) => {
+      state.hospitalCount += count;
+    },
+    GET_EDUCATION: (state, count) => {
+      state.educationCount += count;
+    },
+    GET_CULTURE: (state, count) => {
+      state.cultureCount += count;
     },
   },
 };

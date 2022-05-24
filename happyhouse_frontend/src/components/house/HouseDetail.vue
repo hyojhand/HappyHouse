@@ -54,6 +54,9 @@
     <b-row class="mb-2">
       <b-col> <strong>층수</strong> : {{ selectApart.floor }} 층 </b-col>
     </b-row>
+    <b-row class="mb-2">
+      <b-col> <strong>카페 수</strong> : {{ cafeCount }} </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -61,6 +64,7 @@
 import { mapState } from "vuex";
 import http from "@/util/http-common";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 export default {
   name: "HouseDetail",
@@ -72,9 +76,25 @@ export default {
   },
   computed: {
     ...mapState("memberStore", ["isLogin"]),
-    ...mapState("houseStore", ["selectApart", "selectApartImgNum"]),
+    ...mapState("houseStore", [
+      "selectApart",
+      "selectApartImgNum",
+      "cafeCount",
+    ]),
   },
   async created() {
+    // var lng = this.selectApart.lng;
+    // var lat = this.selectApart.lat;
+    // axios.defaults.headers["Authorization"] =
+    //   "KakaoAK d00501781e125b07eeb9a328ebc287e6";
+    // axios
+    //   .get(
+    //     `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=CE7&radius=500&x=${lng}&y=${lat}`
+    //   )
+    //   .then(({ data }) => {
+    //     console.log(data);
+    //   });
+
     if (this.isLogin) {
       const decode = jwt_decode(sessionStorage.getItem("access-token"));
       http.defaults.headers["access-token"] =
@@ -97,6 +117,18 @@ export default {
     }
   },
   updated() {
+    console.log(this.selectApart);
+    var lng = this.selectApart.lng;
+    var lat = this.selectApart.lat;
+    axios.defaults.headers["Authorization"] =
+      "KakaoAK d00501781e125b07eeb9a328ebc287e6";
+    axios
+      .get(
+        `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=CE7&radius=100&x=${lng}&y=${lat}`
+      )
+      .then(({ data }) => {
+        console.log(data);
+      });
     http
       .get(`map/bookmark`, {
         params: {

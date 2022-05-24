@@ -74,7 +74,8 @@
 
 <script>
 import http from "@/util/http-common";
-import { mapState } from "vuex";
+import axios from "axios";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "HouseMap",
@@ -85,6 +86,7 @@ export default {
       apartPositions: [],
       categoryMarkers: [], // 선택한 카테고리 마커 담을 배열
       customOverlay: [],
+      category: ["CE7", "CS2", "HP8", "PM9", "SC4", "AC5", "PS3", "CT1", "AT4"],
 
       selected: [], // Must be an array reference!
       options: [
@@ -131,6 +133,15 @@ export default {
     }
   },
   methods: {
+    ...mapActions("houseStore", [
+      "selectApt",
+      "selectApartImgNum",
+      "getCafe",
+      "getConbi",
+      "getHospital",
+      "getEducation",
+      "getCulture",
+    ]),
     async initMap() {
       const container = document.getElementById("map");
       const options = {
@@ -236,7 +247,6 @@ export default {
     },
     // 카테고리 키워드 검색 후 마커찍는 메서드
     placesSearchCB(data, status) {
-      console.log(data);
       if (status === kakao.maps.services.Status.OK) {
         data.forEach((place) => {
           var imageSrc;
@@ -478,8 +488,49 @@ export default {
         }
       });
     },
-    moveList() {
-      this.$router.push({ name: "HouseList" });
+    async moveList() {
+      console.log(this.apartPositions[0]);
+      var lng = this.apartPositions[0].lng;
+      var lat = this.apartPositions[0].lat;
+      console.log(lng);
+      console.log(lat);
+
+      for (var i = 0; i < 9; i++) {
+        var category_code = this.category[i];
+        if (category_code === "CE7") {
+          this.getCafe(await this.searchItem(lng, lat, 300, "CE7"));
+        } else if (category_code === "CS2") {
+          this.getConbi(await this.searchItem(lng, lat, 100, "CS2"));
+        } else if (category_code === "HP8" || category_code === "PM9") {
+          this.getHospital(
+            await this.searchItem(lng, lat, 1000, category_code)
+          );
+        } else if (
+          category_code === "SC4" ||
+          category_code === "AC5" ||
+          category_code === "PS3"
+        ) {
+          this.getEducation(
+            await this.searchItem(lng, lat, 500, category_code)
+          );
+        } else if (category_code === "CT1" || category_code === "AT4") {
+          this.getEducation(
+            await this.searchItem(lng, lat, 1500, category_code)
+          );
+        }
+      }
+
+      console.log(await this.searchItem(lng, lat, 300, "CE7"));
+      await this.$router.push({ name: "HouseList" });
+    },
+    // 주변 상가 정보 가져오기
+    async searchItem(x, y, rad, code) {
+      axios.defaults.headers["Authorization"] =
+        "KakaoAK d00501781e125b07eeb9a328ebc287e6";
+      var data = await axios.get(
+        `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=${code}&radius=${rad}&x=${x}&y=${y}`
+      );
+      return data.data.meta.total_count;
     },
     moveSearch() {
       this.$router.push({ name: "HouseSearchBar" });
