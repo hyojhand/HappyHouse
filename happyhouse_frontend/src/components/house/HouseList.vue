@@ -74,7 +74,6 @@ export default {
       sortIconYear: "",
       sortIconPrice: "",
       sortIconArea: "",
-      category: ["CE7", "CS2", "HP8", "PM9", "SC4", "AC5", "PS3", "CT1", "AT4"],
     };
   },
   computed: {
@@ -82,15 +81,19 @@ export default {
     ...mapState("houseStore", [
       "selectDong",
       "selectArea",
-      "cafeCount",
-      "conbiCount",
-      "hospitalCount",
-      "educationCount",
-      "cultureCount",
+      "cafeInfo",
+      "conbiInfo",
+      "hospitalInfo",
+      "educationInfo",
+      "cultureInfo",
     ]),
   },
   async created() {
-    console.log("카페카운트 : " + this.cafeCount);
+    // console.log(this.cafeInfo);
+    // console.log(this.conbiInfo);
+    // console.log(this.hospitalInfo);
+    // console.log(this.educationInfo);
+    // console.log(this.cultureInfo);
 
     if (this.isLogin) {
       const decode = jwt_decode(sessionStorage.getItem("access-token"));
@@ -123,28 +126,6 @@ export default {
         if (data != null) {
           this.selectApt(data[0]);
           this.selectApartImgNum("1");
-          // var lng = data[0].lng;
-          // var lat = data[0].lat;
-
-          // for (var i = 0; i < 9; i++) {
-          //   var category_code = this.category[i];
-          //   if (category_code === "CE7") {
-          //     this.getCafe(this.searchItem(lng, lat, 300, "CE7"));
-          //     console.log(this.searchItem(lng, lat, 300, "CE7"));
-          //   } else if (category_code === "CS2") {
-          //     this.getConbi(this.searchItem(lng, lat, 100, "CS2"));
-          //   } else if (category_code === "HP8" || category_code === "PM9") {
-          //     this.getHospital(this.searchItem(lng, lat, 1000, category_code));
-          //   } else if (
-          //     category_code === "SC4" ||
-          //     category_code === "AC5" ||
-          //     category_code === "PS3"
-          //   ) {
-          //     this.getEducation(this.searchItem(lng, lat, 500, category_code));
-          //   } else if (category_code === "CT1" || category_code === "AT4") {
-          //     this.getEducation(this.searchItem(lng, lat, 1500, category_code));
-          //   }
-          // }
         }
       });
     }
@@ -159,14 +140,18 @@ export default {
       "getEducation",
       "getCulture",
     ]),
-    sort(kind) {
+    async sort(kind) {
+      //     this.sortIconName = "sort-alpha-up";
+      //     this.sortIconYear = this.sortIconPrice = this.sortIconArea = "";
+      // this.sortIconName = "sort-alpha-down";
+      //     this.sortIconYear = this.sortIconPrice = this.sortIconArea = "";
       if (this.sortBy == kind) {
         this.sortDesc = !this.sortDesc;
       } else {
         this.sortBy = kind;
         this.sortDesc = false;
       }
-      http
+      await http
         .get(`/map/aptsort/${this.selectDong}`, {
           params: { kind: kind, order: !this.sortDesc },
         })
@@ -175,46 +160,31 @@ export default {
           if (data != null) {
             this.selectApt(data[0]);
             this.selectApartImgNum("1");
-            var lng = data[0].lng;
-            var lat = data[0].lat;
-
-            for (var i = 0; i < 9; i++) {
-              var category_code = this.category[i];
-              if (category_code === "CE7") {
-                this.getCafe(this.searchItem(lng, lat, 300, "CE7"));
-              } else if (category_code === "CS2") {
-                this.getConbi(this.searchItem(lng, lat, 100, "CS2"));
-              } else if (category_code === "HP8" || category_code === "PM9") {
-                this.getHospital(
-                  this.searchItem(lng, lat, 1000, category_code)
-                );
-              } else if (
-                category_code === "SC4" ||
-                category_code === "AC5" ||
-                category_code === "PS3"
-              ) {
-                this.getEducation(
-                  this.searchItem(lng, lat, 500, category_code)
-                );
-              } else if (category_code === "CT1" || category_code === "AT4") {
-                this.getEducation(
-                  this.searchItem(lng, lat, 1500, category_code)
-                );
-              }
-            }
+            console.log(data[0]);
+            this.setSortApart(data[0]);
           }
         });
     },
-    searchItem(x, y, rad, code) {
+    async setSortApart(data) {
+      var lng = data.lng;
+      var lat = data.lat;
+
+      this.getCafe(await this.searchItem(lng, lat, 300, "CE7"));
+      this.getConbi(await this.searchItem(lng, lat, 100, "CS2"));
+      this.getHospital(await this.searchItem(lng, lat, 1000, "HP8"));
+      this.getEducation(await this.searchItem(lng, lat, 500, "SC4"));
+      this.getCulture(await this.searchItem(lng, lat, 1500, "CT1"));
+    },
+    // 주변 상가 정보 가져오기
+    async searchItem(x, y, rad, code) {
       axios.defaults.headers["Authorization"] =
         "KakaoAK d00501781e125b07eeb9a328ebc287e6";
-      axios
-        .get(
-          `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=${code}&radius=${rad}&x=${x}&y=${y}`
-        )
-        .then(({ data }) => {
-          return data.meta.total_count;
-        });
+      var data = await axios.get(
+        `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=${code}&radius=${rad}&x=${x}&y=${y}`
+      );
+      // console.log(data.data.documents);
+      // console.log(data.data.meta.total_count);
+      return data.data;
     },
 
     // sortName() {

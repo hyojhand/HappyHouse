@@ -86,7 +86,7 @@ export default {
       apartPositions: [],
       categoryMarkers: [], // 선택한 카테고리 마커 담을 배열
       customOverlay: [],
-      category: ["CE7", "CS2", "HP8", "PM9", "SC4", "AC5", "PS3", "CT1", "AT4"],
+      category: ["CE7", "CS2", "HP8", "SC4", "CT1"],
 
       selected: [], // Must be an array reference!
       options: [
@@ -492,37 +492,73 @@ export default {
       console.log(this.apartPositions[0]);
       var lng = this.apartPositions[0].lng;
       var lat = this.apartPositions[0].lat;
-      console.log(lng);
-      console.log(lat);
 
-      for (var i = 0; i < 9; i++) {
+      for (var i = 0; i < 5; i++) {
         var category_code = this.category[i];
         if (category_code === "CE7") {
           this.getCafe(await this.searchItem(lng, lat, 300, "CE7"));
         } else if (category_code === "CS2") {
           this.getConbi(await this.searchItem(lng, lat, 100, "CS2"));
-        } else if (category_code === "HP8" || category_code === "PM9") {
-          this.getHospital(
-            await this.searchItem(lng, lat, 1000, category_code)
-          );
-        } else if (
-          category_code === "SC4" ||
-          category_code === "AC5" ||
-          category_code === "PS3"
-        ) {
-          this.getEducation(
-            await this.searchItem(lng, lat, 500, category_code)
-          );
-        } else if (category_code === "CT1" || category_code === "AT4") {
-          this.getEducation(
-            await this.searchItem(lng, lat, 1500, category_code)
-          );
+        } else if (category_code === "HP8") {
+          this.getHospital(await this.searchItem(lng, lat, 1000, "HP8"));
+        } else if (category_code === "SC4") {
+          this.getEducation(await this.searchItem(lng, lat, 500, "SC4"));
+        } else if (category_code === "CT1") {
+          this.getCulture(await this.searchItem(lng, lat, 1500, "CT1"));
         }
       }
 
-      console.log(await this.searchItem(lng, lat, 300, "CE7"));
       await this.$router.push({ name: "HouseList" });
     },
+    // async moveList() {
+    //   console.log(this.apartPositions[0]);
+    //   var lng = this.apartPositions[0].lng;
+    //   var lat = this.apartPositions[0].lat;
+
+    //   for (var i = 0; i < 9; i++) {
+    //     var category_code = this.category[i];
+    //     var data = "";
+    //     if (category_code === "CE7") {
+    //       data = await this.searchItem(lng, lat, 300, "CE7");
+    //       this.getCafe(await this.searchItem(lng, lat, 300, "CE7"));
+    //       // this.getCafeCount(data.meta.total_count);
+    //       // this.getCafeInfo(data.documents);
+    //     } else if (category_code === "CS2") {
+    //       data = await this.searchItem(lng, lat, 100, "CS2");
+    //       this.getConbi(await this.searchItem(lng, lat, 100, "CS2"));
+    //       // this.getConbiCount(data.meta.total_count);
+    //       // this.getConbiInfo(data.documents);
+    //     } else if (category_code === "HP8" || category_code === "PM9") {
+    //       data = await this.searchItem(lng, lat, 1000, category_code);
+    //       this.getHospital(
+    //         await this.searchItem(lng, lat, 1000, category_code)
+    //       );
+    //       // this.getHospitalCount(data.meta.total_count);
+    //       // this.getHospitalInfo(data.documents);
+    //     } else if (
+    //       category_code === "SC4" ||
+    //       category_code === "AC5" ||
+    //       category_code === "PS3"
+    //     ) {
+    //       data = await this.searchItem(lng, lat, 500, category_code);
+    //       this.getEducation(
+    //         await this.searchItem(lng, lat, 500, category_code)
+    //       );
+    //       // this.getEducationCount(data.meta.total_count);
+    //       // this.getEducationInfo(data.documents);
+    //     } else if (category_code === "CT1" || category_code === "AT4") {
+    //       data = await this.searchItem(lng, lat, 1500, category_code);
+    //       this.getCulture(await this.searchItem(lng, lat, 1500, category_code));
+    //       // this.getCultureCount(data.meta.total_count);
+    //       // this.getCultureInfo(data.documents);
+    //     }
+
+    //     console.log(category_code);
+    //     console.log(data);
+    //   }
+
+    //   await this.$router.push({ name: "HouseList" });
+    // },
     // 주변 상가 정보 가져오기
     async searchItem(x, y, rad, code) {
       axios.defaults.headers["Authorization"] =
@@ -530,7 +566,9 @@ export default {
       var data = await axios.get(
         `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=${code}&radius=${rad}&x=${x}&y=${y}`
       );
-      return data.data.meta.total_count;
+      // console.log(data.data.documents);
+      // console.log(data.data.meta.total_count);
+      return data.data;
     },
     moveSearch() {
       this.$router.push({ name: "HouseSearchBar" });

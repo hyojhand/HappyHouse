@@ -15,11 +15,12 @@ const houseStore = {
 
     selectAptCode: "",
     selectApart: {},
-    cafeCount: 0,
-    conbiCount: 0,
-    hospitalCount: 0,
-    educationCount: 0,
-    cultureCount: 0,
+
+    cafeInfo: [],
+    conbiInfo: [],
+    hospitalInfo: [],
+    educationInfo: [],
+    cultureInfo: [],
   },
   getters: {},
 
@@ -46,20 +47,20 @@ const houseStore = {
     selectApartImgNum({ commit }, num) {
       commit("SELECT_APART_IMG_NUM", num);
     },
-    getCafe({ commit }, count) {
-      commit("GET_CAFE", count);
+    getCafe({ commit }, data) {
+      commit("GET_CAFE", data);
     },
-    getConbi({ commit }, count) {
-      commit("GET_CONBI", count);
+    getConbi({ commit }, data) {
+      commit("GET_CONBI", data);
     },
-    getHospital({ commit }, count) {
-      commit("GET_HOSPITAL", count);
+    getHospital({ commit }, data) {
+      commit("GET_HOSPITAL", data);
     },
-    getEducation({ commit }, count) {
-      commit("GET_EDUCATION", count);
+    getEducation({ commit }, data) {
+      commit("GET_EDUCATION", data);
     },
-    getCulture({ commit }, count) {
-      commit("GET_CULTURE", count);
+    getCulture({ commit }, data) {
+      commit("GET_CULTURE", data);
     },
   },
   mutations: {
@@ -81,20 +82,20 @@ const houseStore = {
     SELECT_APART_IMG_NUM: (state, num) => {
       state.selectApartImgNum = num;
     },
-    GET_CAFE: (state, count) => {
-      state.cafeCount = count;
+    GET_CAFE: (state, data) => {
+      state.cafeInfo = data;
     },
-    GET_CONBI: (state, count) => {
-      state.conbiCount = count;
+    GET_CONBI: (state, data) => {
+      state.conbiInfo = data;
     },
-    GET_HOSPITAL: (state, count) => {
-      state.hospitalCount += count;
+    GET_HOSPITAL: (state, data) => {
+      state.hospitalInfo = data;
     },
-    GET_EDUCATION: (state, count) => {
-      state.educationCount += count;
+    GET_EDUCATION: (state, data) => {
+      state.educationInfo = data;
     },
-    GET_CULTURE: (state, count) => {
-      state.cultureCount += count;
+    GET_CULTURE: (state, data) => {
+      state.cultureInfo = data;
     },
   },
 };

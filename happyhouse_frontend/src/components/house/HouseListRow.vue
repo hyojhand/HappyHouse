@@ -28,6 +28,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import axios from "axios";
 export default {
   name: "HouseListRow",
   props: {
@@ -43,10 +44,38 @@ export default {
     ...mapState("houseStore", ["selectArea"]),
   },
   methods: {
-    ...mapActions("houseStore", ["selectApt", "selectApartImgNum"]),
-    selectApart() {
-      this.selectApt(this.apt);
-      this.selectApartImgNum(this.num);
+    ...mapActions("houseStore", [
+      "selectApt",
+      "selectApartImgNum",
+      "getCafe",
+      "getConbi",
+      "getHospital",
+      "getEducation",
+      "getCulture",
+    ]),
+    async selectApart() {
+      await this.selectApt(this.apt);
+      await this.selectApartImgNum(this.num);
+
+      var lng = this.apt.lng;
+      var lat = this.apt.lat;
+
+      this.getCafe(await this.searchItem(lng, lat, 300, "CE7"));
+      this.getConbi(await this.searchItem(lng, lat, 100, "CS2"));
+      this.getHospital(await this.searchItem(lng, lat, 1000, "HP8"));
+      this.getEducation(await this.searchItem(lng, lat, 500, "SC4"));
+      this.getCulture(await this.searchItem(lng, lat, 1500, "CT1"));
+    },
+    // 주변 상가 정보 가져오기
+    async searchItem(x, y, rad, code) {
+      axios.defaults.headers["Authorization"] =
+        "KakaoAK d00501781e125b07eeb9a328ebc287e6";
+      var data = await axios.get(
+        `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=${code}&radius=${rad}&x=${x}&y=${y}`
+      );
+      // console.log(data.data.documents);
+      // console.log(data.data.meta.total_count);
+      return data.data;
     },
     colorChange(flag) {
       this.isColor = flag;

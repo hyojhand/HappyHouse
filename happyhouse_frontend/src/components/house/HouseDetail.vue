@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-row class="mt-3 mb-3">
+    <b-row class="mb-2">
       <b-col
         ><h3>
           {{ selectApart.apartmentName }}
@@ -55,8 +55,64 @@
       <b-col> <strong>층수</strong> : {{ selectApart.floor }} 층 </b-col>
     </b-row>
     <b-row class="mb-2">
-      <b-col> <strong>카페 수</strong> : {{ cafeCount }} </b-col>
+      <b-col>
+        <strong>카페 수</strong> :
+        <span>{{ cafeInfo.meta.total_count }} 개 / </span>
+        <span v-if="cafeInfo.meta.total_count >= 5"> 별 5개</span>
+        <span v-else-if="cafeInfo.meta.total_count >= 3"> 별 3개</span>
+        <span v-else-if="cafeInfo.meta.total_count >= 1"> 별 1개</span>
+        <span v-else> 별 0개</span>
+        <div>
+          <!-- <div v-for="(cafe, index) in cafeInfo.documents" :key="cafe.id">
+            {{ cafe[index].distance }} 거리에 {{ cafe[index].place_name }} 이
+            있습니다.
+          </div> -->
+          {{ cafeInfo.documents[0].distance }}m 거리에
+          {{ cafeInfo.documents[0].place_name }} 이(가) 있습니다.
+        </div>
+      </b-col>
     </b-row>
+    <b-row class="mb-2">
+      <b-col>
+        <strong>편의점 수</strong> :
+        <span>{{ conbiInfo.meta.total_count }} 개 / </span>
+        <span v-if="conbiInfo.meta.total_count >= 5"> 별 5개</span>
+        <span v-else-if="conbiInfo.meta.total_count >= 3"> 별 3개</span>
+        <span v-else-if="conbiInfo.meta.total_count >= 1"> 별 1개</span>
+        <span v-else> 별 0개</span>
+      </b-col>
+    </b-row>
+    <b-row class="mb-2">
+      <b-col>
+        <strong>학교 수</strong> :
+        <span>{{ educationInfo.meta.total_count }} 개 / </span>
+        <span v-if="educationInfo.meta.total_count >= 5"> 별 5개</span>
+        <span v-else-if="educationInfo.meta.total_count >= 3"> 별 3개</span>
+        <span v-else-if="educationInfo.meta.total_count >= 1"> 별 1개</span>
+        <span v-else> 별 0개</span>
+      </b-col>
+    </b-row>
+    <b-row class="mb-2">
+      <b-col>
+        <strong>병원 수</strong> :
+        <span>{{ hospitalInfo.meta.total_count }} 개 / </span>
+        <span v-if="hospitalInfo.meta.total_count >= 5"> 별 5개</span>
+        <span v-else-if="hospitalInfo.meta.total_count >= 3"> 별 3개</span>
+        <span v-else-if="hospitalInfo.meta.total_count >= 1"> 별 1개</span>
+        <span v-else> 별 0개</span>
+      </b-col>
+    </b-row>
+    <b-row class="mb-2">
+      <b-col>
+        <strong>문화시설 수</strong> :
+        <span>{{ cultureInfo.meta.total_count }} 개 / </span>
+        <span v-if="cultureInfo.meta.total_count >= 5"> 별 5개</span>
+        <span v-else-if="cultureInfo.meta.total_count >= 3"> 별 3개</span>
+        <span v-else-if="cultureInfo.meta.total_count >= 1"> 별 1개</span>
+        <span v-else> 별 0개</span>
+      </b-col>
+    </b-row>
+    <br />
   </b-container>
 </template>
 
@@ -64,7 +120,7 @@
 import { mapState } from "vuex";
 import http from "@/util/http-common";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   name: "HouseDetail",
@@ -79,22 +135,14 @@ export default {
     ...mapState("houseStore", [
       "selectApart",
       "selectApartImgNum",
-      "cafeCount",
+      "cafeInfo",
+      "conbiInfo",
+      "hospitalInfo",
+      "educationInfo",
+      "cultureInfo",
     ]),
   },
   async created() {
-    // var lng = this.selectApart.lng;
-    // var lat = this.selectApart.lat;
-    // axios.defaults.headers["Authorization"] =
-    //   "KakaoAK d00501781e125b07eeb9a328ebc287e6";
-    // axios
-    //   .get(
-    //     `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=CE7&radius=500&x=${lng}&y=${lat}`
-    //   )
-    //   .then(({ data }) => {
-    //     console.log(data);
-    //   });
-
     if (this.isLogin) {
       const decode = jwt_decode(sessionStorage.getItem("access-token"));
       http.defaults.headers["access-token"] =
@@ -117,18 +165,6 @@ export default {
     }
   },
   updated() {
-    console.log(this.selectApart);
-    var lng = this.selectApart.lng;
-    var lat = this.selectApart.lat;
-    axios.defaults.headers["Authorization"] =
-      "KakaoAK d00501781e125b07eeb9a328ebc287e6";
-    axios
-      .get(
-        `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=CE7&radius=100&x=${lng}&y=${lat}`
-      )
-      .then(({ data }) => {
-        console.log(data);
-      });
     http
       .get(`map/bookmark`, {
         params: {
@@ -196,6 +232,6 @@ export default {
 
 <style scoped>
 #detailImg {
-  height: 400px;
+  height: 370px;
 }
 </style>
