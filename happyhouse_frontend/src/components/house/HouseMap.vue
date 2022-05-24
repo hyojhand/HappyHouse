@@ -55,17 +55,18 @@
       <b-col> </b-col>
     </b-row>
 
-    <!-- <div id="map"></div> -->
     <div
       :class="{ roadViewMode: isRoadView, mapMode: isMapView }"
       style="height: 100vh; float: left"
     >
-      <!-- <div id="mapWrapper" style="width: 50%; height: 100vh; float: left"> -->
       <div id="map"></div>
     </div>
-    <div id="rvWrapper" style="width: 50%; height: 100vh; float: left">
+    <div
+      :class="{ roadViewMode: isRoadView, notMapMode: isMapView }"
+      style="height: 100vh; float: left"
+    >
+      <!-- <div id="rvWrapper" style="width: 50%; height: 100vh; float: left"> -->
       <div id="roadview" style="width: 100%; height: 100vh"></div>
-      <!-- 로드뷰를 표시할 div 입니다 -->
     </div>
     <br />
   </div>
@@ -167,7 +168,7 @@ export default {
         // 2-1. 아파트 마커 이미지 세팅
         var imageSrc =
           "https://cdn-icons-png.flaticon.com/512/6984/6984891.png";
-        var imageSize = new kakao.maps.Size(60, 60);
+        var imageSize = new kakao.maps.Size(75, 75);
         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
         // 3. 아파트 마커 좌표, 이미지 세팅
@@ -187,7 +188,13 @@ export default {
       });
       // 5. 검색된 위치들 기준으로 지도 범위 재설정
       this.map.setBounds(bounds);
-      // kakao.maps.event.addListener(this.map, "idle", this.selectCategory());
+
+      kakao.maps.event.addListener(this.map, "dragend", () => {
+        this.selectCategory();
+      });
+      kakao.maps.event.addListener(this.map, "zoom_changed", () => {
+        this.selectCategory();
+      });
     },
     setApartOverlay(apart) {
       // var content =
@@ -394,8 +401,6 @@ export default {
       if (this.roadViewStatus) {
         this.map.addOverlayMapTypeId(kakao.maps.MapTypeId.ROADVIEW);
         this.setRoadView();
-        console.log("start 뜨나요?..");
-        console.log(this.map.getCenter());
         this.toggleRoadView(this.map.getCenter());
         // this.toggleRoadView(
         //   new kakao.maps.LatLng(
@@ -403,32 +408,24 @@ export default {
         //     this.map.getCenter().Ma
         //   )
         // );
-        console.log("start 끝은 뜨나요?..");
       } else {
         this.map.removeOverlayMapTypeId(kakao.maps.MapTypeId.ROADVIEW);
         this.rvMarker.setMap(null);
-        console.log("end 뜨나요?..");
+
         this.toggleRoadView(new kakao.maps.LatLng(0, 0));
-        console.log("end 끝 뜨나요?..");
+        this.map.relayout();
+        // this.rvContainer = "";
+        // this.rv = {};
+        // this.rvClient = {};
       }
     },
     setRoadView() {
       this.rvContainer = document.getElementById("roadview"); //로드뷰를 표시할 div
       this.rv = new kakao.maps.Roadview(this.rvContainer); //로드뷰 객체
       this.rvClient = new kakao.maps.RoadviewClient(); //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
-
       var markImage = new kakao.maps.MarkerImage(
-        "https://t1.daumcdn.net/localimg/localimages/07/2018/pc/roadview_minimap_wk_2018.png",
-        new kakao.maps.Size(26, 46),
-        {
-          // 스프라이트 이미지를 사용합니다.
-          // 스프라이트 이미지 전체의 크기를 지정하고
-          spriteSize: new kakao.maps.Size(1666, 168),
-          // 사용하고 싶은 영역의 좌상단 좌표를 입력합니다.
-          // background-position으로 지정하는 값이며 부호는 반대입니다.
-          spriteOrigin: new kakao.maps.Point(705, 114),
-          offset: new kakao.maps.Point(13, 46),
-        }
+        "https://cdn-icons.flaticon.com/png/512/3156/premium/3156200.png?token=exp=1653373585~hmac=8ea179af4200a3d8452767c854b9c56e",
+        new kakao.maps.Size(75, 75)
       );
       this.rvMarker = new kakao.maps.Marker({
         image: markImage,
@@ -444,10 +441,10 @@ export default {
       kakao.maps.event.addListener(this.map, "click", (mouseEvent) => {
         // 현재 클릭한 부분의 좌표를 리턴
         var position = mouseEvent.latLng;
-        console.log(position);
-        console.log(position.La);
-        console.log(position.Ma);
-        this.toggleRoadview(new kakao.maps.LatLng(position.La, position.Ma)); //로드뷰를 토글합니다
+        this.rvMarker.setPosition(
+          new kakao.maps.LatLng(position.getLat(), position.getLng())
+        );
+        this.toggleRoadView(position);
       });
     },
     toggleRoadView(position) {
@@ -459,30 +456,21 @@ export default {
           this.isMapView = true;
           this.rvContainer.style.display = "none"; //로드뷰를 넣은 컨테이너를 숨깁니다
           this.map.relayout();
+
+          // this.map.setCenter();
+          // this.map.setLevel();
         } else {
-          this.isRoadView = true;
-          this.isMapView = false;
-          this.map.relayout(); //지도를 감싸고 있는 영역이 변경됨에 따라, 지도를 재배열합니다
-          // this.rvMarker.setPosition(position);
-          console.log(position);
-          console.log(this.map.getCenter());
-          this.rvMarker.setPosition(this.map.getCenter());
+          if (this.roadViewStatus) {
+            this.isRoadView = true;
+            this.isMapView = false;
+            this.rvContainer.style.display = "block"; //로드뷰를 넣은 컨테이너를 보이게합니다
 
-          // this.rvMarker.setPosition(
-          //   new kakao.maps.LatLng(position.La, position.Ma)
-          // );
-          // this.rvMarker.setMap(new kakao.maps.LatLng(position.La, position.Ma));
-
-          // this.rvMarker.setPosition(
-          //   new kakao.maps.LatLng(
-          //     this.map.getCenter().La,
-          //     this.map.getCenter().Ma
-          //   )
-          // );
-
-          this.rvContainer.style.display = "block"; //로드뷰를 넣은 컨테이너를 보이게합니다
-          this.rv.setPanoId(panoId, position); //panoId를 통한 로드뷰 실행
-          this.rv.relayout(); //로드뷰를 감싸고 있는 영역이 변경됨에 따라, 로드뷰를 재배열합니다
+            this.rv.setPanoId(panoId, position); //panoId를 통한 로드뷰 실행
+            this.rv.relayout(); //로드뷰를 감싸고 있는 영역이 변경됨에 따라, 로드뷰를 재배열합니다
+            this.map.relayout(); //지도를 감싸고 있는 영역이 변경됨에 따라, 지도를 재배열합니다
+            // this.map.setCenter();
+            // this.map.setLevel();
+          }
         }
       });
     },
@@ -502,6 +490,9 @@ export default {
 }
 .roadViewMode {
   width: 50%;
+}
+.notMapMode {
+  width: 0%;
 }
 #map {
   width: 100%;
