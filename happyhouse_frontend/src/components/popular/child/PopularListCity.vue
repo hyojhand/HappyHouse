@@ -1,7 +1,11 @@
 <template>
   <div class="mt-5">
-    <div class="text-center pop-content" v-for="i in 3" :key="i">
-      <h2>{{ cities[i - 1].address }}</h2>
+    <div
+      class="text-center pop-content"
+      v-for="city in cities"
+      :key="city.dongCode"
+    >
+      <h2>{{ city.address }}</h2>
     </div>
   </div>
 </template>
@@ -15,7 +19,7 @@ export default {
   },
   created() {
     http.get(`/admin/search`).then(({ data }) => {
-      this.cities = data;
+      this.cities = data.slice(undefined, 3);
     });
   },
 };

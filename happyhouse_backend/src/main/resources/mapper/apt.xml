@@ -34,6 +34,17 @@
 		where dongCode = #{aptcode}
 	</select>
 	
+	<select id="findSearchCnt" parameterType="string" resultType="int">
+		select count(*)
+			from searchapt
+		where dongcode = #{aptcode} and userid = #{userid};
+	</select>
+	
+	<insert id="insertSearchCnt" parameterType="string">
+		insert into searchapt
+		values (#{aptcode}, #{userid}, 1)
+	</insert>
+	
 	<update id="addSearchCnt" parameterType="string">
 		update searchapt
 			set cnt = cnt + 1
@@ -41,10 +52,14 @@
 	</update>
 	
 	<select id="searchApt" resultType="aptSearchCnt">
-		select d.dongCode, concat(d.sidoName, ' ', d.gugunName, ' ', d.dongName) address, s.cnt
-			from dongcode d, searchapt s
-		where d.dongCode = s.dongcode
-		order by s.cnt desc
+		select d.dongCode, concat(d.sidoName, ' ', d.gugunName, ' ', d.dongName) address, a.cnt cnt
+			from dongcode d,
+				(select dongcode, sum(cnt) cnt
+					from searchapt
+					group by dongcode
+				)a
+			where d.dongCode = a.dongcode
+		order by a.cnt desc
 		limit 10;
 	</select>
 	
@@ -188,6 +203,16 @@
 		where h.aptCode = a.aptCode and
 		left(h.dongcode, 2) = left(si.sidocode, 2) and
 		left(h.dongcode, 5) = left(gu.guguncode, 5)
+	</select>
+	
+	<select id="getMostAddress" resultType="string">
+	select concat(sidoName, ' ', gugunName, ' ', dongName)
+		from dongCode
+	where dongCode in
+		(select * from
+			(select dongcode from searchapt where userid = #{userid}
+			order by cnt limit 1)
+		 t);
 	</select>
 	
 </mapper>

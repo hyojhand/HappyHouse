@@ -15,7 +15,7 @@ public interface HouseMapService {
 	List<SidoGugunCodeDto> getGugunInSido(String sido) throws Exception;
 	List<HouseInfoDto> getDongInGugun(String gugun) throws Exception;
 	HouseInfoDto getAptInfo(String aptcode) throws Exception;
-	void addSearchCnt(String aptcode) throws Exception;
+	void addSearchCnt(String userid, String aptcode) throws Exception;
 	List<AptSearchCnt> searchApt() throws Exception;
 	List<HouseInfoDto> getAptInDong(String dong) throws Exception;
 	List<HouseDetail> getAptDetail(String aptcode) throws SQLException;
@@ -31,5 +31,6 @@ public interface HouseMapService {
 	boolean isBookmark(Bookmark bookmark) throws Exception;
 	List<HouseDetail> retrieveBookmark(String userid) throws Exception;
 	List<HouseInfoDto> getMostBookmark() throws Exception;
+	String getMostAddress(String userid) throws Exception;
 	
 }

@@ -44,7 +44,8 @@
 
 <script>
 import http from "@/util/http-common";
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
+import jwt_decode from "jwt-decode";
 
 export default {
   name: "HouseSearchBar",
@@ -55,12 +56,24 @@ export default {
       guguns: [],
       selectGuguncode: "",
       dongs: [],
+      userInfo: {},
     };
   },
-  created() {
+  async created() {
+    if (this.isLogin) {
+      const decode = jwt_decode(sessionStorage.getItem("access-token"));
+      http.defaults.headers["access-token"] =
+        sessionStorage.getItem("access-token");
+      await http.get(`/member/info/${decode.userid}`).then(({ data }) => {
+        this.userInfo = data.userInfo;
+      });
+    }
     http.get("/map/sido").then(({ data }) => {
       this.cities = data;
     });
+  },
+  computed: {
+    ...mapState("memberStore", ["isLogin"]),
   },
   methods: {
     ...mapActions("houseStore", ["getSido", "getGugun", "getDong", "getArea"]),
@@ -81,12 +94,16 @@ export default {
         this.dongs = data;
       });
     },
-    async selectDong(event) {
+    selectDong(event) {
       let aptcode = event.target.value;
       this.getDong(aptcode);
-      await http.post(`/map/aptcnt/${aptcode}`);
+      if (this.isLogin) {
+        http.post(`/map/aptcnt`, {
+          dongCode: aptcode,
+          userid: this.userInfo.userid,
+        });
+      }
       // 동 선택후, Map으로 넘어가면서 aptcode 넘기기
-
       http.get(`/map/aptinfo/${aptcode}`).then(({ data }) => {
         this.getArea({
           sidoName: data.sidoName,

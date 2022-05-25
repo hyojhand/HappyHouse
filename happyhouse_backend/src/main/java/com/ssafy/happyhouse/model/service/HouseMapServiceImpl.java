@@ -40,8 +40,12 @@ public class HouseMapServiceImpl implements HouseMapService {
 	}
 	
 	@Override
-	public void addSearchCnt(String aptcode) throws Exception {
-		houseMapMapper.addSearchCnt(aptcode);
+	public void addSearchCnt(String userid, String aptcode) throws Exception {
+		if (houseMapMapper.findSearchCnt(userid, aptcode) == 0) {
+			houseMapMapper.insertSearchCnt(userid, aptcode);
+		} else {
+			houseMapMapper.addSearchCnt(userid, aptcode);
+		}
 	}
 	
 	@Override
@@ -118,6 +122,11 @@ public class HouseMapServiceImpl implements HouseMapService {
 	@Override
 	public List<HouseInfoDto> getMostBookmark() throws Exception {
 		return houseMapMapper.getMostBookmark();
+	}
+
+	@Override
+	public String getMostAddress(String userid) throws Exception {
+		return houseMapMapper.getMostAddress(userid);
 	}
 
 }

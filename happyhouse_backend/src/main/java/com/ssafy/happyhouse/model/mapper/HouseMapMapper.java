@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.ssafy.happyhouse.model.AptSearchCnt;
 import com.ssafy.happyhouse.model.Bookmark;
@@ -18,7 +19,9 @@ public interface HouseMapMapper {
 	List<SidoGugunCodeDto> getGugunInSido(String sido) throws SQLException;
 	List<HouseInfoDto> getDongInGugun(String gugun) throws SQLException;
 	HouseInfoDto getAptInfo(String aptcode) throws SQLException;
-	int addSearchCnt(String aptcode) throws SQLException;
+	int findSearchCnt(@Param("userid") String userid, @Param("aptcode") String aptcode) throws SQLException;
+	int insertSearchCnt(@Param("userid") String userid, @Param("aptcode") String aptcode) throws SQLException;
+	int addSearchCnt(@Param("userid") String userid, @Param("aptcode") String aptcode) throws SQLException;
 	List<AptSearchCnt> searchApt() throws SQLException;
 	List<HouseInfoDto> getAptInDong(String dong) throws SQLException;
 	List<HouseDetail> getAptDetail(String aptcode) throws SQLException;
@@ -34,5 +37,6 @@ public interface HouseMapMapper {
 	List<Bookmark> selectBookmark(Bookmark bookmark) throws SQLException;
 	List<HouseDetail> getBookmark(String userid) throws SQLException;
 	List<HouseInfoDto> getMostBookmark() throws SQLException;
+	String getMostAddress(String userid) throws SQLException;
 	
 }

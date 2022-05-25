@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.happyhouse.model.AptSearchCnt;
 import com.ssafy.happyhouse.model.Bookmark;
 import com.ssafy.happyhouse.model.HouseDetail;
 import com.ssafy.happyhouse.model.HouseInfoDto;
@@ -65,11 +66,18 @@ public class HouseMapController {
 	}
 	
 	@ApiOperation(value = "해당 아파트의 검색 횟수를 늘린다.")
-	@PostMapping("/aptcnt/{aptcode}")
-	public ResponseEntity<Void> addSearch(@PathVariable String aptcode) throws Exception {
-		log.debug("addSearch - 호출, aptcode : " + aptcode);
-		HouseMapService.addSearchCnt(aptcode);
+	@PostMapping("/aptcnt")
+	public ResponseEntity<Void> addSearch(@RequestBody AptSearchCnt searchcnt) throws Exception {
+		log.debug("addSearch - 호출, aptcode : " + searchcnt);
+		HouseMapService.addSearchCnt(searchcnt.getUserid(), searchcnt.getDongCode());
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "특정 유저가 가장 많이 검색한 지역명을 반환한다.", response = String.class)
+	@PostMapping("/apt/{userid}")
+	public ResponseEntity<String> retrieveMostAddress(@PathVariable String userid) throws Exception {
+		log.debug("retrieveMostAddress - 호출, userid : " + userid);
+		return new ResponseEntity<String>(HouseMapService.getMostAddress(userid), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "해당 동의 모든 아파트를 반환한다.", response = List.class)
@@ -78,8 +86,6 @@ public class HouseMapController {
 		log.debug("apt : {}", HouseMapService.getAptInDong(aptcode));
 		return new ResponseEntity<List<HouseInfoDto>>(HouseMapService.getAptInDong(aptcode), HttpStatus.OK);
 	}
-	
-	
 	
 	@ApiOperation(value = "이름순으로 정렬한 아파트의 정보를 반환한다. ", response = HouseDetail.class)
 	@GetMapping("/aptdetail/{aptcode}")
