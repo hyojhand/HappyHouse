@@ -85,10 +85,17 @@ INSERT INTO MESSAGE(send, receive, title, content) VALUES ('choi', 'son','안녕
 INSERT INTO MESSAGE(send, receive, title, content) VALUES ('son', 'choi','안녕하세요~', '궁금한거 있으신가요');
 
 CREATE TABLE SEARCHAPT (
-	dongcode varchar(10) primary key,
+	dongcode varchar(10),
+    userid varchar(20),
     cnt int default 0,
+    primary key (dongcode, userid),
     constraint fk_searchapt_dongcode foreign key (dongcode) references dongcode(dongCode)
 );
+
+INSERT INTO SEARCHAPT(dongcode, userid, cnt) VALUES ('1168010100', 'son', '55');
+INSERT INTO SEARCHAPT(dongcode, userid, cnt) VALUES ('2644010400', 'son', '95');
+INSERT INTO SEARCHAPT(dongcode, userid, cnt) VALUES ('1138010900', 'son', '7');
+
 
 CREATE TABLE BOOKMARK (
 	userid varchar(20),
@@ -98,4 +105,6 @@ CREATE TABLE BOOKMARK (
     constraint fk_bookmark_aptCode foreign key (aptCode) references houseinfo(aptCode)
 );
 
-INSERT INTO SEARCHAPT (dongcode) SELECT dongCode FROM dongcode;
+INSERT INTO BOOKMARK(userid, aptCode) VALUES ('son', '26470000000322');
+INSERT INTO BOOKMARK(userid, aptCode) VALUES ('son', '26500000000063');
+INSERT INTO BOOKMARK(userid, aptCode) VALUES ('son', '26440000000006');
