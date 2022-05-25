@@ -1,6 +1,6 @@
 <template>
   <b-row
-    class="mb-3"
+    class="mb-3 house-container"
     @mouseover="colorChange(true)"
     @mouseout="colorChange(false)"
     @click="selectApart"
@@ -94,7 +94,14 @@ export default {
 .AptName {
   font-size: 20px;
 }
-.mouse-over-bgcolor {
+/* .mouse-over-bgcolor {
+  background-color: rgba(0, 0, 0, 0.1);
+} */
+.house-container {
+  padding: 15px 0px;
+  background-color: rgba(0, 0, 0, 0.01);
+}
+.house-container:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 </style>

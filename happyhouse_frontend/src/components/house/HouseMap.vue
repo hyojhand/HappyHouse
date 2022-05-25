@@ -610,6 +610,7 @@ export default {
   font-weight: bold;
   font-size: 18px;
   width: 200px;
+  margin-top: 20px;
   /* z-index: 80; */
 }
 .map-tool {
@@ -621,7 +622,12 @@ export default {
   z-index: 80;
   width: 200px;
   border: 5px outset;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.3);
+  color: rgba(0, 0, 0, 0.5);
+}
+.map-tool:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: rgba(0, 0, 0);
 }
 
 .mapwrap {
