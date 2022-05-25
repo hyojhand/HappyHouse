@@ -9,14 +9,14 @@
             role="button"
             width="30"
             height="30"
-            src="@/assets/bookmarked.png"
+            src="@/assets/apt_detail/bookmarked.png"
             @click="nobookmark"
           /><img
             v-else
             role="button"
             width="30"
             height="30"
-            src="@/assets/bookmark.png"
+            src="@/assets/apt_detail/bookmark.png"
             @click="bookmark"
           />
         </h3>
@@ -58,13 +58,39 @@
     <div class="accordion" role="tablist">
       <b-card no-body class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
-          <b-button block v-b-toggle.accordion-1 variant="info"
-            >편의
-            <span>{{ cafeInfo.meta.total_count }} 개 / </span>
-            <span v-if="cafeInfo.meta.total_count >= 5"> 별 5개</span>
-            <span v-else-if="cafeInfo.meta.total_count >= 3"> 별 3개</span>
-            <span v-else-if="cafeInfo.meta.total_count >= 1"> 별 1개</span>
-            <span v-else> 별 0개</span>
+          <b-button
+            block
+            v-b-toggle.accordion-1
+            variant="light"
+            style="padding: 10px 30px; line-height: 40px"
+            ><span style="float: left"
+              ><img
+                width="30"
+                height="30"
+                src="@/assets/apt_detail/cafeImg.png"
+              />&nbsp;&nbsp; 카페 :
+              <span>{{ cafeInfo.meta.total_count }} 개 </span>
+            </span>
+            <span style="float: right">
+              <img
+                v-if="cafeInfo.meta.total_count >= 7"
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/gold_medal.png"
+              />
+              <img
+                v-else-if="cafeInfo.meta.total_count >= 4"
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/silver_medal.png"
+              />
+              <img
+                v-else
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/bronze_medal.png"
+              />
+            </span>
           </b-button>
         </b-card-header>
         <b-collapse
@@ -84,13 +110,39 @@
 
       <b-card no-body class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
-          <b-button block v-b-toggle.accordion-2
-            >편의 <strong>편의점 수</strong> :
-            <span>{{ conbiInfo.meta.total_count }} 개 / </span>
-            <span v-if="conbiInfo.meta.total_count >= 5"> 별 5개</span>
-            <span v-else-if="conbiInfo.meta.total_count >= 3"> 별 3개</span>
-            <span v-else-if="conbiInfo.meta.total_count >= 1"> 별 1개</span>
-            <span v-else> 별 0개</span>
+          <b-button
+            block
+            v-b-toggle.accordion-2
+            variant="light"
+            style="padding: 10px 30px; line-height: 40px"
+            ><span style="float: left"
+              ><img
+                width="30"
+                height="30"
+                src="@/assets/apt_detail/conbiImg.png"
+              />&nbsp;&nbsp; 편의 :
+              <span>{{ conbiInfo.meta.total_count }} 개 </span>
+            </span>
+            <span style="float: right">
+              <img
+                v-if="conbiInfo.meta.total_count >= 7"
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/gold_medal.png"
+              />
+              <img
+                v-else-if="conbiInfo.meta.total_count >= 4"
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/silver_medal.png"
+              />
+              <img
+                v-else
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/bronze_medal.png"
+              />
+            </span>
           </b-button>
         </b-card-header>
         <b-collapse
@@ -110,13 +162,40 @@
 
       <b-card no-body class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
-          <b-button block v-b-toggle.accordion-3 variant="info"
-            >교육 <strong>학교 수</strong> :
-            <span>{{ educationInfo.meta.total_count }} 개 / </span>
-            <span v-if="educationInfo.meta.total_count >= 5"> 별 5개</span>
-            <span v-else-if="educationInfo.meta.total_count >= 3"> 별 3개</span>
-            <span v-else-if="educationInfo.meta.total_count >= 1"> 별 1개</span>
-            <span v-else> 별 0개</span>
+          <b-button
+            block
+            v-b-toggle.accordion-3
+            variant="light"
+            style="padding: 10px 30px; line-height: 40px"
+            ><span style="float: left"
+              ><img
+                width="30"
+                height="30"
+                src="@/assets/apt_detail/eduImg.png"
+              />
+              &nbsp;&nbsp; 교육 :
+              <span>{{ educationInfo.meta.total_count }} 개 </span>
+            </span>
+            <span style="float: right">
+              <img
+                v-if="educationInfo.meta.total_count >= 7"
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/gold_medal.png"
+              />
+              <img
+                v-else-if="educationInfo.meta.total_count >= 4"
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/silver_medal.png"
+              />
+              <img
+                v-else
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/bronze_medal.png"
+              />
+            </span>
           </b-button>
         </b-card-header>
         <b-collapse
@@ -136,13 +215,40 @@
 
       <b-card no-body class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
-          <b-button block v-b-toggle.accordion-4 variant="info"
-            >의료 <strong>병원 수</strong> :
-            <span>{{ hospitalInfo.meta.total_count }} 개 / </span>
-            <span v-if="hospitalInfo.meta.total_count >= 5"> 별 5개</span>
-            <span v-else-if="hospitalInfo.meta.total_count >= 3"> 별 3개</span>
-            <span v-else-if="hospitalInfo.meta.total_count >= 1"> 별 1개</span>
-            <span v-else> 별 0개</span>
+          <b-button
+            block
+            v-b-toggle.accordion-4
+            variant="light"
+            style="padding: 10px 30px; line-height: 40px"
+            ><span style="float: left"
+              ><img
+                width="30"
+                height="30"
+                src="@/assets/apt_detail/hospitalImg.png"
+              />
+              &nbsp;&nbsp; 의료 :
+              <span>{{ hospitalInfo.meta.total_count }} 개 </span>
+            </span>
+            <span style="float: right">
+              <img
+                v-if="hospitalInfo.meta.total_count >= 7"
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/gold_medal.png"
+              />
+              <img
+                v-else-if="hospitalInfo.meta.total_count >= 4"
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/silver_medal.png"
+              />
+              <img
+                v-else
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/bronze_medal.png"
+              />
+            </span>
           </b-button>
         </b-card-header>
         <b-collapse
@@ -161,14 +267,45 @@
       </b-card>
 
       <b-card no-body class="mb-1">
-        <b-card-header header-tag="header" class="p-1" role="tab">
-          <b-button block v-b-toggle.accordion-5 variant="info"
-            >문화 <strong>문화시설 수</strong> :
-            <span>{{ cultureInfo.meta.total_count }} 개 / </span>
-            <span v-if="cultureInfo.meta.total_count >= 5"> 별 5개</span>
-            <span v-else-if="cultureInfo.meta.total_count >= 3"> 별 3개</span>
-            <span v-else-if="cultureInfo.meta.total_count >= 1"> 별 1개</span>
-            <span v-else> 별 0개</span>
+        <b-card-header
+          header-tag="header"
+          class="p-1"
+          role="tab"
+          padding="auto"
+        >
+          <b-button
+            block
+            v-b-toggle.accordion-5
+            variant="light"
+            style="padding: 10px 30px; line-height: 40px"
+            ><span style="float: left"
+              ><img
+                width="30"
+                height="30"
+                src="@/assets/apt_detail/cultureImg.png"
+              />&nbsp;&nbsp; 문화 :
+              <span>{{ cultureInfo.meta.total_count }} 개 </span>
+            </span>
+            <span style="float: right">
+              <img
+                v-if="cultureInfo.meta.total_count >= 7"
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/gold_medal.png"
+              />
+              <img
+                v-else-if="cultureInfo.meta.total_count >= 4"
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/silver_medal.png"
+              />
+              <img
+                v-else
+                width="40"
+                height="40"
+                src="@/assets/apt_detail/bronze_medal.png"
+              />
+            </span>
           </b-button>
         </b-card-header>
         <b-collapse
