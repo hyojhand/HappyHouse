@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container style="overflow: scroll; height: 700px">
     <b-row class="mb-2">
       <b-col
         ><h3>
