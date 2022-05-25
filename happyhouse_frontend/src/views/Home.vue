@@ -66,7 +66,9 @@
 <script>
 import NewsList from "@/components/news/NewsList.vue";
 import PopularList from "@/components/popular/PopularList.vue";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+import http from "@/util/http-common";
+import jwt_decode from "jwt-decode";
 
 export default {
   name: "Main",
@@ -77,17 +79,50 @@ export default {
     NewsList,
     PopularList,
   },
-  computed: {
-    ...mapState("houseStore", ["isAlarm"]),
+  data() {
+    return {
+      userInfo: {},
+    };
   },
-  created() {
-    // if (this.isAlarm === true) {
-    //   this.$bvToast.show("my-toast");
-    //   console.log(this.isAlarm);
-    //   this.isAlarm = false;
-    // }
+  computed: {
+    ...mapState("memberStore", ["isAlarm", "isLogin"]),
+  },
+  async created() {
+    if (this.isLogin) {
+      const decode = jwt_decode(sessionStorage.getItem("access-token"));
+      http.defaults.headers["access-token"] =
+        sessionStorage.getItem("access-token");
+      await http.get(`/member/info/${decode.userid}`).then(({ data }) => {
+        this.userInfo = data.userInfo;
+      });
+      if (this.isAlarm) {
+        http.post(`map/apt/${this.userInfo.userid}`).then(({ data }) => {
+          if (data != "") {
+            this.setAlarm(false);
+            this.makeToast(data);
+            var addr = data.address.split(" ");
+            this.getArea({
+              sidoName: addr[0],
+              gugunName: addr[1],
+              dongName: addr[2],
+            });
+            this.getDong(data.dongCode);
+          }
+        });
+      }
+    }
   },
   methods: {
+    ...mapActions("memberStore", ["setAlarm"]),
+    ...mapActions("houseStore", ["getDong", "getArea"]),
+    makeToast(data) {
+      this.$bvToast.toast("마음에 드는 매물이 있는지 찾아보세요~", {
+        title: `${data.address} 근처 매물을 구하시나요?`,
+        href: "/house/map",
+        variant: "success",
+        solid: true,
+      });
+    },
     moveHouse() {
       this.$router.push({ name: "House" });
     },

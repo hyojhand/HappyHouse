@@ -37,6 +37,6 @@ public interface HouseMapMapper {
 	List<Bookmark> selectBookmark(Bookmark bookmark) throws SQLException;
 	List<HouseDetail> getBookmark(String userid) throws SQLException;
 	List<HouseInfoDto> getMostBookmark() throws SQLException;
-	String getMostAddress(String userid) throws SQLException;
+	AptSearchCnt getMostAddress(String userid) throws SQLException;
 	
 }

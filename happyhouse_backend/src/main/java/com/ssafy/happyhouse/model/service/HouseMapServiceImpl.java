@@ -125,7 +125,7 @@ public class HouseMapServiceImpl implements HouseMapService {
 	}
 
 	@Override
-	public String getMostAddress(String userid) throws Exception {
+	public AptSearchCnt getMostAddress(String userid) throws Exception {
 		return houseMapMapper.getMostAddress(userid);
 	}
 
