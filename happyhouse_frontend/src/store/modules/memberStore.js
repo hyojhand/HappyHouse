@@ -5,6 +5,7 @@ const memberStore = {
   state: {
     isLogin: false,
     isadmin: false,
+    isAlarm: false,
   },
   getters: {},
   actions: {
@@ -30,6 +31,9 @@ const memberStore = {
       commit("SET_IS_NOT_LOGIN");
       commit("SET_IS_NOT_ADMIN");
     },
+    setAlarm({ commit }, param) {
+      commit("SET_ALARM", param);
+    },
   },
   mutations: {
     SET_IS_LOGIN: (state) => {
@@ -43,6 +47,9 @@ const memberStore = {
     },
     SET_IS_NOT_ADMIN: (state) => {
       state.isadmin = false;
+    },
+    SET_ALARM: (state, param) => {
+      state.isAlarm = param;
     },
   },
 };

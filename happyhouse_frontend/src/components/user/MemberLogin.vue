@@ -43,6 +43,26 @@
           @click="checkValue"
           >로그인</b-button
         >
+
+        <!-- <div>
+          <b-button @click="$bvToast.show('my-toast')">Show toast</b-button>
+          <b-toast id="my-toast" variant="warning" solid>
+            <template #toast-title>
+              <div class="d-flex flex-grow-1 align-items-baseline">
+                <b-img
+                  blank
+                  blank-color="#ff5555"
+                  class="mr-2"
+                  width="12"
+                  height="12"
+                ></b-img>
+                <strong class="mr-auto">Notice!</strong>
+                <small class="text-muted mr-2">now</small>
+              </div>
+            </template>
+            This is the content of the toast. It is short and to the point.
+          </b-toast>
+        </div> -->
       </b-form>
     </div>
   </div>
@@ -50,6 +70,9 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+// import "mosha-vue-toastify/dist/style.css";
+// import { createToast } from "mosha-vue-toastify";
+
 export default {
   name: "MemberLogin",
   data() {
@@ -62,11 +85,14 @@ export default {
   computed: {
     ...mapState("memberStore", ["isLogin"]),
   },
-  create() {
+  created() {
+    () => {
+      this.$bvToast.show("my-toast");
+    };
     // this.userid = this.$cookies.get("userid");
   },
   methods: {
-    ...mapActions("memberStore", ["goLogin"]),
+    ...mapActions("memberStore", ["goLogin", "setAlarm"]),
     checkValue() {
       let msg = "";
       let err = true;
@@ -104,10 +130,30 @@ export default {
         this.$cookies.remove("remember");
       }
       if (this.isLogin) {
+        this.toast();
+        // this.$bvToast.show("my-toast");
+
+        // this.$toast.info("my-toast");
+        // const toast = () => {
+        //   createToast({
+        //     title: "이 지역은 어떠신가요??",
+        //     description: "부산시 금정구 부곡동",
+        //   });
+        // };
         this.$router.push({ name: "Home" });
         this.$router.go(this.$router.currentRoute);
+
+        this.setAlarm(true);
       }
     },
+    toast() {
+      console.log("toatst 메서드");
+      this.$bvToast.show(`Toast with action link`, {
+        href: "#foo",
+        title: "Example",
+      });
+    },
+
     moveJoin() {
       this.$router.push({ name: "SignUp" });
     },

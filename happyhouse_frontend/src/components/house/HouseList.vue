@@ -92,12 +92,6 @@ export default {
     ]),
   },
   async created() {
-    console.log(this.cafeInfo);
-    console.log(this.conbiInfo);
-    console.log(this.hospitalInfo);
-    console.log(this.educationInfo);
-    console.log(this.cultureInfo);
-
     if (this.isLogin) {
       const decode = jwt_decode(sessionStorage.getItem("access-token"));
       http.defaults.headers["access-token"] =

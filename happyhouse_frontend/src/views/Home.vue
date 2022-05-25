@@ -66,6 +66,7 @@
 <script>
 import NewsList from "@/components/news/NewsList.vue";
 import PopularList from "@/components/popular/PopularList.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "Main",
@@ -75,6 +76,16 @@ export default {
   components: {
     NewsList,
     PopularList,
+  },
+  computed: {
+    ...mapState("houseStore", ["isAlarm"]),
+  },
+  created() {
+    // if (this.isAlarm === true) {
+    //   this.$bvToast.show("my-toast");
+    //   console.log(this.isAlarm);
+    //   this.isAlarm = false;
+    // }
   },
   methods: {
     moveHouse() {
