@@ -117,7 +117,7 @@
 			(select h.aptCode, d.dealAmount recentPrice, d.dealYear recentYear, d.dealMonth recentMonth, d.dealDay recentDay, d.area, d.floor
 		    from housedeal d, houseinfo h where d.aptCode = h.aptCode and no = (select max(no) from housedeal hd where hd.aptCode = h.aptCode)) b
 		where a.aptCode = b.aptCode
-		order by b.recentPrice
+		order by CAST(b.recentPrice AS DECIMAL(20, 2))
 	</select>
 	
 	<select id="getAptDetailPriceSortDesc" parameterType="string" resultType="houseDetail">
@@ -129,7 +129,7 @@
 			(select h.aptCode, d.dealAmount recentPrice, d.dealYear recentYear, d.dealMonth recentMonth, d.dealDay recentDay, d.area, d.floor
 		    from housedeal d, houseinfo h where d.aptCode = h.aptCode and no = (select max(no) from housedeal hd where hd.aptCode = h.aptCode)) b
 		where a.aptCode = b.aptCode
-		order by b.recentPrice desc
+		order by CAST(b.recentPrice AS DECIMAL(20, 2)) desc
 	</select>
 	
 	<select id="getAptDetailAreaSort" parameterType="string" resultType="houseDetail">

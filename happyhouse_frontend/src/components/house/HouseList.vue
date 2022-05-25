@@ -144,15 +144,41 @@ export default {
       "getCulture",
     ]),
     async sort(kind) {
-      //     this.sortIconName = "sort-alpha-up";
-      //     this.sortIconYear = this.sortIconPrice = this.sortIconArea = "";
-      // this.sortIconName = "sort-alpha-down";
-      //     this.sortIconYear = this.sortIconPrice = this.sortIconArea = "";
+      this.sortIconName =
+        this.sortIconYear =
+        this.sortIconPrice =
+        this.sortIconArea =
+          "";
       if (this.sortBy == kind) {
         this.sortDesc = !this.sortDesc;
       } else {
         this.sortBy = kind;
         this.sortDesc = false;
+      }
+      if (kind == "이름") {
+        if (this.sortDesc) {
+          this.sortIconName = "sort-alpha-down";
+        } else {
+          this.sortIconName = "sort-alpha-up";
+        }
+      } else if (kind == "건축년도") {
+        if (this.sortDesc) {
+          this.sortIconYear = "sort-numeric-down";
+        } else {
+          this.sortIconYear = "sort-numeric-up";
+        }
+      } else if (kind == "거래가") {
+        if (this.sortDesc) {
+          this.sortIconPrice = "sort-numeric-down";
+        } else {
+          this.sortIconPrice = "sort-numeric-up";
+        }
+      } else if (kind == "평수") {
+        if (this.sortDesc) {
+          this.sortIconArea = "sort-numeric-down";
+        } else {
+          this.sortIconArea = "sort-numeric-up";
+        }
       }
       await http
         .get(`/map/aptsort/${this.selectDong}`, {
@@ -185,8 +211,6 @@ export default {
       var data = await axios.get(
         `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=${code}&radius=${rad}&x=${x}&y=${y}&size=5&sort=distance`
       );
-      // console.log(data.data.documents);
-      // console.log(data.data.meta.total_count);
       return data.data;
     },
 
