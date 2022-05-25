@@ -11,6 +11,7 @@ CREATE TABLE USER (
 INSERT INTO USER(userid, username, userpwd, email, isadmin) VALUES ('ssafy', '김싸피', SHA2('1234', 256), 'ssafy@ssafy.com', 0);
 INSERT INTO USER(userid, username, userpwd, email, isadmin) VALUES ('son', '손싸피', SHA2('1234', 256), 'son@ssafy.com', 0);
 INSERT INTO USER(userid, username, userpwd, email, isadmin) VALUES ('choi', '최싸피', SHA2('1234', 256), 'choi@ssafy.com', 0);
+INSERT INTO USER(userid, username, userpwd, email, isadmin) VALUES ('kim', '싸피김', SHA2('1234', 256), 'kim@ssafy.com', 0);
 # 관리자 계정
 INSERT INTO USER(userid, username, userpwd, email, isadmin) VALUES ('admin', '관리자', SHA2('1234', 256), 'admin@ssafy.com', 1);
 
@@ -43,6 +44,15 @@ CREATE TABLE REPLY (
     constraint fk_reply_writer foreign key (writer) references USER(userid) on delete cascade
 );
 
+INSERT INTO REPLY(articleno, writer, content) VALUES ('1', 'son', '명지 추천합니다');
+INSERT INTO REPLY(articleno, writer, content) VALUES ('4', 'ssafy','네.');
+INSERT INTO REPLY(articleno, writer, content) VALUES ('5', 'kim','좋네요~');
+INSERT INTO REPLY(articleno, writer, content) VALUES ('5', 'choi','이거 완전 꿀팁이네요');
+INSERT INTO REPLY(articleno, writer, content) VALUES ('5', 'ssafy','명쾌하다');
+INSERT INTO REPLY(articleno, writer, content) VALUES ('7', 'kim','ㅠㅠ');
+INSERT INTO REPLY(articleno, writer, content) VALUES ('7', 'choi','진심이 느껴지네요..');
+INSERT INTO REPLY(articleno, writer, content) VALUES ('7', 'son','한줄요약 감사합니다');
+
 CREATE TABLE LIKEY (
 	userid 		varchar(20),
     articleno	int,
@@ -50,6 +60,14 @@ CREATE TABLE LIKEY (
     constraint fk_likey_userid foreign key (userid) references USER(userid) on delete cascade,
     constraint fk_likey_articleno foreign key (articleno) references BOARD(articleno) on delete cascade
 );
+
+INSERT INTO LIKEY(userid, articleno) VALUES ('son', '4');
+INSERT INTO LIKEY(userid, articleno) VALUES ('kim', '4');
+INSERT INTO LIKEY(userid, articleno) VALUES ('ssafy', '5');
+INSERT INTO LIKEY(userid, articleno) VALUES ('choi', '5'); 
+INSERT INTO LIKEY(userid, articleno) VALUES ('kim', '5');
+INSERT INTO LIKEY(userid, articleno) VALUES ('son', '7');
+INSERT INTO LIKEY(userid, articleno) VALUES ('kim', '7');
 
 CREATE TABLE MESSAGE (
 	messageid	int				primary key 	auto_increment,
@@ -62,6 +80,9 @@ CREATE TABLE MESSAGE (
     constraint fk_message_send foreign key (send) references USER(userid) on delete cascade,
     constraint fk_message_receive foreign key (receive) references USER(userid) on delete cascade
 );
+
+INSERT INTO MESSAGE(send, receive, title, content) VALUES ('choi', 'son','안녕하세요~', '매물보고 연락드립니다~');
+INSERT INTO MESSAGE(send, receive, title, content) VALUES ('son', 'choi','안녕하세요~', '궁금한거 있으신가요');
 
 CREATE TABLE SEARCHAPT (
 	dongcode varchar(10) primary key,
