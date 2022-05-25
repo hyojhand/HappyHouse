@@ -32,7 +32,10 @@
       ></b-col>
     </b-row>
     <b-row class="mb-2">
-      <b-col> <strong>일련번호</strong> : {{ selectApart.aptCode }} </b-col>
+      <b-col>
+        <strong>주소</strong> : {{ selectApart.sidoName }}
+        {{ selectApart.gugunName }} {{ selectApart.dong }}
+      </b-col>
     </b-row>
     <b-row class="mb-2">
       <b-col> <strong>건축년도</strong> : {{ selectApart.buildYear }}년 </b-col>
