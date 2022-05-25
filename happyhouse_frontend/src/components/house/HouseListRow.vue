@@ -71,7 +71,7 @@ export default {
       axios.defaults.headers["Authorization"] =
         "KakaoAK d00501781e125b07eeb9a328ebc287e6";
       var data = await axios.get(
-        `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=${code}&radius=${rad}&x=${x}&y=${y}`
+        `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=${code}&radius=${rad}&x=${x}&y=${y}&size=5&sort=distance`
       );
       // console.log(data.data.documents);
       // console.log(data.data.meta.total_count);

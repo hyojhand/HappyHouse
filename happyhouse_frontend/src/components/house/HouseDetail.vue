@@ -54,65 +54,141 @@
     <b-row class="mb-2">
       <b-col> <strong>층수</strong> : {{ selectApart.floor }} 층 </b-col>
     </b-row>
-    <b-row class="mb-2">
-      <b-col>
-        <strong>카페 수</strong> :
-        <span>{{ cafeInfo.meta.total_count }} 개 / </span>
-        <span v-if="cafeInfo.meta.total_count >= 5"> 별 5개</span>
-        <span v-else-if="cafeInfo.meta.total_count >= 3"> 별 3개</span>
-        <span v-else-if="cafeInfo.meta.total_count >= 1"> 별 1개</span>
-        <span v-else> 별 0개</span>
-        <div>
-          <!-- <div v-for="(cafe, index) in cafeInfo.documents" :key="cafe.id">
-            {{ cafe[index].distance }} 거리에 {{ cafe[index].place_name }} 이
-            있습니다.
-          </div> -->
-          {{ cafeInfo.documents[0].distance }}m 거리에
-          {{ cafeInfo.documents[0].place_name }} 이(가) 있습니다.
-        </div>
-      </b-col>
-    </b-row>
-    <b-row class="mb-2">
-      <b-col>
-        <strong>편의점 수</strong> :
-        <span>{{ conbiInfo.meta.total_count }} 개 / </span>
-        <span v-if="conbiInfo.meta.total_count >= 5"> 별 5개</span>
-        <span v-else-if="conbiInfo.meta.total_count >= 3"> 별 3개</span>
-        <span v-else-if="conbiInfo.meta.total_count >= 1"> 별 1개</span>
-        <span v-else> 별 0개</span>
-      </b-col>
-    </b-row>
-    <b-row class="mb-2">
-      <b-col>
-        <strong>학교 수</strong> :
-        <span>{{ educationInfo.meta.total_count }} 개 / </span>
-        <span v-if="educationInfo.meta.total_count >= 5"> 별 5개</span>
-        <span v-else-if="educationInfo.meta.total_count >= 3"> 별 3개</span>
-        <span v-else-if="educationInfo.meta.total_count >= 1"> 별 1개</span>
-        <span v-else> 별 0개</span>
-      </b-col>
-    </b-row>
-    <b-row class="mb-2">
-      <b-col>
-        <strong>병원 수</strong> :
-        <span>{{ hospitalInfo.meta.total_count }} 개 / </span>
-        <span v-if="hospitalInfo.meta.total_count >= 5"> 별 5개</span>
-        <span v-else-if="hospitalInfo.meta.total_count >= 3"> 별 3개</span>
-        <span v-else-if="hospitalInfo.meta.total_count >= 1"> 별 1개</span>
-        <span v-else> 별 0개</span>
-      </b-col>
-    </b-row>
-    <b-row class="mb-2">
-      <b-col>
-        <strong>문화시설 수</strong> :
-        <span>{{ cultureInfo.meta.total_count }} 개 / </span>
-        <span v-if="cultureInfo.meta.total_count >= 5"> 별 5개</span>
-        <span v-else-if="cultureInfo.meta.total_count >= 3"> 별 3개</span>
-        <span v-else-if="cultureInfo.meta.total_count >= 1"> 별 1개</span>
-        <span v-else> 별 0개</span>
-      </b-col>
-    </b-row>
-    <br />
+
+    <div class="accordion" role="tablist">
+      <b-card no-body class="mb-1">
+        <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-button block v-b-toggle.accordion-1 variant="info"
+            >편의
+            <span>{{ cafeInfo.meta.total_count }} 개 / </span>
+            <span v-if="cafeInfo.meta.total_count >= 5"> 별 5개</span>
+            <span v-else-if="cafeInfo.meta.total_count >= 3"> 별 3개</span>
+            <span v-else-if="cafeInfo.meta.total_count >= 1"> 별 1개</span>
+            <span v-else> 별 0개</span>
+          </b-button>
+        </b-card-header>
+        <b-collapse
+          id="accordion-1"
+          visible
+          accordion="my-accordion"
+          role="tabpanel"
+        >
+          <b-card-body>
+            <b-card-text v-for="cafe in cafeInfo.documents" :key="cafe.id"
+              ><code>{{ cafe.distance }}m</code> 거리에
+              <code>{{ cafe.place_name }}</code> 이(가) 있습니다.</b-card-text
+            >
+          </b-card-body>
+        </b-collapse>
+      </b-card>
+
+      <b-card no-body class="mb-1">
+        <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-button block v-b-toggle.accordion-2
+            >편의 <strong>편의점 수</strong> :
+            <span>{{ conbiInfo.meta.total_count }} 개 / </span>
+            <span v-if="conbiInfo.meta.total_count >= 5"> 별 5개</span>
+            <span v-else-if="conbiInfo.meta.total_count >= 3"> 별 3개</span>
+            <span v-else-if="conbiInfo.meta.total_count >= 1"> 별 1개</span>
+            <span v-else> 별 0개</span>
+          </b-button>
+        </b-card-header>
+        <b-collapse
+          id="accordion-2"
+          visible
+          accordion="my-accordion"
+          role="tabpanel"
+        >
+          <b-card-body>
+            <b-card-text v-for="conbi in conbiInfo.documents" :key="conbi.id"
+              ><code>{{ conbi.distance }}m</code> 거리에
+              <code>{{ conbi.place_name }}</code> 이(가) 있습니다.</b-card-text
+            >
+          </b-card-body>
+        </b-collapse>
+      </b-card>
+
+      <b-card no-body class="mb-1">
+        <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-button block v-b-toggle.accordion-3 variant="info"
+            >교육 <strong>학교 수</strong> :
+            <span>{{ educationInfo.meta.total_count }} 개 / </span>
+            <span v-if="educationInfo.meta.total_count >= 5"> 별 5개</span>
+            <span v-else-if="educationInfo.meta.total_count >= 3"> 별 3개</span>
+            <span v-else-if="educationInfo.meta.total_count >= 1"> 별 1개</span>
+            <span v-else> 별 0개</span>
+          </b-button>
+        </b-card-header>
+        <b-collapse
+          id="accordion-3"
+          visible
+          accordion="my-accordion"
+          role="tabpanel"
+        >
+          <b-card-body>
+            <b-card-text v-for="edu in educationInfo.documents" :key="edu.id"
+              ><code>{{ edu.distance }}m</code> 거리에
+              <code>{{ edu.place_name }}</code> 이(가) 있습니다.</b-card-text
+            >
+          </b-card-body>
+        </b-collapse>
+      </b-card>
+
+      <b-card no-body class="mb-1">
+        <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-button block v-b-toggle.accordion-4 variant="info"
+            >의료 <strong>병원 수</strong> :
+            <span>{{ hospitalInfo.meta.total_count }} 개 / </span>
+            <span v-if="hospitalInfo.meta.total_count >= 5"> 별 5개</span>
+            <span v-else-if="hospitalInfo.meta.total_count >= 3"> 별 3개</span>
+            <span v-else-if="hospitalInfo.meta.total_count >= 1"> 별 1개</span>
+            <span v-else> 별 0개</span>
+          </b-button>
+        </b-card-header>
+        <b-collapse
+          id="accordion-4"
+          visible
+          accordion="my-accordion"
+          role="tabpanel"
+        >
+          <b-card-body>
+            <b-card-text v-for="hosp in hospitalInfo.documents" :key="hosp.id"
+              ><code>{{ hosp.distance }}m</code> 거리에
+              <code>{{ hosp.place_name }}</code> 이(가) 있습니다.</b-card-text
+            >
+          </b-card-body>
+        </b-collapse>
+      </b-card>
+
+      <b-card no-body class="mb-1">
+        <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-button block v-b-toggle.accordion-5 variant="info"
+            >문화 <strong>문화시설 수</strong> :
+            <span>{{ cultureInfo.meta.total_count }} 개 / </span>
+            <span v-if="cultureInfo.meta.total_count >= 5"> 별 5개</span>
+            <span v-else-if="cultureInfo.meta.total_count >= 3"> 별 3개</span>
+            <span v-else-if="cultureInfo.meta.total_count >= 1"> 별 1개</span>
+            <span v-else> 별 0개</span>
+          </b-button>
+        </b-card-header>
+        <b-collapse
+          id="accordion-5"
+          visible
+          accordion="my-accordion"
+          role="tabpanel"
+        >
+          <b-card-body>
+            <b-card-text
+              v-for="culture in cultureInfo.documents"
+              :key="culture.id"
+              ><code>{{ culture.distance }}m</code> 거리에
+              <code>{{ culture.place_name }}</code> 이(가)
+              있습니다.</b-card-text
+            >
+          </b-card-body>
+        </b-collapse>
+      </b-card>
+    </div>
   </b-container>
 </template>
 

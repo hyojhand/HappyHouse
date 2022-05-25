@@ -6,6 +6,7 @@
       {{ this.selectArea.gugunName }}
       {{ this.selectArea.dongName }} 지역 아파트 정보
     </h2>
+
     <b-container v-if="this.apts && this.apts.length != 0" class="mt-5">
       <div v-if="type != 'bookmark'" class="text-right mb-5">
         <span class="sort-order" role="button" @click="sort('이름')"
@@ -21,6 +22,7 @@
           >평수순<b-icon :icon="sortIconArea"></b-icon
         ></span>
       </div>
+
       <b-row>
         <b-col cols="6">
           <house-list-row
@@ -30,6 +32,7 @@
             :num="Math.ceil(Math.random() * 20)"
           />
         </b-col>
+
         <b-col cols="6">
           <house-detail
             id="house_detail"
@@ -89,11 +92,11 @@ export default {
     ]),
   },
   async created() {
-    // console.log(this.cafeInfo);
-    // console.log(this.conbiInfo);
-    // console.log(this.hospitalInfo);
-    // console.log(this.educationInfo);
-    // console.log(this.cultureInfo);
+    console.log(this.cafeInfo);
+    console.log(this.conbiInfo);
+    console.log(this.hospitalInfo);
+    console.log(this.educationInfo);
+    console.log(this.cultureInfo);
 
     if (this.isLogin) {
       const decode = jwt_decode(sessionStorage.getItem("access-token"));
@@ -180,7 +183,7 @@ export default {
       axios.defaults.headers["Authorization"] =
         "KakaoAK d00501781e125b07eeb9a328ebc287e6";
       var data = await axios.get(
-        `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=${code}&radius=${rad}&x=${x}&y=${y}`
+        `https://dapi.kakao.com/v2/local/search/category.json?category_group_code=${code}&radius=${rad}&x=${x}&y=${y}&size=5&sort=distance`
       );
       // console.log(data.data.documents);
       // console.log(data.data.meta.total_count);
