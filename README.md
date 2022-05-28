@@ -8,9 +8,12 @@
 3. [Contributors](#Contributors)
 4. [사용 스택](#사용스택)
 5. [프로젝트 세팅](#프로젝트세팅)
-6. [ERD](#ERD)
-7. [핵심 기능](#핵심기능)
-8. [상세 페이지](#상세페이지)
+6. [WireFrame](#WireFrame)
+7. [Usecase Diagram](#UsercaseDiagram)
+8. [Flow Chart](#FlowChart)
+9. [ERD](#ERD)
+10. [핵심 기능](#핵심기능)
+11. [상세 페이지](#상세페이지)
 
 ## 프로젝트&nbsp;소개
 - SSAFY 7기 1학기 Final 프로젝트 ( 최우수 프로젝트 수상🏅 )
@@ -52,9 +55,27 @@ npm run serve
 ### Comments
 - Booststrap 버전을 **4.5.3**으로 변경 후 npm install
 
+## WireFrame
+
+  ![WireFrame1](/happyhouse_document/WireFrame_1.png)
+  ![WireFrame2](/happyhouse_document/WireFrame_2.png)
+  ![WireFrame3](/happyhouse_document/WireFrame_3.png)
+
+
+## Usecase&nbsp;Diagram
+
+  ![WireFrame3](/happyhouse_document/UsecaseDiagram.png)
+
+
+## Flow&nbsp;Chart
+
+  ![WireFrame3](/happyhouse_document/FlowChart.png)
+
+
 ## ERD
 
-<img src="https://user-images.githubusercontent.com/87989933/170809116-45145dda-8dd8-4e22-a8ca-7367fb6285c5.png" width="900" height="600"/>
+  ![ERD](/happyhouse_document/erd.png)
+
 
 ## 핵심&nbsp;기능
 
