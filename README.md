@@ -4,8 +4,8 @@
 
 ---
 1. [프로젝트 소개](#프로젝트소개)
-2. [Contributors](#Contributors)
-3. [Project Period](#ProjectPeriod)
+2. [Project Period](#ProjectPeriod)
+3. [Contributors](#Contributors)
 4. [사용 스택](#사용스택)
 5. [프로젝트 세팅](#프로젝트세팅)
 6. [ERD](#ERD)
@@ -20,17 +20,16 @@
 
 시연영상 : 링크
 
+## Project Period
+
+2022.05.19 ~ 2022.05.26
+
 ## Contributors
 
 | 팀원   | 역할                              | 비고           | 깃헙                              |
 | ------ | --------------------------------- | -------------- | --------------------------------- |
 | 최지원 | 팀장, 백엔드, 프론트엔드 |  | https://github.com/CHOIJXWXN  |
 | 손효재 | 백엔드, 프론트엔드 |   | https://github.com/hyojhand  |
-
-## Project Period
-
-2022.05.19 ~ 2022.05.26
-
 
 ## 사용&nbsp;스택
 
